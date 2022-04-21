@@ -4,6 +4,7 @@ import '../widget/dashboardWidgets/grossSales.dart';
 import '../widget/dashboardWidgets/grossEarnings.dart';
 import '../widget/dashboardWidgets/totalOrders.dart';
 import '../widget/dashboardWidgets/totalProducts.dart';
+import '../widget/dashboardWidgets/newOrders.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -119,6 +120,7 @@ class Dashboard extends StatelessWidget {
                   right: width * 0.02,
                   bottom: height * 0.02),
               child: GridView(
+                physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     crossAxisSpacing: width * 0.065,
                     mainAxisSpacing: height * 0.03,
@@ -134,7 +136,7 @@ class Dashboard extends StatelessWidget {
             SizedBox(height: height * 0.02),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: const [
                 Text(
                   'New Order',
                   style: TextStyle(
@@ -143,14 +145,17 @@ class Dashboard extends StatelessWidget {
                       fontSize: 22),
                 ),
                 Text(
-                  'New Order',
+                  'See All Orders',
                   style: TextStyle(
                       color: Color.fromARGB(255, 39, 138, 42),
                       // fontWeight: FontWeight.bold,
-                      fontSize: 22),
+                      fontSize: 15),
                 )
               ],
-            )
+            ),
+            SizedBox(height: height * 0.025),
+            NewOrders(),
+            SizedBox(height: height * 0.04),
           ],
         ),
       ),
