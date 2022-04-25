@@ -16,12 +16,15 @@ class Products extends StatelessWidget {
         decoration: const BoxDecoration(shape: BoxShape.circle, boxShadow: [
           BoxShadow(color: Colors.grey, blurRadius: 8, offset: Offset(2, 2))
         ]),
-        child: CircleAvatar(
-          radius: width * 0.07,
-          backgroundColor: Colors.green,
-          child: const Text(
-            '+',
-            style: TextStyle(color: Colors.white, fontSize: 35),
+        child: InkWell(
+          onTap: () => Navigator.of(context).pushNamed('/add-products'),
+          child: CircleAvatar(
+            radius: width * 0.07,
+            backgroundColor: Colors.green,
+            child: const Text(
+              '+',
+              style: TextStyle(color: Colors.white, fontSize: 35),
+            ),
           ),
         ),
       ),
