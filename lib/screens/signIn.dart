@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../widget/signInWidget.dart';
+import '../widget/signIn&signUp/signInWidget.dart';
 
 // class SignIn extends StatefulWidget {
 //   SignInState createState() => SignInState();
@@ -38,7 +38,7 @@ class SignIn extends StatelessWidget {
             ),
             Center(
               child: Text(
-                'Login to start shopping',
+                'Login to Start Selling',
                 textScaleFactor: textScaleFactor,
                 style: const TextStyle(
                     // fontWeight: FontWeight.bold,

@@ -4,6 +4,7 @@ import './screens/addProducts.dart';
 import 'package:provider/provider.dart';
 import './model/categoryProvider.dart';
 import './screens/signIn.dart';
+import './screens/signUp.dart';
 
 void main() => runApp(TanviVendor());
 
@@ -25,7 +26,10 @@ class TanviVendor extends StatelessWidget {
             scaffoldBackgroundColor: const Color.fromRGBO(236, 236, 248, 1)),
         // home: CustomBottomNavigation(),
         home: SignIn(),
-        routes: {'/add-products': (context) => AddProductsPage()},
+        routes: {
+          '/add-products': (context) => AddProductsPage(),
+          '/sign-up': (context) => SignUp()
+        },
       ),
     );
   }
