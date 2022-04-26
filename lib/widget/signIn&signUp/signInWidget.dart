@@ -26,7 +26,7 @@ class FormWidgetState extends State<FormWidget> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor * 1.2;
+    // final textScaleFactor = MediaQuery.of(context).textScaleFactor * 1.2;
 
     // TODO: implement build
     return Column(
@@ -139,7 +139,7 @@ class FormWidgetState extends State<FormWidget> {
         Text(
           'Forgot your password?',
           textAlign: TextAlign.center,
-          textScaleFactor: textScaleFactor,
+          // textScaleFactor: textScaleFactor,
           style: const TextStyle(color: Colors.grey),
         ),
         Padding(
@@ -172,11 +172,11 @@ class FormWidgetState extends State<FormWidget> {
               decoration: BoxDecoration(
                   color: const Color.fromRGBO(57, 226, 14, 1),
                   borderRadius: BorderRadius.circular(15)),
-              child: Center(
+              child: const Center(
                 child: Text(
                   'Login',
-                  textScaleFactor: textScaleFactor,
-                  style: const TextStyle(
+                  // textScaleFactor: textScaleFactor,
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 18),
@@ -189,20 +189,22 @@ class FormWidgetState extends State<FormWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Dont\'t have an account?',
               textAlign: TextAlign.center,
-              textScaleFactor: textScaleFactor,
-              style: const TextStyle(color: Colors.grey),
+              // textScaleFactor: textScaleFactor,
+              style: TextStyle(color: Colors.grey, fontSize: 16),
             ),
             InkWell(
               onTap: () => Navigator.of(context).pushNamed('/sign-up'),
-              child: Text(
+              child: const Text(
                 'Sign Up',
                 textAlign: TextAlign.center,
-                textScaleFactor: textScaleFactor,
-                style: const TextStyle(
-                    color: Colors.grey, fontWeight: FontWeight.bold),
+                // textScaleFactor: textScaleFactor,
+                style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
               ),
             ),
           ],
@@ -252,6 +254,26 @@ class FormWidgetState extends State<FormWidget> {
               ),
             )
           ],
+        ),
+        SizedBox(height: height * 0.04),
+        const Text(
+            'Please Change your Password if you are Logging In For the First Time',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            )),
+        SizedBox(height: height * 0.02),
+        InkWell(
+          onTap: () => Navigator.of(context).pushNamed('/change-password'),
+          child: const Text('Change Password',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              )),
         )
       ],
     );

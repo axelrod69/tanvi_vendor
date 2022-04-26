@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import './model/categoryProvider.dart';
 import './screens/signIn.dart';
 import './screens/signUp.dart';
+import './screens/changePassword.dart';
 
 void main() => runApp(TanviVendor());
 
@@ -24,11 +25,13 @@ class TanviVendor extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             scaffoldBackgroundColor: const Color.fromRGBO(236, 236, 248, 1)),
-        // home: CustomBottomNavigation(),
-        home: SignIn(),
+        home: CustomBottomNavigation(),
+        // home: SignIn(),
         routes: {
           '/add-products': (context) => AddProductsPage(),
-          '/sign-up': (context) => SignUp()
+          '/sign-in': (context) => SignIn(),
+          '/sign-up': (context) => SignUp(),
+          '/change-password': (context) => ChangePassword(),
         },
       ),
     );

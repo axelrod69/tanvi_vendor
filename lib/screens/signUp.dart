@@ -16,6 +16,8 @@ class SignUpState extends State<SignUp> {
   String? lastName;
   String? phoneNumber;
   String? email;
+  String? organizationName;
+  String? panNumber;
   List<String> gender = ['Female', 'Male', 'Rather Not Say'];
 
   @override
@@ -46,13 +48,13 @@ class SignUpState extends State<SignUp> {
                   fit: BoxFit.cover)),
           child: Stack(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Image.asset('assets/images/sign_up_asset.png',
-                      fit: BoxFit.cover),
-                ],
-              ),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     Image.asset('assets/images/sign_up_asset.png',
+              //         fit: BoxFit.cover),
+              //   ],
+              // ),
               Positioned(
                 child: Form(
                   key: _globalKey,
@@ -217,6 +219,7 @@ class SignUpState extends State<SignUp> {
                                   ]),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton(
+                                    hint: Text('Gender'),
                                     value: dropDownValue,
                                     items: gender.map((e) {
                                       return DropdownMenuItem(
@@ -281,14 +284,70 @@ class SignUpState extends State<SignUp> {
                                     enabledBorder: InputBorder.none),
                                 onFieldSubmitted: (_) => FocusScope.of(context)
                                     .requestFocus(_focusFirst),
-                                validator: (number) {
-                                  if (number!.length < 10 ||
-                                      number.length > 10) {
-                                    return 'Please Check Your Phone Number';
-                                  } else if (number.isEmpty) {
-                                    return 'Please Enter Phone Number';
+                                validator: (orgName) {
+                                  if (orgName!.isEmpty) {
+                                    return 'Please Enter Your Organization\'s name';
                                   } else {
-                                    phoneNumber = '+91' + number;
+                                    organizationName = orgName;
+                                    return null;
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: width * 0.08, right: width * 0.08),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'PAN Card',
+                              textScaleFactor: textScaleFactor,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                            SizedBox(height: height * 0.02),
+                            Container(
+                              padding: EdgeInsets.only(
+                                  left: width * 0.02, top: height * 0.0045),
+                              margin: EdgeInsets.only(bottom: height * 0.04),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18),
+                                  color: Colors.white,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        color: Colors.grey,
+                                        spreadRadius: 2,
+                                        blurRadius: 10,
+                                        // color: Color.fromRGBO(227, 189, 255, 0.5),
+                                        offset: Offset(1, 2))
+                                  ]),
+                              child: TextFormField(
+                                style: const TextStyle(fontSize: 18),
+                                keyboardType: TextInputType.text,
+                                decoration: const InputDecoration(
+                                    hintText: 'Enter Your PAN Number',
+                                    // suffixIcon:
+                                    //     Icon(Icons.check_circle, color: Colors.green),
+                                    // label: Text(
+                                    //   'Enter Your Phone Number',
+                                    //   textScaleFactor: textScaleFactor,
+                                    //   style: const TextStyle(color: Colors.grey),
+                                    // ),
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none),
+                                onFieldSubmitted: (_) => FocusScope.of(context)
+                                    .requestFocus(_focusFirst),
+                                validator: (panNo) {
+                                  if (panNo!.isEmpty) {
+                                    return 'Please Enter Your PAN Number';
+                                  } else {
+                                    panNumber = panNo;
                                     return null;
                                   }
                                 },
@@ -473,6 +532,7 @@ class SignUpState extends State<SignUp> {
                           ),
                         ],
                       ),
+                      SizedBox(height: height * 0.02),
                     ],
                   ),
                 ),
