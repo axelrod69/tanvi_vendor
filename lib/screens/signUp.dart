@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tanvi_vendor/model/network/authentication.dart';
+import 'dart:convert';
 // import '../authentication/network.dart';
 
 class SignUp extends StatefulWidget {
@@ -8,9 +10,15 @@ class SignUp extends StatefulWidget {
 
 class SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
-  final _focusFirst = FocusNode();
-  final _focusSecond = FocusNode();
-  final _focusThird = FocusNode();
+  late TextEditingController _firstNameController;
+  late TextEditingController _lastNameController;
+  late TextEditingController _orgNameController;
+  late TextEditingController _panCardController;
+  late TextEditingController _numberController;
+  late TextEditingController _emailController;
+  // final _focusFirst = FocusNode();
+  // final _focusSecond = FocusNode();
+  // final _focusThird = FocusNode();
   String? dropDownValue;
   String? firstName;
   String? lastName;
@@ -21,13 +29,25 @@ class SignUpState extends State<SignUp> {
   List<String> gender = ['Female', 'Male', 'Rather Not Say'];
 
   @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _focusFirst.dispose();
-    _focusSecond.dispose();
-    _focusThird.dispose();
+  void initState() {
+    // TODO: implement initState
+    _firstNameController = TextEditingController();
+    _lastNameController = TextEditingController();
+    _orgNameController = TextEditingController();
+    _panCardController = TextEditingController();
+    _numberController = TextEditingController();
+    _emailController = TextEditingController();
+    super.initState();
   }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   // _focusFirst.dispose();
+  //   // _focusSecond.dispose();
+  //   // _focusThird.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +123,7 @@ class SignUpState extends State<SignUp> {
                                   ]),
                               child: TextFormField(
                                 style: const TextStyle(fontSize: 18),
+                                controller: _firstNameController,
                                 keyboardType: TextInputType.text,
                                 decoration: const InputDecoration(
                                     hintText: 'Enter Your First Name',
@@ -115,8 +136,8 @@ class SignUpState extends State<SignUp> {
                                     // ),
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none),
-                                onFieldSubmitted: (_) => FocusScope.of(context)
-                                    .requestFocus(_focusFirst),
+                                // onFieldSubmitted: (_) => FocusScope.of(context)
+                                //     .requestFocus(_focusFirst),
                                 validator: (fName) {
                                   if (fName!.isEmpty) {
                                     return 'Please Enter First Name';
@@ -162,6 +183,7 @@ class SignUpState extends State<SignUp> {
                                   ]),
                               child: TextFormField(
                                 style: const TextStyle(fontSize: 18),
+                                controller: _lastNameController,
                                 keyboardType: TextInputType.text,
                                 decoration: const InputDecoration(
                                     hintText: 'Enter Your Last Name',
@@ -174,8 +196,8 @@ class SignUpState extends State<SignUp> {
                                     // ),
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none),
-                                onFieldSubmitted: (_) => FocusScope.of(context)
-                                    .requestFocus(_focusFirst),
+                                // onFieldSubmitted: (_) => FocusScope.of(context)
+                                //     .requestFocus(_focusFirst),
                                 validator: (lName) {
                                   if (lName!.isEmpty) {
                                     return 'Please Enter Last Name';
@@ -270,6 +292,7 @@ class SignUpState extends State<SignUp> {
                                   ]),
                               child: TextFormField(
                                 style: const TextStyle(fontSize: 18),
+                                controller: _orgNameController,
                                 keyboardType: TextInputType.text,
                                 decoration: const InputDecoration(
                                     hintText: 'Enter Your Organization\'s name',
@@ -282,8 +305,8 @@ class SignUpState extends State<SignUp> {
                                     // ),
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none),
-                                onFieldSubmitted: (_) => FocusScope.of(context)
-                                    .requestFocus(_focusFirst),
+                                // onFieldSubmitted: (_) => FocusScope.of(context)
+                                //     .requestFocus(_focusFirst),
                                 validator: (orgName) {
                                   if (orgName!.isEmpty) {
                                     return 'Please Enter Your Organization\'s name';
@@ -329,6 +352,7 @@ class SignUpState extends State<SignUp> {
                                   ]),
                               child: TextFormField(
                                 style: const TextStyle(fontSize: 18),
+                                controller: _panCardController,
                                 keyboardType: TextInputType.text,
                                 decoration: const InputDecoration(
                                     hintText: 'Enter Your PAN Number',
@@ -341,8 +365,8 @@ class SignUpState extends State<SignUp> {
                                     // ),
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none),
-                                onFieldSubmitted: (_) => FocusScope.of(context)
-                                    .requestFocus(_focusFirst),
+                                // onFieldSubmitted: (_) => FocusScope.of(context)
+                                //     .requestFocus(_focusFirst),
                                 validator: (panNo) {
                                   if (panNo!.isEmpty) {
                                     return 'Please Enter Your PAN Number';
@@ -388,6 +412,7 @@ class SignUpState extends State<SignUp> {
                                   ]),
                               child: TextFormField(
                                 style: const TextStyle(fontSize: 18),
+                                controller: _numberController,
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
                                     hintText: 'Enter Your Phone Number',
@@ -400,8 +425,8 @@ class SignUpState extends State<SignUp> {
                                     // ),
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none),
-                                onFieldSubmitted: (_) => FocusScope.of(context)
-                                    .requestFocus(_focusFirst),
+                                // onFieldSubmitted: (_) => FocusScope.of(context)
+                                //     .requestFocus(_focusFirst),
                                 validator: (number) {
                                   if (number!.length < 10 ||
                                       number.length > 10) {
@@ -449,6 +474,7 @@ class SignUpState extends State<SignUp> {
                                   ]),
                               child: TextFormField(
                                 style: const TextStyle(fontSize: 18),
+                                controller: _emailController,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: const InputDecoration(
                                     hintText: 'Enter Your Email',
@@ -487,6 +513,9 @@ class SignUpState extends State<SignUp> {
                             // if (_globalKey.currentState!.validate()) {
                             //   _signUp();
                             // }
+                            if (_globalKey.currentState!.validate()) {
+                              _signUp();
+                            }
                           },
                           child: Container(
                             width: double.infinity,
@@ -540,6 +569,23 @@ class SignUpState extends State<SignUp> {
             ],
           )),
     );
+  }
+
+  void _signUp() async {
+    var data = {
+      'first_name': firstName.toString(),
+      'last_name': lastName.toString(),
+      'gender': dropDownValue.toString(),
+      'org_name': organizationName.toString(),
+      'pancard': panNumber.toString(),
+      'mobile': phoneNumber.toString(),
+      'email': email.toString()
+    };
+    print(data);
+
+    var response = await Provider.of<Authentication>(context, listen: false)
+        .signUp(data, 'api/vendor/registration/');
+    print(json.decode(response.body));
   }
 
   // void _signUp() async {

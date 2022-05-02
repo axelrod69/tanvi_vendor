@@ -6,11 +6,35 @@ import './model/categoryProvider.dart';
 import './screens/signIn.dart';
 import './screens/signUp.dart';
 import './screens/changePassword.dart';
+import './model/network/authentication.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(TanviVendor());
 
-class TanviVendor extends StatelessWidget {
+class TanviVendor extends StatefulWidget {
+  TanviVendorState createState() => TanviVendorState();
+}
+
+class TanviVendorState extends State<TanviVendor> {
   bool isAuth = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    checkIfLoggedIn();
+    super.initState();
+  }
+
+  void checkIfLoggedIn() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('token');
+    print('Tokeeeeeeeeeeeeen $token');
+    if (token != null) {
+      setState(() {
+        isAuth = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +43,17 @@ class TanviVendor extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => CategoryProvider(),
-        )
+        ),
+        ChangeNotifierProvider(create: (context) => Authentication())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             scaffoldBackgroundColor: const Color.fromRGBO(236, 236, 248, 1)),
-        home: CustomBottomNavigation(),
-        // home: SignIn(),
+        home: SignIn(),
+        // home: isAuth ? CustomBottomNavigation() : SignIn(),
         routes: {
+          '/home': (context) => CustomBottomNavigation(),
           '/add-products': (context) => AddProductsPage(),
           '/sign-in': (context) => SignIn(),
           '/sign-up': (context) => SignUp(),

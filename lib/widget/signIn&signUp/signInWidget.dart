@@ -1,8 +1,9 @@
 import 'dart:convert';
-
+import '../../model/network/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 // import '../../authentication/network.dart';
 
@@ -14,6 +15,7 @@ class FormWidgetState extends State<FormWidget> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   // final _focusFifth = FocusNode();
   String? emailId = '';
+  String? password = '';
 
   @override
   void dispose() {
@@ -102,7 +104,7 @@ class FormWidgetState extends State<FormWidget> {
                                 offset: Offset(1, 2))
                           ]),
                       child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.text,
                         obscureText: true,
                         decoration: const InputDecoration(
                             hintText: 'Enter Your Password',
@@ -119,11 +121,11 @@ class FormWidgetState extends State<FormWidget> {
                             enabledBorder: InputBorder.none),
                         // onFieldSubmitted: (_) =>
                         //     FocusScope.of(context).requestFocus(_focusFirst),
-                        validator: (email) {
-                          if (email!.isEmpty) {
+                        validator: (passWrd) {
+                          if (passWrd!.isEmpty) {
                             return 'Please Enter Password';
                           } else {
-                            emailId = email;
+                            password = passWrd;
                             return null;
                           }
                         },
@@ -164,6 +166,9 @@ class FormWidgetState extends State<FormWidget> {
               //         onPressed: () => Navigator.of(context).pop()),
               //   ));
               // }
+              if (_key.currentState!.validate()) {
+                _signIn();
+              }
             },
             child: Container(
               width: double.infinity,
@@ -277,6 +282,21 @@ class FormWidgetState extends State<FormWidget> {
         )
       ],
     );
+  }
+
+  void _signIn() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var data = {'email': emailId.toString(), 'password': password.toString()};
+    print(data);
+
+    var response = await Provider.of<Authentication>(context, listen: false)
+        .signIn(data, 'api/vendor/login/');
+    var res = json.decode(response.body);
+    if (res['status'] == 'success') {
+      await localStorage.setString('token', res['data']['access']);
+      Navigator.of(context).pushNamed('/home');
+    }
+    print(json.decode(response.body));
   }
 
   // void validateNumber(String number) async {

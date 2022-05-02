@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import '../model/network/authentication.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 // import '../../authentication/network.dart';
 
@@ -30,7 +31,7 @@ class ChangePasswordState extends State<ChangePassword> {
 
     // TODO: implement build
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           SizedBox(height: height * 0.3),
           Column(
@@ -167,6 +168,9 @@ class ChangePasswordState extends State<ChangePassword> {
                 //         onPressed: () => Navigator.of(context).pop()),
                 //   ));
                 // }
+                if (_key.currentState!.validate()) {
+                  _changePassword();
+                }
               },
               child: Container(
                 width: double.infinity,
@@ -278,5 +282,17 @@ class ChangePasswordState extends State<ChangePassword> {
         ],
       ),
     );
+  }
+
+  void _changePassword() async {
+    var data = {
+      'old_password': oldPassword.toString(),
+      'new_password': newPassword.toString()
+    };
+    print(data);
+    var response = await Provider.of<Authentication>(context, listen: false)
+        .changePassword(data, 'api/vendor/change-password/');
+    var res = json.decode(response.body);
+    print('Changed Password $res');
   }
 }

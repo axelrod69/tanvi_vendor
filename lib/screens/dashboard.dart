@@ -16,6 +16,7 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        automaticallyImplyLeading: false,
         toolbarHeight: height * 0.1,
         elevation: 0,
         title: Stack(
