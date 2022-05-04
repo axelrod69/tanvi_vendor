@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../model/categoryProvider.dart';
+import '../model/category/categoryProvider.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddProductsPage extends StatefulWidget {

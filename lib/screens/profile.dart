@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widget/profileWidget/business.dart';
 import '../widget/profileWidget/personal.dart';
+import 'package:provider/provider.dart';
+import '../model/profile/profileProvider.dart';
 
 class Profile extends StatefulWidget {
   ProfileState createState() => ProfileState();
@@ -8,10 +10,18 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
   late TabController tabController;
+  bool isLoading = true;
 
   @override
   void initState() {
     // TODO: implement initState
+    Provider.of<ProfileProvider>(context, listen: false)
+        .fetchProfileDetails()
+        .then((_) {
+      setState(() {
+        isLoading = false;
+      });
+    });
     super.initState();
     tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     tabController.addListener(() {
@@ -24,10 +34,12 @@ class ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     // final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    final provider = Provider.of<ProfileProvider>(context).profile;
 
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 10,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         centerTitle: true,
@@ -57,14 +69,26 @@ class ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
           ],
         ),
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          // CancelledOrders(),
-          Personal(),
-          Business(),
-        ],
-      ),
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Colors.green,
+              ),
+            )
+          : TabBarView(
+              controller: tabController,
+              children: [
+                // CancelledOrders(),
+                Personal(
+                    provider['data']['first_name'],
+                    provider['data']['last_name'],
+                    provider['data']['email'],
+                    provider['data']['mobile'],
+                    provider['data']['alternate_email'],
+                    provider['data']['profile_pic']),
+                Business(),
+              ],
+            ),
     );
   }
 }

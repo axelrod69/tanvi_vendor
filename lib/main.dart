@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import './widget/bottomNavigation.dart';
 import './screens/addProducts.dart';
 import 'package:provider/provider.dart';
-import './model/categoryProvider.dart';
+import './model/category/categoryProvider.dart';
 import './screens/signIn.dart';
 import './screens/signUp.dart';
 import './screens/changePassword.dart';
 import './model/network/authentication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import './model/profile/profileProvider.dart';
 
 void main() => runApp(TanviVendor());
 
@@ -44,14 +45,15 @@ class TanviVendorState extends State<TanviVendor> {
         ChangeNotifierProvider(
           create: (context) => CategoryProvider(),
         ),
-        ChangeNotifierProvider(create: (context) => Authentication())
+        ChangeNotifierProvider(create: (context) => Authentication()),
+        ChangeNotifierProvider(create: (context) => ProfileProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             scaffoldBackgroundColor: const Color.fromRGBO(236, 236, 248, 1)),
-        home: SignIn(),
-        // home: isAuth ? CustomBottomNavigation() : SignIn(),
+        // home: SignIn(),
+        home: isAuth ? CustomBottomNavigation() : SignIn(),
         routes: {
           '/home': (context) => CustomBottomNavigation(),
           '/add-products': (context) => AddProductsPage(),

@@ -3,6 +3,15 @@ import 'package:provider/provider.dart';
 // import '../../model/profile/profileProvider.dart';
 
 class Details extends StatelessWidget {
+  final String? firstName;
+  final String? lastName;
+  final String? email;
+  final String? mobileNumber;
+  final String? alternateEmail;
+
+  Details(this.firstName, this.lastName, this.email, this.mobileNumber,
+      this.alternateEmail);
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -29,7 +38,7 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            'Viv May',
+            firstName!,
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
@@ -45,7 +54,7 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            'Viv May',
+            lastName!,
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
@@ -60,7 +69,7 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            'siddc.8@gmail.com',
+            email!,
             // provider['email'],
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
@@ -76,7 +85,7 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            '+919831405393',
+            mobileNumber!,
             // provider['phone'],
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
@@ -92,7 +101,7 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            'siddc@gmail.com',
+            alternateEmail ?? 'null',
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),

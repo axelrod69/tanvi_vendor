@@ -1,29 +1,46 @@
 import 'package:flutter/material.dart';
 // import '../../model/profile/profileProvider.dart';
 import 'package:provider/provider.dart';
+import '../../../model/profile/profileProvider.dart';
+import 'dart:io';
 
 class EditProfile extends StatefulWidget {
+  final String? firstName;
+  final String? lastName;
+  final String? email;
+  final String? mobileNo;
+  final String? alternateEmail;
+  final File? image;
+
   EditProfileState createState() => EditProfileState();
+
+  EditProfile(this.firstName, this.lastName, this.email, this.mobileNo,
+      this.alternateEmail, this.image);
 }
 
 class EditProfileState extends State<EditProfile> {
   final key = GlobalKey<FormState>();
-  final _emailFocus = FocusNode();
-  final _mobileNoFocus = FocusNode();
-  final _addressFocus = FocusNode();
-  final _pincodeFocus = FocusNode();
-  final _passwordFocus = FocusNode();
-  final _confirmPasswordFocus = FocusNode();
+  // final _emailFocus = FocusNode();
+  // final _mobileNoFocus = FocusNode();
+  // final _addressFocus = FocusNode();
+  // final _pincodeFocus = FocusNode();
+  // final _passwordFocus = FocusNode();
+  // final _confirmPasswordFocus = FocusNode();
+  String firstNames = '';
+  String lastNames = '';
+  String emailId = '';
+  String alternateEmailId = '';
+  String mobileNumber = '';
 
   @override
   void dispose() {
     // TODO: implement dispose
-    _emailFocus.dispose();
-    _mobileNoFocus.dispose();
-    _addressFocus.dispose();
-    _pincodeFocus.dispose();
-    _passwordFocus.dispose();
-    _confirmPasswordFocus.dispose();
+    // _emailFocus.dispose();
+    // _mobileNoFocus.dispose();
+    // _addressFocus.dispose();
+    // _pincodeFocus.dispose();
+    // _passwordFocus.dispose();
+    // _confirmPasswordFocus.dispose();1
 
     super.dispose();
   }
@@ -44,26 +61,34 @@ class EditProfileState extends State<EditProfile> {
           child: Column(
             children: [
               Container(
-                  width: double.infinity,
-                  height: height * 0.06,
-                  padding: EdgeInsets.only(left: width * 0.05),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.white,
-                  ),
-                  child: TextFormField(
-                    autofocus: true,
-                    keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Siddhartha Chatterjee',
-                        label: Text(
-                          'First Name',
-                          // textScaleFactor: textScale,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
-                        )),
-                  )),
+                width: double.infinity,
+                height: height * 0.06,
+                padding: EdgeInsets.only(left: width * 0.05),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: Colors.white,
+                ),
+                child: TextFormField(
+                  autofocus: true,
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: widget.firstName,
+                      label: const Text(
+                        'First Name',
+                        // textScaleFactor: textScale,
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      )),
+                  validator: (fName) {
+                    if (fName!.isEmpty && widget.firstName!.isEmpty) {
+                      return 'Please Enter First Name';
+                    } else {
+                      firstNames = fName;
+                      return null;
+                    }
+                  },
+                ),
+              ),
               SizedBox(height: height * 0.02),
               Container(
                   width: double.infinity,
@@ -76,15 +101,22 @@ class EditProfileState extends State<EditProfile> {
                   child: TextFormField(
                     autofocus: true,
                     keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Siddhartha Chatterjee',
-                        label: Text(
+                        hintText: widget.lastName,
+                        label: const Text(
                           'Last Name',
                           // textScaleFactor: textScale,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
                         )),
+                    validator: (lName) {
+                      if (lName!.isEmpty && widget.lastName!.isEmpty) {
+                        return 'Please Enter First Name';
+                      } else {
+                        lastNames = lName;
+                        return null;
+                      }
+                    },
                   )),
               SizedBox(height: height * 0.02),
               Container(
@@ -96,16 +128,25 @@ class EditProfileState extends State<EditProfile> {
                     color: Colors.white,
                   ),
                   child: TextFormField(
-                      autofocus: true,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Siddhartha Chatterjee',
-                          label: Text(
-                            'Email',
-                            // textScaleFactor: textScale,
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
-                          )))),
+                    autofocus: true,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: widget.email,
+                        label: const Text(
+                          'Email',
+                          // textScaleFactor: textScale,
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        )),
+                    validator: (inputEmail) {
+                      if (inputEmail!.isEmpty && widget.email!.isEmpty) {
+                        return 'Please Enter First Name';
+                      } else {
+                        emailId = inputEmail;
+                        return null;
+                      }
+                    },
+                  )),
               SizedBox(height: height * 0.02),
               Container(
                   width: double.infinity,
@@ -118,15 +159,23 @@ class EditProfileState extends State<EditProfile> {
                   child: TextFormField(
                     autofocus: true,
                     keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Siddhartha Chatterjee',
-                        label: Text(
+                        hintText: widget.alternateEmail ?? 'null',
+                        label: const Text(
                           'Alternate Email',
                           // textScaleFactor: textScale,
                           style:
                               const TextStyle(color: Colors.grey, fontSize: 12),
                         )),
+                    validator: (altEmail) {
+                      if (altEmail!.isEmpty && widget.alternateEmail!.isEmpty) {
+                        return 'Please Enter First Name';
+                      } else {
+                        alternateEmailId = altEmail;
+                        return null;
+                      }
+                    },
                   )),
               SizedBox(height: height * 0.02),
               Container(
@@ -138,29 +187,63 @@ class EditProfileState extends State<EditProfile> {
                     color: Colors.white,
                   ),
                   child: TextFormField(
-                      // autofocus: true,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          label: Text(
-                            'Mobile No',
-                            // textScaleFactor: textScale,
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
-                          )))),
+                    // autofocus: true,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: widget.mobileNo,
+                        label: const Text(
+                          'Mobile No',
+                          // textScaleFactor: textScale,
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        )),
+                    validator: (number) {
+                      if (number!.isEmpty && widget.mobileNo!.isEmpty) {
+                        return 'Please Enter First Name';
+                      } else {
+                        mobileNumber = number;
+                        return null;
+                      }
+                    },
+                  )),
               SizedBox(height: height * 0.05),
-              Container(
-                width: double.infinity,
-                height: height * 0.05,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                        color: Color.fromARGB(255, 36, 71, 100), width: 1)),
-                child: const Center(
-                  child: Text(
-                    'Save',
-                    // textScaleFactor: textScale,
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 36, 71, 100)),
+              InkWell(
+                onTap: () {
+                  if (key.currentState!.validate()) {
+                    Provider.of<ProfileProvider>(context, listen: false)
+                        .postProfileUpdate(
+                            firstNames.isEmpty ? widget.firstName : firstNames,
+                            lastNames.isEmpty ? widget.lastName : lastNames,
+                            emailId.isEmpty ? widget.email : emailId,
+                            alternateEmailId.isEmpty
+                                ? widget.alternateEmail
+                                : alternateEmailId,
+                            mobileNumber.isEmpty
+                                ? widget.mobileNo
+                                : mobileNumber,
+                            widget.image);
+                    print('First Name $firstNames');
+                    print('Last Name $lastNames');
+                    print('Email ID $emailId');
+                    print('Alternate Email ID $alternateEmailId');
+                    print('Mobile Number $mobileNumber');
+                    print('Image ${widget.image}');
+                  }
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: height * 0.05,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(
+                          color: const Color.fromARGB(255, 36, 71, 100),
+                          width: 1)),
+                  child: const Center(
+                    child: Text(
+                      'Save',
+                      // textScaleFactor: textScale,
+                      style: TextStyle(color: Color.fromARGB(255, 36, 71, 100)),
+                    ),
                   ),
                 ),
               ),
