@@ -9,6 +9,8 @@ import './screens/changePassword.dart';
 import './model/network/authentication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './model/profile/profileProvider.dart';
+import './model/profileStatus/statusProvider.dart';
+import './model/profile/businessProfileProvider.dart';
 
 void main() => runApp(TanviVendor());
 
@@ -23,6 +25,8 @@ class TanviVendorState extends State<TanviVendor> {
   void initState() {
     // TODO: implement initState
     checkIfLoggedIn();
+    // Provider.of<StatusProvider>(context, listen: false).getStatus();
+
     super.initState();
   }
 
@@ -47,21 +51,45 @@ class TanviVendorState extends State<TanviVendor> {
         ),
         ChangeNotifierProvider(create: (context) => Authentication()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
+        ChangeNotifierProvider(create: (context) => StatusProvider()),
+        ChangeNotifierProvider(create: (context) => BusinessProfileProvider())
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            scaffoldBackgroundColor: const Color.fromRGBO(236, 236, 248, 1)),
-        // home: SignIn(),
-        home: isAuth ? CustomBottomNavigation() : SignIn(),
-        routes: {
-          '/home': (context) => CustomBottomNavigation(),
-          '/add-products': (context) => AddProductsPage(),
-          '/sign-in': (context) => SignIn(),
-          '/sign-up': (context) => SignUp(),
-          '/change-password': (context) => ChangePassword(),
-        },
-      ),
+
+      builder: (context, child) {
+        final provider = Provider.of<StatusProvider>(context).profileStatus;
+
+        // print('Provider $provider');
+
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+              scaffoldBackgroundColor: const Color.fromRGBO(236, 236, 248, 1)),
+          // home: SignIn(),
+          home: isAuth ? CustomBottomNavigation() : SignIn(),
+          routes: {
+            '/home': (context) => CustomBottomNavigation(),
+            '/add-products': (context) => AddProductsPage(),
+            '/sign-in': (context) => SignIn(),
+            '/sign-up': (context) => SignUp(),
+            '/change-password': (context) => ChangePassword(),
+          },
+        );
+      },
+
+      // child: MaterialApp(
+      //   debugShowCheckedModeBanner: false,
+      //   theme: ThemeData(
+      //       scaffoldBackgroundColor: const Color.fromRGBO(236, 236, 248, 1)),
+      //   // home: SignIn(),
+      //   home: isAuth ? CustomBottomNavigation() : SignIn(),
+      //   routes: {
+      //     '/home': (context) => CustomBottomNavigation(),
+      //     '/add-products': (context) => AddProductsPage(),
+      //     '/sign-in': (context) => SignIn(),
+      //     '/sign-up': (context) => SignUp(),
+      //     '/change-password': (context) => ChangePassword(),
+      //   },
+      // ),
     );
   }
 }

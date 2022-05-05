@@ -3,6 +3,7 @@ import '../widget/profileWidget/business.dart';
 import '../widget/profileWidget/personal.dart';
 import 'package:provider/provider.dart';
 import '../model/profile/profileProvider.dart';
+import '../model/profile/businessProfileProvider.dart';
 
 class Profile extends StatefulWidget {
   ProfileState createState() => ProfileState();
@@ -22,6 +23,8 @@ class ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
         isLoading = false;
       });
     });
+    Provider.of<BusinessProfileProvider>(context, listen: false)
+        .getBankDetails();
     super.initState();
     tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     tabController.addListener(() {

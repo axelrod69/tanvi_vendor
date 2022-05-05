@@ -60,17 +60,6 @@ class PersonalState extends State<Personal> {
 
     // TODO: implement build
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      //   elevation: 0,
-      //   centerTitle: true,
-      //   title: Text(
-      //     'Personal',
-      //     textScaleFactor: textScale,
-      //     style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
-      //   ),
-      //   // actions: [Cart(), NotifyBell()],
-      // ),
       body: Center(
         child: ListView(
           children: [
