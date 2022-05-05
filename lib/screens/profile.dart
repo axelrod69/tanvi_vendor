@@ -23,8 +23,13 @@ class ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
         isLoading = false;
       });
     });
+
     Provider.of<BusinessProfileProvider>(context, listen: false)
         .getBankDetails();
+
+    Provider.of<BusinessProfileProvider>(context, listen: false)
+        .getBusinessProfile();
+
     super.initState();
     tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     tabController.addListener(() {
@@ -38,6 +43,10 @@ class ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
     final height = MediaQuery.of(context).size.height;
     // final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     final provider = Provider.of<ProfileProvider>(context).profile;
+    final bankDetailsProvider =
+        Provider.of<BusinessProfileProvider>(context).bankDetails;
+    final businessDetailsProvider =
+        Provider.of<BusinessProfileProvider>(context).businessProfile;
 
     // TODO: implement build
     return Scaffold(
@@ -89,7 +98,20 @@ class ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                     provider['data']['mobile'],
                     provider['data']['alternate_email'],
                     provider['data']['profile_pic']),
-                Business(),
+                Business(
+                  bankDetailsProvider['data']['acc_bank_name'],
+                  bankDetailsProvider['data']['acc_branch_name'],
+                  bankDetailsProvider['data']['acc_ifsc'],
+                  bankDetailsProvider['data']['acc_no'],
+                  businessDetailsProvider['data']['org_name'],
+                  businessDetailsProvider['data']['telephone_1'],
+                  businessDetailsProvider['data']['telephone_2'],
+                  businessDetailsProvider['data']['company_pancard'],
+                  businessDetailsProvider['data']['company_pancard_doc'],
+                  businessDetailsProvider['data']['adhar_udyam_udoyog'],
+                  businessDetailsProvider['data']['adhar_udyam_udoyog_doc'],
+                  businessDetailsProvider['data']['gst_number'],
+                ),
               ],
             ),
     );

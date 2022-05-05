@@ -3,7 +3,34 @@ import './business/details.dart';
 import './business/edit.dart';
 
 class Business extends StatefulWidget {
+  final String bankName;
+  final String branchName;
+  final String ifscCode;
+  final String accountNumber;
+  final String organisationName;
+  final String telephoneOne;
+  final String telephoneTwo;
+  final String companyPancard;
+  final String companyPancardDoc;
+  final String aadharUdyog;
+  final String aadharUdyogDoc;
+  final String gstNumber;
+
   BusinessState createState() => BusinessState();
+
+  Business(
+      this.bankName,
+      this.branchName,
+      this.ifscCode,
+      this.accountNumber,
+      this.organisationName,
+      this.telephoneOne,
+      this.telephoneTwo,
+      this.companyPancard,
+      this.companyPancardDoc,
+      this.aadharUdyog,
+      this.aadharUdyogDoc,
+      this.gstNumber);
 }
 
 class BusinessState extends State<Business> {
@@ -88,7 +115,33 @@ class BusinessState extends State<Business> {
             //   ),
             // ),
             SizedBox(height: height * 0.01),
-            !clicked ? Details() : EditProfile()
+            !clicked
+                ? Details(
+                    widget.bankName,
+                    widget.branchName,
+                    widget.ifscCode,
+                    widget.accountNumber,
+                    widget.organisationName,
+                    widget.telephoneOne,
+                    widget.telephoneTwo,
+                    widget.companyPancard,
+                    widget.companyPancardDoc,
+                    widget.aadharUdyog,
+                    widget.aadharUdyogDoc,
+                    widget.gstNumber)
+                : EditProfile(
+                    widget.bankName,
+                    widget.branchName,
+                    widget.ifscCode,
+                    widget.accountNumber,
+                    widget.organisationName,
+                    widget.telephoneOne,
+                    widget.telephoneTwo,
+                    widget.companyPancard,
+                    widget.companyPancardDoc,
+                    widget.aadharUdyog,
+                    widget.aadharUdyogDoc,
+                    widget.gstNumber)
           ],
         ),
       ),

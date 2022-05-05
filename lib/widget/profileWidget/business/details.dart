@@ -3,6 +3,33 @@ import 'package:provider/provider.dart';
 // import '../../model/profile/profileProvider.dart';
 
 class Details extends StatelessWidget {
+  final String bankName;
+  final String branchName;
+  final String ifscCode;
+  final String accountNumber;
+  final String organisationName;
+  final String telephoneOne;
+  final String telephoneTwo;
+  final String companyPancard;
+  final String companyPancardDoc;
+  final String aadharUdyog;
+  final String aadharUdyogDoc;
+  final String gstNumber;
+
+  Details(
+      this.bankName,
+      this.branchName,
+      this.ifscCode,
+      this.accountNumber,
+      this.organisationName,
+      this.telephoneOne,
+      this.telephoneTwo,
+      this.companyPancard,
+      this.companyPancardDoc,
+      this.aadharUdyog,
+      this.aadharUdyogDoc,
+      this.gstNumber);
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -29,7 +56,7 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            'Viv May',
+            organisationName ?? 'null',
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
@@ -45,7 +72,7 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            'Viv May',
+            telephoneOne ?? 'null',
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
@@ -60,7 +87,7 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            'siddc.8@gmail.com',
+            telephoneTwo ?? 'null',
             // provider['email'],
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
@@ -76,14 +103,16 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            '+919831405393',
+            companyPancard ?? 'null',
             // provider['phone'],
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.005),
           Text(
-            'Pan Card Document Uploaded',
+            companyPancardDoc != null
+                ? 'Pan Card Document Uploaded'
+                : 'Pan Card Document Not Uploaded',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
@@ -102,13 +131,15 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            'Viv May',
+            aadharUdyog,
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.005),
           Text(
-            'Aadhar Card Document Uploaded',
+            aadharUdyogDoc != null
+                ? 'Aadhar Card Document Uploaded'
+                : 'Aadhar Card Document Not Uploaded',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
@@ -127,7 +158,7 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            'Viv May',
+            gstNumber,
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
@@ -143,7 +174,7 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            'Viv May',
+            bankName,
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
@@ -159,7 +190,7 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            'Dum Dum Cantonment',
+            branchName,
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
@@ -175,7 +206,7 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            'Dum Dum Cantonment',
+            ifscCode,
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
@@ -191,7 +222,7 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            'Dum Dum Cantonment',
+            accountNumber,
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
@@ -212,85 +243,85 @@ class Details extends StatelessWidget {
             style: TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
-            'Business Address',
-            // textScaleFactor: textScale,
-            style: TextStyle(
-                // color: Color.fromRGBO(131, 131, 131, 1),
-                color: textColor,
-                fontSize: 17),
-          ),
-          SizedBox(height: height * 0.01),
-          Text(
-            // provider['name'],
-            'Dum Dum Cantonment',
-            // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
-          ),
-          SizedBox(height: height * 0.02),
-          Text(
-            'Locality',
-            // textScaleFactor: textScale,
-            style: TextStyle(
-                // color: Color.fromRGBO(131, 131, 131, 1),
-                color: textColor,
-                fontSize: 17),
-          ),
-          SizedBox(height: height * 0.01),
-          Text(
-            // provider['name'],
-            'Dum Dum Cantonment',
-            // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
-          ),
-          SizedBox(height: height * 0.02),
-          Text(
-            'City',
-            // textScaleFactor: textScale,
-            style: TextStyle(
-                // color: Color.fromRGBO(131, 131, 131, 1),
-                color: textColor,
-                fontSize: 17),
-          ),
-          SizedBox(height: height * 0.01),
-          Text(
-            // provider['name'],
-            'Dum Dum Cantonment',
-            // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
-          ),
-          SizedBox(height: height * 0.02),
-          Text(
-            'State',
-            // textScaleFactor: textScale,
-            style: TextStyle(
-                // color: Color.fromRGBO(131, 131, 131, 1),
-                color: textColor,
-                fontSize: 17),
-          ),
-          SizedBox(height: height * 0.01),
-          Text(
-            // provider['name'],
-            'Dum Dum Cantonment',
-            // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
-          ),
-          SizedBox(height: height * 0.02),
-          Text(
-            'Post Code',
-            // textScaleFactor: textScale,
-            style: TextStyle(
-                // color: Color.fromRGBO(131, 131, 131, 1),
-                color: textColor,
-                fontSize: 17),
-          ),
-          SizedBox(height: height * 0.01),
-          Text(
-            // provider['name'],
-            'Dum Dum Cantonment',
-            // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
-          ),
+          // Text(
+          //   'Business Address',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(
+          //       // color: Color.fromRGBO(131, 131, 131, 1),
+          //       color: textColor,
+          //       fontSize: 17),
+          // ),
+          // SizedBox(height: height * 0.01),
+          // Text(
+          //   // provider['name'],
+          //   'Dum Dum Cantonment',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(color: textColor, fontSize: 12),
+          // ),
+          // SizedBox(height: height * 0.02),
+          // Text(
+          //   'Locality',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(
+          //       // color: Color.fromRGBO(131, 131, 131, 1),
+          //       color: textColor,
+          //       fontSize: 17),
+          // ),
+          // SizedBox(height: height * 0.01),
+          // Text(
+          //   // provider['name'],
+          //   'Dum Dum Cantonment',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(color: textColor, fontSize: 12),
+          // ),
+          // SizedBox(height: height * 0.02),
+          // Text(
+          //   'City',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(
+          //       // color: Color.fromRGBO(131, 131, 131, 1),
+          //       color: textColor,
+          //       fontSize: 17),
+          // ),
+          // SizedBox(height: height * 0.01),
+          // Text(
+          //   // provider['name'],
+          //   'Dum Dum Cantonment',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(color: textColor, fontSize: 12),
+          // ),
+          // SizedBox(height: height * 0.02),
+          // Text(
+          //   'State',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(
+          //       // color: Color.fromRGBO(131, 131, 131, 1),
+          //       color: textColor,
+          //       fontSize: 17),
+          // ),
+          // SizedBox(height: height * 0.01),
+          // Text(
+          //   // provider['name'],
+          //   'Dum Dum Cantonment',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(color: textColor, fontSize: 12),
+          // ),
+          // SizedBox(height: height * 0.02),
+          // Text(
+          //   'Post Code',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(
+          //       // color: Color.fromRGBO(131, 131, 131, 1),
+          //       color: textColor,
+          //       fontSize: 17),
+          // ),
+          // SizedBox(height: height * 0.01),
+          // Text(
+          //   // provider['name'],
+          //   'Dum Dum Cantonment',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(color: textColor, fontSize: 12),
+          // ),
           SizedBox(height: height * 0.05),
           Padding(
             padding: EdgeInsets.only(right: width * 0.1, bottom: height * 0.05),

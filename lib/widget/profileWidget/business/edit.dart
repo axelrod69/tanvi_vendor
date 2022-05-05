@@ -8,7 +8,34 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 class EditProfile extends StatefulWidget {
+  final String bankName;
+  final String branchName;
+  final String ifscCode;
+  final String accountNumber;
+  final String organisationName;
+  final String telephoneOne;
+  final String telephoneTwo;
+  final String companyPancard;
+  final String companyPancardDoc;
+  final String aadharUdyog;
+  final String aadharUdyogDoc;
+  final String gstNumber;
+
   EditProfileState createState() => EditProfileState();
+
+  EditProfile(
+      this.bankName,
+      this.branchName,
+      this.ifscCode,
+      this.accountNumber,
+      this.organisationName,
+      this.telephoneOne,
+      this.telephoneTwo,
+      this.companyPancard,
+      this.companyPancardDoc,
+      this.aadharUdyog,
+      this.aadharUdyogDoc,
+      this.gstNumber);
 }
 
 class EditProfileState extends State<EditProfile> {
@@ -527,12 +554,31 @@ class EditProfileState extends State<EditProfile> {
               InkWell(
                 onTap: () {
                   if (key.currentState!.validate()) {
-                    // Provider.of<BusinessProfileProvider>(context, listen: false)
-                    //     .postBankDetails(
-                    //         nameOfBank, nameOfBranch, ifsc, accountNo);
                     Provider.of<BusinessProfileProvider>(context, listen: false)
-                        .postOrganisationDetails(organisation, teleOne, teleTwo,
-                            panCard, panDoc, aadharUdyom, aadharDoc, gstNo);
+                        .postBankDetails(
+                            nameOfBank!.isEmpty ? widget.bankName : nameOfBank,
+                            nameOfBranch!.isEmpty
+                                ? widget.branchName
+                                : nameOfBranch,
+                            ifsc!.isEmpty ? widget.ifscCode : ifsc,
+                            accountNo!.isEmpty
+                                ? widget.accountNumber
+                                : accountNo);
+
+                    Provider.of<BusinessProfileProvider>(context, listen: false)
+                        .postOrganisationDetails(
+                            organisation!.isEmpty
+                                ? widget.organisationName
+                                : organisation,
+                            teleOne!.isEmpty ? widget.telephoneOne : teleOne,
+                            teleTwo!.isEmpty ? widget.telephoneTwo : teleTwo,
+                            panCard!.isEmpty ? widget.companyPancard : panCard,
+                            panDoc,
+                            aadharUdyom!.isEmpty
+                                ? widget.aadharUdyog
+                                : aadharUdyom,
+                            aadharDoc,
+                            gstNo!.isEmpty ? widget.gstNumber : gstNo);
                   }
                 },
                 child: Container(

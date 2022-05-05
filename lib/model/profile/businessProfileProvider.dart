@@ -5,17 +5,34 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:io';
+import './businessProfileModel.dart';
 
 class BusinessProfileProvider with ChangeNotifier {
   String baseUrl = 'http://3.109.206.91:8000/';
   Map<String, dynamic> _bankDetails = {};
+  Map<String, dynamic> _businessProfile = {};
 
   Map<String, dynamic> get bankDetails {
     return {..._bankDetails};
   }
 
-  Future<void> postBusinessProfile() async {
+  Map<String, dynamic> get businessProfile {
+    return {..._businessProfile};
+  }
+
+  Future<void> getBusinessProfile() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
     final url = Uri.parse(baseUrl + 'api/vendor/profile/business/');
+
+    final response = await http.get(url, headers: {
+      'Authorization': 'Bearer ${localStorage.getString('token')}'
+    });
+
+    BusinessProfile businessProfile = businessProfileFromJson(response.body);
+
+    _businessProfile = businessProfile.toJson();
+
+    print('Business Profile $_businessProfile');
   }
 
   Future<void> getBankDetails() async {
