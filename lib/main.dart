@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './model/profile/profileProvider.dart';
 import './model/profileStatus/statusProvider.dart';
 import './model/profile/businessProfileProvider.dart';
+import './model/products/productsProvider.dart';
 
 void main() => runApp(TanviVendor());
 
@@ -52,7 +53,8 @@ class TanviVendorState extends State<TanviVendor> {
         ChangeNotifierProvider(create: (context) => Authentication()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
         ChangeNotifierProvider(create: (context) => StatusProvider()),
-        ChangeNotifierProvider(create: (context) => BusinessProfileProvider())
+        ChangeNotifierProvider(create: (context) => BusinessProfileProvider()),
+        ChangeNotifierProvider(create: (context) => ProductsProvider()),
       ],
 
       builder: (context, child) {

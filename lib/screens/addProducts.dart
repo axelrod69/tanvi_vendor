@@ -208,6 +208,40 @@ class AddProductsPageState extends State<AddProductsPage> {
                     ),
                     SizedBox(height: height * 0.025),
                     const Text(
+                      'Short Description',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 36, 71, 100),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                    SizedBox(height: height * 0.01),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: width * 0.02, right: width * 0.02),
+                      child: Container(
+                        height: height * 0.15,
+                        padding: EdgeInsets.only(
+                            left: width * 0.02, right: width * 0.02),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Colors.grey,
+                                  blurRadius: 8,
+                                  offset: Offset(1, 2))
+                            ]),
+                        child: TextFormField(
+                          maxLines: 5,
+                          decoration: const InputDecoration(
+                              hintText: 'Enter Description',
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.025),
+                    const Text(
                       'Description',
                       style: TextStyle(
                           color: Color.fromARGB(255, 36, 71, 100),
@@ -413,6 +447,43 @@ class AddProductsPageState extends State<AddProductsPage> {
                       ),
                     ),
                     SizedBox(height: height * 0.015),
+                    const Text('Size',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 36, 71, 100),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15)),
+                    SizedBox(height: height * 0.01),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: width * 0.01),
+                          child: Container(
+                            width: width * 0.25,
+                            height: height * 0.035,
+                            padding: EdgeInsets.only(left: width * 0.02),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 8,
+                                      offset: Offset(1, 2))
+                                ]),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                  hintText: 'Enter Size',
+                                  hintStyle: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: height * 0.015),
                     const Text('Quantity',
                         style: TextStyle(
                             color: Color.fromARGB(255, 36, 71, 100),
@@ -452,6 +523,30 @@ class AddProductsPageState extends State<AddProductsPage> {
                           ),
                           SizedBox(width: width * 0.02),
                           Container(
+                            width: width * 0.25,
+                            height: height * 0.035,
+                            padding: EdgeInsets.only(left: width * 0.02),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 8,
+                                      offset: Offset(1, 2))
+                                ]),
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                  hintText: 'Enter Weight',
+                                  hintStyle: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none),
+                            ),
+                          ),
+                          SizedBox(width: width * 0.02),
+                          Container(
                             // width: width * 0.35,
                             height: height * 0.035,
                             padding: EdgeInsets.only(left: width * 0.02),
@@ -467,7 +562,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton(
                                   value: measureDropDownValue,
-                                  hint: Text('Measure'),
+                                  hint: const Text('Measure'),
                                   items: measure.map((list) {
                                     return DropdownMenuItem(
                                         child: Text(list), value: list);
@@ -484,45 +579,117 @@ class AddProductsPageState extends State<AddProductsPage> {
                       ),
                     ),
                     SizedBox(height: height * 0.025),
-                    const Text('Price',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 36, 71, 100),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15)),
                     Container(
-                      height: height * 0.05,
+                      height: height * 0.07,
+                      width: width * 0.9,
                       // color: Colors.red,
                       child: Row(
                         children: [
-                          const Text('₹',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 36, 71, 100),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25)),
-                          SizedBox(width: width * 0.01),
                           Container(
-                            width: width * 0.25,
-                            height: height * 0.035,
-                            padding: EdgeInsets.only(left: width * 0.02),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: Colors.grey,
-                                      blurRadius: 8,
-                                      offset: Offset(1, 2))
-                                ]),
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                  hintText: 'Enter Amount',
-                                  hintStyle: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none),
+                            height: double.infinity,
+                            width: width * 0.3,
+                            // color: Colors.amber,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Price',
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 36, 71, 100),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15)),
+                                SizedBox(height: height * 0.005),
+                                Row(
+                                  children: [
+                                    const Text('₹',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 36, 71, 100),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 25)),
+                                    SizedBox(width: width * 0.005),
+                                    Container(
+                                      width: width * 0.25,
+                                      height: height * 0.035,
+                                      padding:
+                                          EdgeInsets.only(left: width * 0.02),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                                color: Colors.grey,
+                                                blurRadius: 8,
+                                                offset: Offset(1, 2))
+                                          ]),
+                                      child: TextFormField(
+                                        decoration: const InputDecoration(
+                                            hintText: 'Enter Amount',
+                                            hintStyle: TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                            focusedBorder: InputBorder.none,
+                                            enabledBorder: InputBorder.none),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
+                          SizedBox(width: width * 0.02),
+                          Container(
+                            height: double.infinity,
+                            width: width * 0.35,
+                            // color: Colors.blue,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Tax',
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 36, 71, 100),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15)),
+                                SizedBox(height: height * 0.005),
+                                Row(
+                                  children: [
+                                    const Text('₹',
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 36, 71, 100),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 25)),
+                                    SizedBox(width: width * 0.005),
+                                    Container(
+                                      width: width * 0.31,
+                                      height: height * 0.035,
+                                      padding:
+                                          EdgeInsets.only(left: width * 0.02),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                                color: Colors.grey,
+                                                blurRadius: 8,
+                                                offset: Offset(1, 2))
+                                          ]),
+                                      child: TextFormField(
+                                        decoration: const InputDecoration(
+                                            hintText: 'Enter Tax Amount',
+                                            hintStyle: TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                            focusedBorder: InputBorder.none,
+                                            enabledBorder: InputBorder.none),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
