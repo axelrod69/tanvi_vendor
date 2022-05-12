@@ -1,16 +1,319 @@
 import 'package:flutter/material.dart';
+import '../model/products/productsProvider.dart';
+import 'package:provider/provider.dart';
 
-class Products extends StatelessWidget {
+class Products extends StatefulWidget {
+  ProductsState createState() => ProductsState();
+}
+
+class ProductsState extends State<Products> {
+  bool isLoading = true;
+  Map<String, dynamic> _mapData = {};
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    Provider.of<ProductsProvider>(context, listen: false)
+        .getProducts()
+        .then((_) {
+      setState(() {
+        isLoading = false;
+      });
+    });
+    // recall();
+    super.didChangeDependencies();
+  }
+
+  recall() async {
+    print('Called');
+    await Provider.of<ProductsProvider>(context, listen: false)
+        .getProducts()
+        .then((_) {
+      setState(() {
+        isLoading = false;
+        _mapData = Provider.of<ProductsProvider>(context, listen: false)
+            .vendorProducts;
+      });
+    });
+
+    print('Map Data: $_mapData');
+    print('executed');
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final provider = Provider.of<ProductsProvider>(context).vendorProducts;
 
     // TODO: implement build
     return Scaffold(
-      body: const Center(
-        child: Text('Products'),
-      ),
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Colors.green,
+              ),
+            )
+          : Container(
+              width: double.infinity,
+              height: double.infinity,
+              // color: Colors.red,
+              padding: EdgeInsets.only(
+                  left: width * 0.02,
+                  top: height * 0.02,
+                  right: width * 0.02,
+                  bottom: height * 0.02),
+              child: ListView.builder(
+                itemBuilder: (context, index) => Container(
+                  margin: EdgeInsets.only(bottom: height * 0.02),
+                  padding: EdgeInsets.all(width * 0.01),
+                  width: double.infinity,
+                  height: height * 0.15,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 10,
+                            offset: Offset(1, 2))
+                      ]),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: width * 0.3,
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 132, 175, 134),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Image.network(_mapData == null
+                            ? 'http://3.109.206.91:8000${provider['data'][index]['main_image']}'
+                            : 'http://3.109.206.91:8000${_mapData['data'][index]['main_image']}'),
+                      ),
+                      SizedBox(width: width * 0.02),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              top: height * 0.01, bottom: height * 0.01),
+                          // width: width * 0.7,
+                          height: double.infinity,
+                          // color: Colors.blue,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      _mapData == null
+                                          ? provider['data'][index]['name']
+                                          : _mapData['data'][index]['name'],
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(width: width * 0.02),
+                                    Text(
+                                      _mapData == null
+                                          ? provider['data'][index]['category']
+                                              ['name']
+                                          : _mapData['data'][index]['category']
+                                              ['name'],
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: height * 0.01),
+                              SizedBox(
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        const Text('Size',
+                                            style:
+                                                TextStyle(color: Colors.grey)),
+                                        Text(
+                                            _mapData == null
+                                                ? provider['data'][index]
+                                                    ['sizes']['size']
+                                                : _mapData['data'][index]
+                                                    ['sizes']['size'],
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ))
+                                      ],
+                                    ),
+                                    SizedBox(width: width * 0.015),
+                                    Column(
+                                      children: [
+                                        const Text('Quantity',
+                                            style:
+                                                TextStyle(color: Colors.grey)),
+                                        Text(
+                                            _mapData == null
+                                                ? provider['data'][index]['qty']
+                                                    .toString()
+                                                : _mapData['data'][index]['qty']
+                                                    .toString(),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ))
+                                      ],
+                                    ),
+                                    SizedBox(width: width * 0.015),
+                                    Column(
+                                      children: [
+                                        const Text('Weight',
+                                            style:
+                                                TextStyle(color: Colors.grey)),
+                                        Text(
+                                            _mapData == null
+                                                ? provider['data'][index]
+                                                        ['weight']
+                                                    .toString()
+                                                : _mapData['data'][index]
+                                                        ['weight']
+                                                    .toString(),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ))
+                                      ],
+                                    ),
+                                    SizedBox(width: width * 0.015),
+                                    Column(
+                                      children: [
+                                        const Text('Unit',
+                                            style:
+                                                TextStyle(color: Colors.grey)),
+                                        Text(
+                                            _mapData == null
+                                                ? provider['data'][index]['uom']
+                                                        ['short_name']
+                                                    .toString()
+                                                : _mapData['data'][index]['uom']
+                                                    ['short_name'],
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ))
+                                      ],
+                                    ),
+                                    SizedBox(width: width * 0.015),
+                                    Column(
+                                      children: [
+                                        const Text('Status',
+                                            style:
+                                                TextStyle(color: Colors.grey)),
+                                        Text(
+                                            _mapData == null
+                                                ? provider['data'][index]
+                                                    ['status']
+                                                : _mapData['data'][index]
+                                                    ['status'],
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ))
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: height * 0.01),
+                              SizedBox(
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      flex: 1,
+                                      fit: FlexFit.tight,
+                                      child: Container(
+                                        // color: Colors.red,
+                                        child: Column(
+                                          children: [
+                                            const Text('Price',
+                                                style: TextStyle(
+                                                    color: Colors.grey)),
+                                            Text(
+                                                _mapData == null
+                                                    ? '₹ ${provider['data'][index]['price']}'
+                                                    : '₹ ${_mapData['data'][index]['price']}',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ))
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    // SizedBox(width: width * 0.01),
+                                    Flexible(
+                                      flex: 1,
+                                      fit: FlexFit.tight,
+                                      child: Container(
+                                        // color: Colors.amber,
+                                        child: Column(
+                                          children: [
+                                            const Text('Tax',
+                                                style: TextStyle(
+                                                    color: Colors.grey)),
+                                            Text(
+                                                _mapData == null
+                                                    ? '${provider['data'][index]['tax']}%'
+                                                    : '${_mapData['data'][index]['tax']}%',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ))
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 1,
+                                      fit: FlexFit.tight,
+                                      child: Container(
+                                        // color: Colors.purple,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(Icons.edit,
+                                                color: Colors.green),
+                                            InkWell(
+                                              onTap: () async {
+                                                Provider.of<ProductsProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .deleteProduct(
+                                                        provider['data'][index]
+                                                                ['id']
+                                                            .toString());
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
+                                                recall();
+                                              },
+                                              child: const Icon(Icons.delete,
+                                                  color: Colors.red),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                itemCount: provider['data'].length,
+              ),
+            ),
       floatingActionButton: Container(
         margin: EdgeInsets.only(bottom: height * 0.07),
         decoration: const BoxDecoration(shape: BoxShape.circle, boxShadow: [
@@ -28,19 +331,6 @@ class Products extends StatelessWidget {
           ),
         ),
       ),
-      // floatingActionButton: Container(
-      //   width: width * 0.2,
-      //   height: height * 0.06,
-      //   margin: EdgeInsets.only(bottom: height * 0.07),
-      //   decoration: BoxDecoration(
-      //       color: Colors.green,
-      //       shape: BoxShape.circle,
-      //       boxShadow: [
-      //         BoxShadow(
-      //             color: Colors.grey, blurRadius: 10, offset: Offset(1, 2))
-      //       ]),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

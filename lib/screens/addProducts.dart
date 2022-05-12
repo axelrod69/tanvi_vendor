@@ -4,6 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../model/category/categoryProvider.dart';
 import 'package:image_picker/image_picker.dart';
+import '../model/products/productsProvider.dart';
+import '../model/sizeList/sizeListProvider.dart';
+import '../model/measureList/measureListProvider.dart';
+import 'dart:convert';
 
 class AddProductsPage extends StatefulWidget {
   AddProductsPageState createState() => AddProductsPageState();
@@ -11,9 +15,27 @@ class AddProductsPage extends StatefulWidget {
 
 class AddProductsPageState extends State<AddProductsPage> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final TextEditingController _title = TextEditingController();
+  final TextEditingController _shortDesc = TextEditingController();
+  final TextEditingController _desc = TextEditingController();
+  final TextEditingController _size = TextEditingController();
+  final TextEditingController _quantities = TextEditingController();
+  final TextEditingController _weighht = TextEditingController();
+  final TextEditingController _priceeee = TextEditingController();
+  final TextEditingController _taxxx = TextEditingController();
+
   String? dropDownValue;
   String? measureDropDownValue;
+  String? sizeDropDownValue;
   String? availablityDropDownValue;
+  String? nameOfProduct;
+  String? shortDescription;
+  String? description;
+  String? sizeOfProduct;
+  String? quantityOfProduct;
+  String? weightOfProduct;
+  String? priceOfProduct;
+  String? taxAmount;
   List<dynamic> list = [];
   bool isLoading = true;
   PickedFile? _imageFile;
@@ -23,7 +45,11 @@ class AddProductsPageState extends State<AddProductsPage> {
   PickedFile? _secondImageFile;
   bool second = false;
   final ImagePicker? _imagePicker = ImagePicker();
-  final measure = ['Kg', 'gm'];
+  final measure = ['Kg', 'gm', 'ltr'];
+  // final available = [
+  //   {'value': true, 'data': 'Available'},
+  //   {'value': false, 'data': 'Out Of Stock'}
+  // ];
   final available = ['Available', 'Out Of Stock'];
 
   Future pickImage(ImageSource source) async {
@@ -59,8 +85,16 @@ class AddProductsPageState extends State<AddProductsPage> {
     Provider.of<CategoryProvider>(context, listen: false)
         .getCategories()
         .then((_) {
-      setState(() {
-        isLoading = false;
+      Provider.of<SizeListProvider>(context, listen: false)
+          .getSizeList()
+          .then((_) {
+        Provider.of<MeasureListProvider>(context, listen: false)
+            .getMeasureList()
+            .then((_) {
+          setState(() {
+            isLoading = false;
+          });
+        });
       });
     });
     super.initState();
@@ -71,6 +105,8 @@ class AddProductsPageState extends State<AddProductsPage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final provider = Provider.of<CategoryProvider>(context).categoryList;
+    final sizeProvider = Provider.of<SizeListProvider>(context).sizeList;
+    final measureList = Provider.of<MeasureListProvider>(context).measureList;
     // list = provider;
 
     // print('LIST $list');
@@ -199,10 +235,19 @@ class AddProductsPageState extends State<AddProductsPage> {
                                   offset: Offset(1, 2))
                             ]),
                         child: TextFormField(
+                          controller: _title,
                           decoration: const InputDecoration(
                               hintText: 'Enter Name Of Product',
                               focusedBorder: InputBorder.none,
                               enabledBorder: InputBorder.none),
+                          validator: (name) {
+                            if (name!.isEmpty) {
+                              return 'Please Enter Name';
+                            } else {
+                              nameOfProduct = name;
+                              return null;
+                            }
+                          },
                         ),
                       ),
                     ),
@@ -232,11 +277,20 @@ class AddProductsPageState extends State<AddProductsPage> {
                                   offset: Offset(1, 2))
                             ]),
                         child: TextFormField(
+                          controller: _shortDesc,
                           maxLines: 5,
                           decoration: const InputDecoration(
                               hintText: 'Enter Description',
                               focusedBorder: InputBorder.none,
                               enabledBorder: InputBorder.none),
+                          validator: (short) {
+                            if (short!.isEmpty) {
+                              return 'Please Enter Short Description';
+                            } else {
+                              shortDescription = short;
+                              return null;
+                            }
+                          },
                         ),
                       ),
                     ),
@@ -266,11 +320,20 @@ class AddProductsPageState extends State<AddProductsPage> {
                                   offset: Offset(1, 2))
                             ]),
                         child: TextFormField(
+                          controller: _desc,
                           maxLines: 5,
                           decoration: const InputDecoration(
                               hintText: 'Enter Description',
                               focusedBorder: InputBorder.none,
                               enabledBorder: InputBorder.none),
+                          validator: (desc) {
+                            if (desc!.isEmpty) {
+                              return 'Please Enter Desccription';
+                            } else {
+                              description = desc;
+                              return null;
+                            }
+                          },
                         ),
                       ),
                     ),
@@ -458,7 +521,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                         Padding(
                           padding: EdgeInsets.only(left: width * 0.01),
                           child: Container(
-                            width: width * 0.25,
+                            // width: width * 0.35,
                             height: height * 0.035,
                             padding: EdgeInsets.only(left: width * 0.02),
                             decoration: BoxDecoration(
@@ -470,14 +533,23 @@ class AddProductsPageState extends State<AddProductsPage> {
                                       blurRadius: 8,
                                       offset: Offset(1, 2))
                                 ]),
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                  hintText: 'Enter Size',
-                                  hintStyle: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                  value: sizeDropDownValue,
+                                  hint: const Text('Select Size'),
+                                  items: sizeProvider.map((sizeList) {
+                                    return DropdownMenuItem(
+                                        child: Text(sizeList['size']),
+                                        value: sizeList['id'].toString());
+                                  }).toList(),
+                                  onChanged: (selectedDropdownValue) {
+                                    setState(() {
+                                      sizeDropDownValue =
+                                          selectedDropdownValue.toString();
+                                      print(
+                                          'Measure DropDownValue $sizeDropDownValue');
+                                    });
+                                  }),
                             ),
                           ),
                         ),
@@ -512,6 +584,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                                       offset: Offset(1, 2))
                                 ]),
                             child: TextFormField(
+                              controller: _quantities,
                               decoration: const InputDecoration(
                                   hintText: 'Enter Quantity',
                                   hintStyle: TextStyle(
@@ -519,6 +592,14 @@ class AddProductsPageState extends State<AddProductsPage> {
                                   ),
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none),
+                              validator: (quantity) {
+                                if (quantity!.isEmpty) {
+                                  return 'Please Enter Quantity';
+                                } else {
+                                  quantityOfProduct = quantity;
+                                  return null;
+                                }
+                              },
                             ),
                           ),
                           SizedBox(width: width * 0.02),
@@ -536,6 +617,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                                       offset: Offset(1, 2))
                                 ]),
                             child: TextFormField(
+                              controller: _weighht,
                               decoration: const InputDecoration(
                                   hintText: 'Enter Weight',
                                   hintStyle: TextStyle(
@@ -543,6 +625,14 @@ class AddProductsPageState extends State<AddProductsPage> {
                                   ),
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none),
+                              validator: (weight) {
+                                if (weight!.isEmpty) {
+                                  return 'Please Enter Weight';
+                                } else {
+                                  weightOfProduct = weight;
+                                  return null;
+                                }
+                              },
                             ),
                           ),
                           SizedBox(width: width * 0.02),
@@ -563,14 +653,16 @@ class AddProductsPageState extends State<AddProductsPage> {
                               child: DropdownButton(
                                   value: measureDropDownValue,
                                   hint: const Text('Measure'),
-                                  items: measure.map((list) {
+                                  items: measureList.map((list) {
                                     return DropdownMenuItem(
-                                        child: Text(list), value: list);
+                                        child: Text(list['short_name']),
+                                        value: list['id'].toString());
                                   }).toList(),
                                   onChanged: (selectedDropdownValue) {
                                     setState(() {
                                       measureDropDownValue =
                                           selectedDropdownValue.toString();
+                                      print('Measure: $measureDropDownValue');
                                     });
                                   }),
                             ),
@@ -623,6 +715,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                                                 offset: Offset(1, 2))
                                           ]),
                                       child: TextFormField(
+                                        controller: _priceeee,
                                         decoration: const InputDecoration(
                                             hintText: 'Enter Amount',
                                             hintStyle: TextStyle(
@@ -630,6 +723,14 @@ class AddProductsPageState extends State<AddProductsPage> {
                                             ),
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none),
+                                        validator: (price) {
+                                          if (price!.isEmpty) {
+                                            return 'Please Enter Price';
+                                          } else {
+                                            priceOfProduct = price;
+                                            return null;
+                                          }
+                                        },
                                       ),
                                     ),
                                   ],
@@ -676,6 +777,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                                                 offset: Offset(1, 2))
                                           ]),
                                       child: TextFormField(
+                                        controller: _taxxx,
                                         decoration: const InputDecoration(
                                             hintText: 'Enter Tax Amount',
                                             hintStyle: TextStyle(
@@ -683,6 +785,14 @@ class AddProductsPageState extends State<AddProductsPage> {
                                             ),
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none),
+                                        validator: (tax) {
+                                          if (tax!.isEmpty) {
+                                            return 'Please Enter Tax';
+                                          } else {
+                                            taxAmount = tax;
+                                            return null;
+                                          }
+                                        },
                                       ),
                                     ),
                                   ],
@@ -737,24 +847,31 @@ class AddProductsPageState extends State<AddProductsPage> {
                     Padding(
                       padding: EdgeInsets.only(
                           left: width * 0.1, right: width * 0.1),
-                      child: Container(
-                        width: width * 0.2,
-                        height: height * 0.05,
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 36, 71, 100),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 8,
-                                  offset: Offset(1, 2))
-                            ]),
-                        child: const Center(
-                          child: Text(
-                            'Upload',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                      child: InkWell(
+                        onTap: () {
+                          if (_key.currentState!.validate()) {
+                            addProducts(context);
+                          }
+                        },
+                        child: Container(
+                          width: width * 0.2,
+                          height: height * 0.05,
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 36, 71, 100),
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 8,
+                                    offset: Offset(1, 2))
+                              ]),
+                          child: const Center(
+                            child: Text(
+                              'Upload',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -766,5 +883,40 @@ class AddProductsPageState extends State<AddProductsPage> {
               ),
             ),
     );
+  }
+
+  void addProducts(BuildContext context) async {
+    await Provider.of<ProductsProvider>(context, listen: false).postProducts(
+        nameOfProduct!,
+        shortDescription!,
+        description!,
+        availablityDropDownValue!,
+        weightOfProduct!,
+        quantityOfProduct!,
+        priceOfProduct!,
+        taxAmount!,
+        image!,
+        dropDownValue!,
+        sizeDropDownValue!,
+        measureDropDownValue!);
+
+    // await Provider.of<ProductsProvider>(context, listen: false).getProducts();
+
+    // var res = json.decode(response.body);
+    // if (res['message'] == 'Invalid inputes') {
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //     content: const Text('Invalid Input Entered',
+    //         style: TextStyle(
+    //           color: Colors.white,
+    //           fontWeight: FontWeight.bold,
+    //         )),
+    //     backgroundColor: Colors.green,
+    //     action: SnackBarAction(
+    //         label: 'OK',
+    //         onPressed: () =>
+    //             ScaffoldMessenger.of(context).hideCurrentSnackBar()),
+    //   ));
+    // }
+    Navigator.of(context).pop();
   }
 }

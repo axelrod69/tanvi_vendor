@@ -4,9 +4,15 @@ import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import './productsModel.dart';
 
 class ProductsProvider with ChangeNotifier {
   String baseUrl = 'http://3.109.206.91:8000/';
+  Map<String, dynamic> _vendorProducts = {};
+
+  Map<String, dynamic> get vendorProducts {
+    return {..._vendorProducts};
+  }
 
   Future<dynamic> postProducts(
       String name,
@@ -18,7 +24,6 @@ class ProductsProvider with ChangeNotifier {
       String price,
       String tax,
       File image,
-      String brandName,
       String category,
       String size,
       String uom) async {
@@ -28,13 +33,13 @@ class ProductsProvider with ChangeNotifier {
       'name': name,
       'short_description': shortDescription,
       'description': description,
-      'status': status,
+      'status': status == 'Available' ? 'in_stock' : 'out_of_stock',
       'weight': weight,
       'qty': quantity,
       'price': price,
       'tax': tax,
-      'main_image': image,
-      'brand_name(id)': brandName,
+      'main_image': await MultipartFile.fromFile(image.path),
+      'brand_name': 1,
       'category': category,
       'sizes': size,
       'uom': uom
@@ -53,7 +58,16 @@ class ProductsProvider with ChangeNotifier {
     return response;
   }
 
-  Future<void> getProducts() async {}
+  Future<void> getProducts() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    final url = Uri.parse(baseUrl + 'api/vendor/product/');
+    final response = await http.get(url, headers: {
+      'Authorization': 'Bearer ${localStorage.getString('token')}'
+    });
+    ProductsModel productsModel = productsModelFromJson(response.body);
+    _vendorProducts = productsModel.toJson();
+    print('Vendor Products: $_vendorProducts');
+  }
 
   Future<dynamic> putProducts(
       String name,
@@ -80,8 +94,8 @@ class ProductsProvider with ChangeNotifier {
       'qty': quantity,
       'price': price,
       'tax': tax,
-      'main_image': image,
-      'brand_name(id)': brandName,
+      'main_image': await MultipartFile.fromFile(image.path),
+      'brand_name': 1,
       'category': category,
       'sizes': size,
       'uom': uom
@@ -102,9 +116,11 @@ class ProductsProvider with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    final url = Uri.parse(baseUrl + 'api/vendor/product/$id');
-    final response = await http.delete(url, headers: {
-      'Authorization': 'Bearer ${localStorage.getString('token')}'
+    final url = Uri.parse(baseUrl + 'api/vendor/product/');
+    final response =
+        await http.delete(url, body: json.encode({'id': id}), headers: {
+      'Authorization': 'Bearer ${localStorage.getString('token')}',
+      'Content-Type': 'application/json'
     });
 
     print('Delete response: ${response.body}');

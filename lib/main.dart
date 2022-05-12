@@ -12,6 +12,8 @@ import './model/profile/profileProvider.dart';
 import './model/profileStatus/statusProvider.dart';
 import './model/profile/businessProfileProvider.dart';
 import './model/products/productsProvider.dart';
+import './model/sizeList/sizeListProvider.dart';
+import './model/measureList/measureListProvider.dart';
 
 void main() => runApp(TanviVendor());
 
@@ -55,6 +57,8 @@ class TanviVendorState extends State<TanviVendor> {
         ChangeNotifierProvider(create: (context) => StatusProvider()),
         ChangeNotifierProvider(create: (context) => BusinessProfileProvider()),
         ChangeNotifierProvider(create: (context) => ProductsProvider()),
+        ChangeNotifierProvider(create: (context) => SizeListProvider()),
+        ChangeNotifierProvider(create: (context) => MeasureListProvider())
       ],
 
       builder: (context, child) {
