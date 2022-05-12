@@ -64,8 +64,10 @@ class ProductsProvider with ChangeNotifier {
     final response = await http.get(url, headers: {
       'Authorization': 'Bearer ${localStorage.getString('token')}'
     });
-    ProductsModel productsModel = productsModelFromJson(response.body);
-    _vendorProducts = productsModel.toJson();
+    // ProductsModel productsModel = productsModelFromJson(response.body);
+    // _vendorProducts = productsModel.toJson();
+    // print('Vendor Products: $_vendorProducts');
+    _vendorProducts = json.decode(response.body);
     print('Vendor Products: $_vendorProducts');
   }
 

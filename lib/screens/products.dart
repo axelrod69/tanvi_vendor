@@ -11,8 +11,8 @@ class ProductsState extends State<Products> {
   Map<String, dynamic> _mapData = {};
 
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
+  void initState() {
+    // TODO: implement initState
     Provider.of<ProductsProvider>(context, listen: false)
         .getProducts()
         .then((_) {
@@ -21,7 +21,7 @@ class ProductsState extends State<Products> {
       });
     });
     // recall();
-    super.didChangeDependencies();
+    super.initState();
   }
 
   recall() async {
@@ -86,9 +86,8 @@ class ProductsState extends State<Products> {
                         decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 132, 175, 134),
                             borderRadius: BorderRadius.circular(20)),
-                        child: Image.network(_mapData == null
-                            ? 'http://3.109.206.91:8000${provider['data'][index]['main_image']}'
-                            : 'http://3.109.206.91:8000${_mapData['data'][index]['main_image']}'),
+                        child: Image.network(
+                            'http://3.109.206.91:8000${provider['data'][index]['main_image']}'),
                       ),
                       SizedBox(width: width * 0.02),
                       Expanded(
@@ -105,9 +104,7 @@ class ProductsState extends State<Products> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      _mapData == null
-                                          ? provider['data'][index]['name']
-                                          : _mapData['data'][index]['name'],
+                                      provider['data'][index]['name'],
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -115,11 +112,8 @@ class ProductsState extends State<Products> {
                                     ),
                                     SizedBox(width: width * 0.02),
                                     Text(
-                                      _mapData == null
-                                          ? provider['data'][index]['category']
-                                              ['name']
-                                          : _mapData['data'][index]['category']
-                                              ['name'],
+                                      provider['data'][index]['category']
+                                          ['name'],
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -138,11 +132,8 @@ class ProductsState extends State<Products> {
                                             style:
                                                 TextStyle(color: Colors.grey)),
                                         Text(
-                                            _mapData == null
-                                                ? provider['data'][index]
-                                                    ['sizes']['size']
-                                                : _mapData['data'][index]
-                                                    ['sizes']['size'],
+                                            provider['data'][index]['sizes']
+                                                ['size'],
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ))
@@ -155,11 +146,8 @@ class ProductsState extends State<Products> {
                                             style:
                                                 TextStyle(color: Colors.grey)),
                                         Text(
-                                            _mapData == null
-                                                ? provider['data'][index]['qty']
-                                                    .toString()
-                                                : _mapData['data'][index]['qty']
-                                                    .toString(),
+                                            provider['data'][index]['qty']
+                                                .toString(),
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ))
@@ -172,13 +160,8 @@ class ProductsState extends State<Products> {
                                             style:
                                                 TextStyle(color: Colors.grey)),
                                         Text(
-                                            _mapData == null
-                                                ? provider['data'][index]
-                                                        ['weight']
-                                                    .toString()
-                                                : _mapData['data'][index]
-                                                        ['weight']
-                                                    .toString(),
+                                            provider['data'][index]['weight']
+                                                .toString(),
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ))
@@ -191,12 +174,9 @@ class ProductsState extends State<Products> {
                                             style:
                                                 TextStyle(color: Colors.grey)),
                                         Text(
-                                            _mapData == null
-                                                ? provider['data'][index]['uom']
-                                                        ['short_name']
-                                                    .toString()
-                                                : _mapData['data'][index]['uom']
-                                                    ['short_name'],
+                                            provider['data'][index]['uom']
+                                                    ['short_name']
+                                                .toString(),
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ))
@@ -208,12 +188,7 @@ class ProductsState extends State<Products> {
                                         const Text('Status',
                                             style:
                                                 TextStyle(color: Colors.grey)),
-                                        Text(
-                                            _mapData == null
-                                                ? provider['data'][index]
-                                                    ['status']
-                                                : _mapData['data'][index]
-                                                    ['status'],
+                                        Text(provider['data'][index]['status'],
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ))
@@ -237,9 +212,7 @@ class ProductsState extends State<Products> {
                                                 style: TextStyle(
                                                     color: Colors.grey)),
                                             Text(
-                                                _mapData == null
-                                                    ? '₹ ${provider['data'][index]['price']}'
-                                                    : '₹ ${_mapData['data'][index]['price']}',
+                                                '₹ ${provider['data'][index]['price']}',
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ))
@@ -259,9 +232,7 @@ class ProductsState extends State<Products> {
                                                 style: TextStyle(
                                                     color: Colors.grey)),
                                             Text(
-                                                _mapData == null
-                                                    ? '${provider['data'][index]['tax']}%'
-                                                    : '${_mapData['data'][index]['tax']}%',
+                                                '${provider['data'][index]['tax']}%',
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                 ))

@@ -59,9 +59,9 @@ class Datum {
   final String tax;
   final String mainImage;
   final Category category;
-  final BrandName sizes;
-  final BrandName brandName;
-  final BrandName uom;
+  final dynamic sizes;
+  final dynamic brandName;
+  final dynamic uom;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
