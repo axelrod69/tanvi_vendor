@@ -8,6 +8,7 @@ import '../model/products/productsProvider.dart';
 import '../model/sizeList/sizeListProvider.dart';
 import '../model/measureList/measureListProvider.dart';
 import 'dart:convert';
+import './products.dart';
 
 class AddProductsPage extends StatefulWidget {
   AddProductsPageState createState() => AddProductsPageState();
@@ -885,7 +886,7 @@ class AddProductsPageState extends State<AddProductsPage> {
     );
   }
 
-  void addProducts(BuildContext context) async {
+  dynamic addProducts(BuildContext context) async {
     await Provider.of<ProductsProvider>(context, listen: false).postProducts(
         nameOfProduct!,
         shortDescription!,
@@ -917,6 +918,12 @@ class AddProductsPageState extends State<AddProductsPage> {
     //             ScaffoldMessenger.of(context).hideCurrentSnackBar()),
     //   ));
     // }
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop().then((_) {});
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Products()))
+        .then((_) {
+      setState(() {
+        Provider.of<ProductsProvider>(context, listen: false).getProducts();
+      });
+    });
   }
 }

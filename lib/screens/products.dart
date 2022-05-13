@@ -48,6 +48,30 @@ class ProductsState extends State<Products> {
 
     // TODO: implement build
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 5,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        leading: InkWell(
+          onTap: () => Navigator.of(context).pushNamed('/home'),
+          child: Container(
+            width: width * 0.1,
+            height: height * 0.05,
+            decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                  color: Colors.grey, blurRadius: 10, offset: Offset(1, 2))
+            ]),
+            child: const Icon(Icons.arrow_back_ios, color: Colors.green),
+          ),
+        ),
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(
