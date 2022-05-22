@@ -3,40 +3,19 @@ import 'package:provider/provider.dart';
 // import '../../model/profile/profileProvider.dart';
 
 class Details extends StatelessWidget {
-  final String bankName;
-  final String branchName;
-  final String ifscCode;
-  final String accountNumber;
-  final String organisationName;
-  final String telephoneOne;
-  final String telephoneTwo;
-  final String companyPancard;
-  final String companyPancardDoc;
-  final String aadharUdyog;
-  final String aadharUdyogDoc;
-  final String gstNumber;
+  final Map<String, dynamic> businessDetails;
+  final Map<String, dynamic> bankDetails;
 
-  Details(
-      this.bankName,
-      this.branchName,
-      this.ifscCode,
-      this.accountNumber,
-      this.organisationName,
-      this.telephoneOne,
-      this.telephoneTwo,
-      this.companyPancard,
-      this.companyPancardDoc,
-      this.aadharUdyog,
-      this.aadharUdyogDoc,
-      this.gstNumber);
+  Details(this.businessDetails, this.bankDetails);
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    final textColor = Color.fromARGB(255, 36, 71, 100);
-    // final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
-    // final provider = Provider.of<ProfileProvider>(context).profile;
+    const textColor = Color.fromARGB(255, 36, 71, 100);
+    bool bank = bankDetails['message'] == 'You don\'t have any Bank details'
+        ? true
+        : false;
 
     // TODO: implement build
     return Padding(
@@ -45,7 +24,7 @@ class Details extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         // mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Organization Name',
             // textScaleFactor: textScale,
             style: TextStyle(
@@ -56,12 +35,12 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            organisationName ?? 'null',
+            businessDetails['data']['org_name'] ?? '',
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: const TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
+          const Text(
             'Telephone Number 1',
             // textScaleFactor: textScale,
             style: TextStyle(
@@ -72,12 +51,13 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            telephoneOne ?? 'null',
+            businessDetails['data']['telephone_1'] ??
+                'Please Enter Primary Phone Number',
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: const TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
+          const Text(
             'Telephone Number 2',
             // textScaleFactor: textScale,
             style: TextStyle(
@@ -87,13 +67,14 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            telephoneTwo ?? 'null',
+            businessDetails['data']['telephone_2'] ??
+                'Please Enter Secondary Phone Number',
             // provider['email'],
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
+          const Text(
             'Company Pan Card',
             // textScaleFactor: textScale,
             style: TextStyle(
@@ -103,24 +84,26 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            companyPancard ?? 'null',
+            businessDetails['data']['company_pancard'] ??
+                'Please Enter the Comapany PAN Card Number',
             // provider['phone'],
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: const TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.005),
           Text(
-            companyPancardDoc != null
+            businessDetails['data']['company_pancard_doc'] != null
                 ? 'Pan Card Document Uploaded'
                 : 'Pan Card Document Not Uploaded',
+            // 'Pan Card Document Uploaded',
             // textScaleFactor: textScale,
-            style: TextStyle(
+            style: const TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
                 fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
+          const Text(
             'Aadhar Udyam Udoyog',
             // textScaleFactor: textScale,
             style: TextStyle(
@@ -131,23 +114,24 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            aadharUdyog,
+            businessDetails['data']['adhar_udyam_udoyog'] ??
+                'Please Enter Aadhar Udyog Number',
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: const TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.005),
           Text(
-            aadharUdyogDoc != null
+            businessDetails['data']['adhar_udyam_udoyog_doc'] != null
                 ? 'Aadhar Card Document Uploaded'
                 : 'Aadhar Card Document Not Uploaded',
             // textScaleFactor: textScale,
-            style: TextStyle(
+            style: const TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
                 fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
+          const Text(
             'GST Number',
             // textScaleFactor: textScale,
             style: TextStyle(
@@ -158,12 +142,12 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            gstNumber,
+            businessDetails['data']['gst_number'] ?? 'Please Enter GST Number',
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
+          const Text(
             'Bank Name',
             // textScaleFactor: textScale,
             style: TextStyle(
@@ -174,12 +158,15 @@ class Details extends StatelessWidget {
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
-            bankName,
+            bank == true
+                ? 'Bank Details Incomplete'
+                : bankDetails['data']['acc_bank_name'],
+            // bankDetails['data']['acc_bank_name'] ?? 'Bank Details Incomplete',
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: const TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
+          const Text(
             'Branch Name',
             // textScaleFactor: textScale,
             style: TextStyle(
@@ -189,13 +176,15 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            // provider['name'],
-            branchName,
+            bank == true
+                ? 'Bank Details Incomplete'
+                : bankDetails['data']['acc_branch_name'],
+            //bankDetails['data']['acc_branch_name'] ?? 'Bank Details Incomplete',
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: const TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
+          const Text(
             'Branch IFSC Code',
             // textScaleFactor: textScale,
             style: TextStyle(
@@ -205,13 +194,14 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            // provider['name'],
-            ifscCode,
+            bank == true
+                ? 'Bank Details Incomplete'
+                : bankDetails['data']['acc_ifsc'],
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: const TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
+          const Text(
             'Account Number',
             // textScaleFactor: textScale,
             style: TextStyle(
@@ -221,27 +211,28 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            // provider['name'],
-            accountNumber,
+            bank == true
+                ? 'Bank Details Incomplete'
+                : bankDetails['data']['acc_no'],
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: const TextStyle(color: textColor, fontSize: 12),
           ),
-          SizedBox(height: height * 0.02),
-          Text(
-            'Business Name',
-            // textScaleFactor: textScale,
-            style: TextStyle(
-                // color: Color.fromRGBO(131, 131, 131, 1),
-                color: textColor,
-                fontSize: 17),
-          ),
-          SizedBox(height: height * 0.01),
-          Text(
-            // provider['name'],
-            'Dum Dum Cantonment',
-            // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
-          ),
+          // SizedBox(height: height * 0.02),
+          // Text(
+          //   'Business Name',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(
+          //       // color: Color.fromRGBO(131, 131, 131, 1),
+          //       color: textColor,
+          //       fontSize: 17),
+          // ),
+          // SizedBox(height: height * 0.01),
+          // Text(
+          //   // provider['name'],
+          //   'Dum Dum Cantonment',
+          //   // textScaleFactor: textScale,
+          //   style: TextStyle(color: textColor, fontSize: 12),
+          // ),
           SizedBox(height: height * 0.02),
           // Text(
           //   'Business Address',
@@ -323,24 +314,24 @@ class Details extends StatelessWidget {
           //   style: TextStyle(color: textColor, fontSize: 12),
           // ),
           SizedBox(height: height * 0.05),
-          Padding(
-            padding: EdgeInsets.only(right: width * 0.1, bottom: height * 0.05),
-            child: Container(
-              width: double.infinity,
-              height: height * 0.05,
-              // margin: EdgeInsets.only(bottom: height * 0.05),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(color: textColor, width: 1)),
-              child: Center(
-                child: Text(
-                  'Save',
-                  // textScaleFactor: textScale,
-                  style: TextStyle(color: textColor),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(right: width * 0.1, bottom: height * 0.05),
+          //   child: Container(
+          //     width: double.infinity,
+          //     height: height * 0.05,
+          //     // margin: EdgeInsets.only(bottom: height * 0.05),
+          //     decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(100),
+          //         border: Border.all(color: textColor, width: 1)),
+          //     child: const Center(
+          //       child: Text(
+          //         'Save',
+          //         // textScaleFactor: textScale,
+          //         style: TextStyle(color: textColor),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

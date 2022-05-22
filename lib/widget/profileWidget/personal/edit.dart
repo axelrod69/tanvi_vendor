@@ -70,11 +70,12 @@ class EditProfileState extends State<EditProfile> {
                 ),
                 child: TextFormField(
                   autofocus: true,
+                  initialValue: widget.firstName,
                   keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: widget.firstName,
-                      label: const Text(
+                      // hintText: widget.firstName,
+                      label: Text(
                         'First Name',
                         // textScaleFactor: textScale,
                         style: TextStyle(color: Colors.grey, fontSize: 12),
@@ -100,11 +101,12 @@ class EditProfileState extends State<EditProfile> {
                   ),
                   child: TextFormField(
                     autofocus: true,
+                    initialValue: widget.lastName,
                     keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: widget.lastName,
-                        label: const Text(
+                        // hintText: widget.lastName,
+                        label: Text(
                           'Last Name',
                           // textScaleFactor: textScale,
                           style: TextStyle(color: Colors.grey, fontSize: 12),
@@ -129,11 +131,12 @@ class EditProfileState extends State<EditProfile> {
                   ),
                   child: TextFormField(
                     autofocus: true,
+                    initialValue: widget.email,
                     keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: widget.email,
-                        label: const Text(
+                        // hintText: widget.email,
+                        label: Text(
                           'Email',
                           // textScaleFactor: textScale,
                           style: TextStyle(color: Colors.grey, fontSize: 12),
@@ -158,15 +161,15 @@ class EditProfileState extends State<EditProfile> {
                   ),
                   child: TextFormField(
                     autofocus: true,
+                    initialValue: widget.alternateEmail ?? '',
                     keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: widget.alternateEmail ?? 'null',
-                        label: const Text(
+                        // hintText: widget.alternateEmail ?? 'null',
+                        label: Text(
                           'Alternate Email',
                           // textScaleFactor: textScale,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
                         )),
                     validator: (altEmail) {
                       if (altEmail!.isEmpty && widget.alternateEmail!.isEmpty) {
@@ -188,11 +191,12 @@ class EditProfileState extends State<EditProfile> {
                   ),
                   child: TextFormField(
                     // autofocus: true,
+                    initialValue: widget.mobileNo,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: widget.mobileNo,
-                        label: const Text(
+                        // hintText: widget.mobileNo,
+                        label: Text(
                           'Mobile No',
                           // textScaleFactor: textScale,
                           style: TextStyle(color: Colors.grey, fontSize: 12),
@@ -206,7 +210,7 @@ class EditProfileState extends State<EditProfile> {
                       }
                     },
                   )),
-              SizedBox(height: height * 0.05),
+              SizedBox(height: height * 0.025),
               InkWell(
                 onTap: () {
                   if (key.currentState!.validate()) {

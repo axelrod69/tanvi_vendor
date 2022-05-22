@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import '../../model/profile/profileProvider.dart';
 import 'package:provider/provider.dart';
 import '../../../model/profile/businessProfileProvider.dart';
 import 'package:file_picker/file_picker.dart';
@@ -8,44 +7,18 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 class EditProfile extends StatefulWidget {
-  final String bankName;
-  final String branchName;
-  final String ifscCode;
-  final String accountNumber;
-  final String organisationName;
-  final String telephoneOne;
-  final String telephoneTwo;
-  final String companyPancard;
-  final String companyPancardDoc;
-  final String aadharUdyog;
-  final String aadharUdyogDoc;
-  final String gstNumber;
+  final Map<String, dynamic> businessDetails;
+  final Map<String, dynamic> bankDetails;
 
   EditProfileState createState() => EditProfileState();
 
-  EditProfile(
-      this.bankName,
-      this.branchName,
-      this.ifscCode,
-      this.accountNumber,
-      this.organisationName,
-      this.telephoneOne,
-      this.telephoneTwo,
-      this.companyPancard,
-      this.companyPancardDoc,
-      this.aadharUdyog,
-      this.aadharUdyogDoc,
-      this.gstNumber);
+  EditProfile(this.businessDetails, this.bankDetails);
 }
 
 class EditProfileState extends State<EditProfile> {
   final key = GlobalKey<FormState>();
-  // final _emailFocus = FocusNode();
-  // final _mobileNoFocus = FocusNode();
-  // final _addressFocus = FocusNode();
-  // final _pincodeFocus = FocusNode();
-  // final _passwordFocus = FocusNode();
-  // final _confirmPasswordFocus = FocusNode();
+  late String organizationName;
+
   TextEditingController orgName = TextEditingController();
   TextEditingController telephoneNumberOne = TextEditingController();
   TextEditingController telephoneNumberTwo = TextEditingController();
@@ -56,6 +29,33 @@ class EditProfileState extends State<EditProfile> {
   TextEditingController branchName = TextEditingController();
   TextEditingController ifscCode = TextEditingController();
   TextEditingController accountNumber = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    bool flag =
+        widget.bankDetails['message'] == 'You don\'t have any Bank details'
+            ? true
+            : false;
+    orgName.text = widget.businessDetails['data']['org_name'] ?? '';
+    telephoneNumberOne.text =
+        widget.businessDetails['data']['telephone_1'] ?? '';
+    telephoneNumberTwo.text =
+        widget.businessDetails['data']['telephone_2'] ?? '';
+    companyPanCard.text =
+        widget.businessDetails['data']['company_pancard'] ?? '';
+    aadharUdyamUdoyog.text =
+        widget.businessDetails['data']['adhar_udyam_udoyog'] ?? '';
+    gstNumber.text = widget.businessDetails['data']['gst_number'] ?? '';
+    bankName.text =
+        flag == true ? '' : widget.bankDetails['data']['acc_bank_name'];
+    branchName.text =
+        flag == true ? '' : widget.bankDetails['data']['acc_branch_name'];
+    ifscCode.text = flag == true ? '' : widget.bankDetails['data']['acc_ifsc'];
+    accountNumber.text =
+        flag == true ? '' : widget.bankDetails['data']['acc_no'];
+    super.initState();
+  }
 
   String? organisation;
   String? teleOne;
@@ -90,8 +90,10 @@ class EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    // final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
-    // final provider = Provider.of<ProfileProvider>(context).profile;
+    bool bank =
+        widget.bankDetails['message'] == 'You don\'t have any Bank details'
+            ? true
+            : false;
 
     // TODO: implement build
     return Padding(
@@ -115,7 +117,7 @@ class EditProfileState extends State<EditProfile> {
                     keyboardType: TextInputType.name,
                     decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Siddhartha Chatterjee',
+                        //hintText: 'Siddhartha Chatterjee',
                         label: Text(
                           'Organization Name',
                           // textScaleFactor: textScale,
@@ -146,7 +148,7 @@ class EditProfileState extends State<EditProfile> {
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Siddhartha Chatterjee',
+                        // //: 'Siddhartha Chatterjee',
                         label: Text(
                           'Telephone Number 1',
                           // textScaleFactor: textScale,
@@ -176,7 +178,7 @@ class EditProfileState extends State<EditProfile> {
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Siddhartha Chatterjee',
+                        // //: 'Siddhartha Chatterjee',
                         label: Text(
                           'Telephone Number 2',
                           // textScaleFactor: textScale,
@@ -205,7 +207,7 @@ class EditProfileState extends State<EditProfile> {
                     keyboardType: TextInputType.name,
                     decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Siddhartha Chatterjee',
+                        // //: 'Siddhartha Chatterjee',
                         label: Text(
                           'Company Pan Card',
                           // textScaleFactor: textScale,
@@ -554,31 +556,31 @@ class EditProfileState extends State<EditProfile> {
               InkWell(
                 onTap: () {
                   if (key.currentState!.validate()) {
-                    Provider.of<BusinessProfileProvider>(context, listen: false)
-                        .postBankDetails(
-                            nameOfBank!.isEmpty ? widget.bankName : nameOfBank,
-                            nameOfBranch!.isEmpty
-                                ? widget.branchName
-                                : nameOfBranch,
-                            ifsc!.isEmpty ? widget.ifscCode : ifsc,
-                            accountNo!.isEmpty
-                                ? widget.accountNumber
-                                : accountNo);
+                    // Provider.of<BusinessProfileProvider>(context, listen: false)
+                    //     .postBankDetails(
+                    //         nameOfBank!.isEmpty ? widget.bankName : nameOfBank,
+                    //         nameOfBranch!.isEmpty
+                    //             ? widget.branchName
+                    //             : nameOfBranch,
+                    //         ifsc!.isEmpty ? widget.ifscCode : ifsc,
+                    //         accountNo!.isEmpty
+                    //             ? widget.accountNumber
+                    //             : accountNo);
 
-                    Provider.of<BusinessProfileProvider>(context, listen: false)
-                        .postOrganisationDetails(
-                            organisation!.isEmpty
-                                ? widget.organisationName
-                                : organisation,
-                            teleOne!.isEmpty ? widget.telephoneOne : teleOne,
-                            teleTwo!.isEmpty ? widget.telephoneTwo : teleTwo,
-                            panCard!.isEmpty ? widget.companyPancard : panCard,
-                            panDoc,
-                            aadharUdyom!.isEmpty
-                                ? widget.aadharUdyog
-                                : aadharUdyom,
-                            aadharDoc,
-                            gstNo!.isEmpty ? widget.gstNumber : gstNo);
+                    // Provider.of<BusinessProfileProvider>(context, listen: false)
+                    //     .postOrganisationDetails(
+                    //         organisation!.isEmpty
+                    //             ? widget.organisationName
+                    //             : organisation,
+                    //         teleOne!.isEmpty ? widget.telephoneOne : teleOne,
+                    //         teleTwo!.isEmpty ? widget.telephoneTwo : teleTwo,
+                    //         panCard!.isEmpty ? widget.companyPancard : panCard,
+                    //         panDoc,
+                    //         aadharUdyom!.isEmpty
+                    //             ? widget.aadharUdyog
+                    //             : aadharUdyom,
+                    //         aadharDoc,
+                    //         gstNo!.isEmpty ? widget.gstNumber : gstNo);
                   }
                 },
                 child: Container(

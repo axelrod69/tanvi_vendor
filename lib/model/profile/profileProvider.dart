@@ -35,15 +35,6 @@ class ProfileProvider with ChangeNotifier {
       File? image) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
 
-    // var formData = {
-    //   'first_name': firstName,
-    //   'last_name': lastName,
-    //   'email': email,
-    //   'alternate_email': alternateEmail,
-    //   'mobile': mobileNo,
-    //   'profile_pic': await http.MultipartFile
-    // };
-
     print('Provider First Name $firstName');
     print('Provider Last Name $lastName');
     print('Provder Email $email');

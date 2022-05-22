@@ -106,24 +106,24 @@ class Details extends StatelessWidget {
             style: TextStyle(color: textColor, fontSize: 12),
           ),
           SizedBox(height: height * 0.1),
-          Padding(
-            padding: EdgeInsets.only(right: width * 0.1, bottom: height * 0.05),
-            child: Container(
-              width: double.infinity,
-              height: height * 0.05,
-              // margin: EdgeInsets.only(bottom: height * 0.05),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(color: textColor, width: 1)),
-              child: Center(
-                child: Text(
-                  'Save',
-                  // textScaleFactor: textScale,
-                  style: TextStyle(color: textColor),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(right: width * 0.1, bottom: height * 0.05),
+          //   child: Container(
+          //     width: double.infinity,
+          //     height: height * 0.05,
+          //     // margin: EdgeInsets.only(bottom: height * 0.05),
+          //     decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(100),
+          //         border: Border.all(color: textColor, width: 1)),
+          //     child: Center(
+          //       child: Text(
+          //         'Save',
+          //         // textScaleFactor: textScale,
+          //         style: TextStyle(color: textColor),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

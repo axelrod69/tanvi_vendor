@@ -28,9 +28,13 @@ class BusinessProfileProvider with ChangeNotifier {
       'Authorization': 'Bearer ${localStorage.getString('token')}'
     });
 
-    BusinessProfile businessProfile = businessProfileFromJson(response.body);
+    // BusinessProfile businessProfile = businessProfileFromJson(response.body);
 
-    _businessProfile = businessProfile.toJson();
+    // _businessProfile = businessProfile.toJson();
+
+    var res = json.decode(response.body);
+
+    _businessProfile = res;
 
     print('Business Profile $_businessProfile');
   }

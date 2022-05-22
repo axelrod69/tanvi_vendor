@@ -19,16 +19,19 @@ class ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
     Provider.of<ProfileProvider>(context, listen: false)
         .fetchProfileDetails()
         .then((_) {
-      Provider.of<BusinessProfileProvider>(context, listen: false)
-          .getBankDetails()
-          .then((_) {
-        Provider.of<BusinessProfileProvider>(context, listen: false)
-            .getBusinessProfile()
-            .then((_) {
-          setState(() {
-            isLoading = false;
-          });
-        });
+      // Provider.of<BusinessProfileProvider>(context, listen: false)
+      //     .getBankDetails()
+      //     .then((_) {
+      //   Provider.of<BusinessProfileProvider>(context, listen: false)
+      //       .getBusinessProfile()
+      //       .then((_) {
+      //     setState(() {
+      //       isLoading = false;
+      //     });
+      //   });
+      // });
+      setState(() {
+        isLoading = false;
       });
     });
 
@@ -104,23 +107,9 @@ class ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                     provider['data']['last_name'] ?? '',
                     provider['data']['email'] ?? '',
                     provider['data']['mobile'] ?? '',
-                    provider['data']['alternate_email'] ?? '',
+                    provider['data']['alternate_email'] ?? 'Optional',
                     provider['data']['profile_pic'] ?? ''),
-                Business(
-                  bankDetailsProvider['data']['acc_bank_name'] ?? '',
-                  bankDetailsProvider['data']['acc_branch_name'] ?? '',
-                  bankDetailsProvider['data']['acc_ifsc'] ?? '',
-                  bankDetailsProvider['data']['acc_no'] ?? '',
-                  businessDetailsProvider['data']['org_name'] ?? '',
-                  businessDetailsProvider['data']['telephone_1'] ?? '',
-                  businessDetailsProvider['data']['telephone_2'] ?? '',
-                  businessDetailsProvider['data']['company_pancard'] ?? '',
-                  businessDetailsProvider['data']['company_pancard_doc'] ?? '',
-                  businessDetailsProvider['data']['adhar_udyam_udoyog'] ?? '',
-                  businessDetailsProvider['data']['adhar_udyam_udoyog_doc'] ??
-                      '',
-                  businessDetailsProvider['data']['gst_number'] ?? '',
-                ),
+                Business(),
               ],
             ),
     );

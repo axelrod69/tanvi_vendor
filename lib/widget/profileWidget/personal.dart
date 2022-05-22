@@ -4,6 +4,8 @@ import './personal/details.dart';
 import './personal/edit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:provider/provider.dart';
+import '../../model/profile/profileProvider.dart';
 
 class Personal extends StatefulWidget {
   final String firstName;
@@ -22,6 +24,14 @@ class Personal extends StatefulWidget {
 class PersonalState extends State<Personal> {
   bool clicked = false;
   File? image;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    image = File(widget.profilePic);
+    print('Initial Image: $image');
+    super.initState();
+  }
 
   Future pickImage(ImageSource source) async {
     try {
@@ -56,6 +66,7 @@ class PersonalState extends State<Personal> {
     final width = MediaQuery.of(context).size.width;
     // final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     const textColor = Color.fromARGB(255, 36, 71, 100);
+    final provider = Provider.of<ProfileProvider>(context).profile;
     // final provider = Provider.of<PersonalProvider>(context).Personal;
 
     // TODO: implement build
@@ -75,11 +86,12 @@ class PersonalState extends State<Personal> {
                     // child: Image.asset(
                     //   'assets/images/NoPath - Copy (14).png',
                     // ),
-                    child: widget.profilePic != null
+                    child: widget.profilePic != ''
                         ? Image.network(
                             'http://3.109.206.91:8000${widget.profilePic}',
                             fit: BoxFit.cover,
                           )
+                        // ? Image.file(widget.profilePic, fit: BoxFit.cover)
                         : image != null
                             ? ClipRRect(
                                 borderRadius:
@@ -156,8 +168,14 @@ class PersonalState extends State<Personal> {
             !clicked
                 ? Details(widget.firstName, widget.lastName, widget.email,
                     widget.mobileNo, widget.alternateEmail)
-                : EditProfile(widget.firstName, widget.lastName, widget.email,
-                    widget.mobileNo, widget.alternateEmail, image)
+                : EditProfile(
+                    widget.firstName,
+                    widget.lastName,
+                    widget.email,
+                    widget.mobileNo,
+                    widget.alternateEmail,
+                    // image ?? widget.profilePic == '' ? null : widget.profilePic as File
+                    image)
           ],
         ),
       ),
