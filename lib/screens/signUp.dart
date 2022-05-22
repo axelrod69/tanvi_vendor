@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tanvi_vendor/model/network/authentication.dart';
@@ -585,7 +587,37 @@ class SignUpState extends State<SignUp> {
 
     var response = await Provider.of<Authentication>(context, listen: false)
         .signUp(data, 'api/vendor/registration/');
+
+    var receivedResponse = json.decode(response.body);
     print(json.decode(response.body));
+
+    if (receivedResponse['status'] != 'warning') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text(
+              'Registration Successful! Please Go Back To The Sign In Page To Login',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              )),
+          backgroundColor: Colors.green,
+          action: SnackBarAction(
+              label: 'OK',
+              textColor: Colors.white,
+              onPressed: () =>
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar())));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(receivedResponse['errors'].toString(),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.green,
+        action: SnackBarAction(
+            label: 'OK',
+            textColor: Colors.white,
+            onPressed: () =>
+                ScaffoldMessenger.of(context).hideCurrentSnackBar()),
+      ));
+    }
   }
 
   // void _signUp() async {

@@ -181,7 +181,7 @@ class ChangePasswordState extends State<ChangePassword> {
                     borderRadius: BorderRadius.circular(15)),
                 child: const Center(
                   child: Text(
-                    'Login',
+                    'Change Password',
                     // textScaleFactor: textScaleFactor,
                     style: TextStyle(
                         color: Colors.white,
@@ -294,5 +294,33 @@ class ChangePasswordState extends State<ChangePassword> {
         .changePassword(data, 'api/vendor/change-password/');
     var res = json.decode(response.body);
     print('Changed Password $res');
+    if (res['status'] != 'warning') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(res['message'],
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.green,
+        action: SnackBarAction(
+          label: 'OK',
+          textColor: Colors.white,
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            Navigator.of(context).pushNamed('/sign-in');
+          },
+        ),
+      ));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(res['message'],
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.green,
+        action: SnackBarAction(
+            label: 'OK',
+            textColor: Colors.white,
+            onPressed: () =>
+                ScaffoldMessenger.of(context).hideCurrentSnackBar()),
+      ));
+    }
   }
 }

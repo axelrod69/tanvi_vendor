@@ -6,12 +6,12 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class Personal extends StatefulWidget {
-  final String? firstName;
-  final String? lastName;
-  final String? email;
-  final String? mobileNo;
-  final String? alternateEmail;
-  final String? profilePic;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String mobileNo;
+  final String alternateEmail;
+  final String profilePic;
 
   PersonalState createState() => PersonalState();
 

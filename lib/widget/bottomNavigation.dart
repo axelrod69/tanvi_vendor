@@ -4,23 +4,49 @@ import '../screens/products.dart';
 import '../screens/earning.dart';
 import '../screens/dashboard.dart';
 import '../screens/profile.dart';
+import 'package:provider/provider.dart';
+import '../model/profileStatus/statusProvider.dart';
 
 class CustomBottomNavigation extends StatefulWidget {
   CustomBottomNavigationState createState() => CustomBottomNavigationState();
 }
 
 class CustomBottomNavigationState extends State<CustomBottomNavigation> {
+  bool isLoading = true;
   int index = 2;
   final screens = [Orders(), Products(), Dashboard(), Earnings(), Profile()];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<StatusProvider>(context, listen: false).getStatus().then((_) {
+      setState(() {
+        isLoading = false;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final provider =
+        Provider.of<StatusProvider>(context, listen: false).profileStatus;
 
     // TODO: implement build
     return Scaffold(
-        body: screens[index],
+        body: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.green,
+                ),
+              )
+            : (provider['data']['status'] == 'incomplete' ||
+                    provider['data']['status'] == 'in review' ||
+                    provider['data']['status'] == 'rejected')
+                ? Profile()
+                : screens[index],
         extendBody: true,
         bottomNavigationBar: Container(
           height: height * 0.06,
