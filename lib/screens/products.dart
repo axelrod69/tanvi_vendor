@@ -65,7 +65,7 @@ class ProductsState extends State<Products> {
           ),
         ),
         title: const Text(
-          'Profile',
+          'Products',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -135,12 +135,15 @@ class ProductsState extends State<Products> {
                                       ),
                                     ),
                                     SizedBox(width: width * 0.02),
-                                    Text(
-                                      provider['data'][index]['category']
-                                          ['name'],
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                    Expanded(
+                                      child: Text(
+                                        provider['data'][index]['category']
+                                            ['name'],
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     )
                                   ],

@@ -60,7 +60,7 @@ class EditProfileState extends State<EditProfile> {
   String? organisation;
   String? teleOne;
   String? teleTwo;
-  String? panCard;
+  String? panCardNumber;
   String? aadharUdyom;
   String? gstNo;
   String? nameOfBank;
@@ -214,11 +214,11 @@ class EditProfileState extends State<EditProfile> {
                           style:
                               const TextStyle(color: Colors.grey, fontSize: 12),
                         )),
-                    validator: (pancard) {
-                      if (pancard!.isEmpty) {
+                    validator: (panCard) {
+                      if (panCard!.isEmpty) {
                         return 'Please Enter Pan Card Number';
                       } else {
-                        panCard = panCard;
+                        panCardNumber = panCard;
                       }
                     },
                   )),
@@ -556,31 +556,49 @@ class EditProfileState extends State<EditProfile> {
               InkWell(
                 onTap: () {
                   if (key.currentState!.validate()) {
-                    // Provider.of<BusinessProfileProvider>(context, listen: false)
-                    //     .postBankDetails(
-                    //         nameOfBank!.isEmpty ? widget.bankName : nameOfBank,
-                    //         nameOfBranch!.isEmpty
-                    //             ? widget.branchName
-                    //             : nameOfBranch,
-                    //         ifsc!.isEmpty ? widget.ifscCode : ifsc,
-                    //         accountNo!.isEmpty
-                    //             ? widget.accountNumber
-                    //             : accountNo);
-
-                    // Provider.of<BusinessProfileProvider>(context, listen: false)
-                    //     .postOrganisationDetails(
-                    //         organisation!.isEmpty
-                    //             ? widget.organisationName
-                    //             : organisation,
-                    //         teleOne!.isEmpty ? widget.telephoneOne : teleOne,
-                    //         teleTwo!.isEmpty ? widget.telephoneTwo : teleTwo,
-                    //         panCard!.isEmpty ? widget.companyPancard : panCard,
-                    //         panDoc,
-                    //         aadharUdyom!.isEmpty
-                    //             ? widget.aadharUdyog
-                    //             : aadharUdyom,
-                    //         aadharDoc,
-                    //         gstNo!.isEmpty ? widget.gstNumber : gstNo);
+                    Provider.of<BusinessProfileProvider>(context, listen: false)
+                        .postBankDetails(
+                            nameOfBank!.isEmpty
+                                ? widget.bankDetails['data']['acc_bank_name']
+                                : nameOfBank,
+                            nameOfBranch!.isEmpty
+                                ? widget.bankDetails['data']['acc_branch_name']
+                                : nameOfBranch,
+                            ifsc!.isEmpty
+                                ? widget.bankDetails['data']['acc_ifsc']
+                                : ifsc,
+                            accountNo!.isEmpty
+                                ? widget.bankDetails['data']['acc_no']
+                                : accountNo)
+                        .then((_) {
+                      Provider.of<BusinessProfileProvider>(context,
+                              listen: false)
+                          .postOrganisationDetails(
+                              organisation!.isEmpty
+                                  ? widget.businessDetails['data']['org_name']
+                                  : organisation,
+                              teleOne!.isEmpty
+                                  ? widget.businessDetails['data']
+                                      ['telephone_1']
+                                  : teleOne,
+                              teleTwo!.isEmpty
+                                  ? widget.businessDetails['data']
+                                      ['telephone_2']
+                                  : teleTwo,
+                              panCardNumber!.isEmpty
+                                  ? widget.businessDetails['data']
+                                      ['company_pancard']
+                                  : panCardNumber,
+                              panDoc,
+                              aadharUdyom!.isEmpty
+                                  ? widget.businessDetails['data']
+                                      ['adhar_udyam_udoyog']
+                                  : aadharUdyom,
+                              aadharDoc,
+                              gstNo!.isEmpty
+                                  ? widget.businessDetails['data']['gst_number']
+                                  : gstNo);
+                    });
                   }
                 },
                 child: Container(

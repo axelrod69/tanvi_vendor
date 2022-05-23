@@ -103,12 +103,13 @@ class BusinessProfileProvider with ChangeNotifier {
 
     print('Form Data $formData');
 
-    final response = await Dio().post(
-        'http://3.109.206.91:8000/api/vendor/profile/business/',
-        data: formData,
-        options: Options(headers: {
-          'Authorization': 'Bearer ${localStorage.getString('token')}'
-        }));
+    final response = await Dio()
+        .post('http://3.109.206.91:8000/api/vendor/profile/business/',
+            data: formData,
+            options: Options(headers: {
+              'Authorization': 'Bearer ${localStorage.getString('token')}',
+              'Content-Type': 'application/json'
+            }));
     print('Response from Dio $response');
 
     return response;

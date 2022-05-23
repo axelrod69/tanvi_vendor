@@ -5,12 +5,34 @@ import '../widget/dashboardWidgets/grossEarnings.dart';
 import '../widget/dashboardWidgets/totalOrders.dart';
 import '../widget/dashboardWidgets/totalProducts.dart';
 import '../widget/dashboardWidgets/newOrders.dart';
+import 'package:provider/provider.dart';
+import '../model/dashboard/monthlyStats.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
+  DashboardState createState() => DashboardState();
+}
+
+class DashboardState extends State<Dashboard> {
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<MonthlyStatsProvider>(context, listen: false)
+        .getStats()
+        .then((_) {
+      setState(() {
+        isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final provider = Provider.of<MonthlyStatsProvider>(context).stats;
 
     // TODO: implement build
     return Scaffold(
@@ -45,7 +67,7 @@ class Dashboard extends StatelessWidget {
                           ),
                           SizedBox(height: height * 0.005),
                           Text(DateFormat.yMMMMd().format(DateTime.now()),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Color.fromARGB(255, 99, 118, 134),
                                   fontSize: 18))
                         ],
@@ -66,7 +88,7 @@ class Dashboard extends StatelessWidget {
                           Icon(
                             Icons.notifications,
                             size: height * 0.04,
-                            color: Color.fromARGB(255, 99, 118, 134),
+                            color: const Color.fromARGB(255, 99, 118, 134),
                           )
                         ],
                       ),
@@ -92,74 +114,82 @@ class Dashboard extends StatelessWidget {
           ],
         ),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        // color: Colors.red,
-        padding: EdgeInsets.only(left: width * 0.03, right: width * 0.03),
-        child: ListView(
-          children: [
-            Row(
-              children: const [
-                Text(
-                  'This Month',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 36, 71, 100),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22),
-                )
-              ],
-            ),
-            // SizedBox(height: height * 0.01),
-            Container(
-              height: height * 0.48,
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Colors.green,
+              ),
+            )
+          : Container(
               width: double.infinity,
-              // color: Colors.amber,
-              padding: EdgeInsets.only(
-                  left: width * 0.02,
-                  top: height * 0.02,
-                  right: width * 0.02,
-                  bottom: height * 0.02),
-              child: GridView(
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    crossAxisSpacing: width * 0.065,
-                    mainAxisSpacing: height * 0.03,
-                    maxCrossAxisExtent: width * 0.45),
+              height: double.infinity,
+              // color: Colors.red,
+              padding: EdgeInsets.only(left: width * 0.03, right: width * 0.03),
+              child: ListView(
                 children: [
-                  GrossSales(),
-                  GrossEarnings(),
-                  TotalOrders(),
-                  TotalProducts()
+                  Row(
+                    children: const [
+                      Text(
+                        'This Month',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 36, 71, 100),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22),
+                      )
+                    ],
+                  ),
+                  // SizedBox(height: height * 0.01),
+                  Container(
+                    height: height * 0.48,
+                    width: double.infinity,
+                    // color: Colors.amber,
+                    padding: EdgeInsets.only(
+                        left: width * 0.02,
+                        top: height * 0.02,
+                        right: width * 0.02,
+                        bottom: height * 0.02),
+                    child: GridView(
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          crossAxisSpacing: width * 0.065,
+                          mainAxisSpacing: height * 0.03,
+                          maxCrossAxisExtent: width * 0.45),
+                      children: [
+                        GrossSales(provider['data']['gross_sell'].toString()),
+                        GrossEarnings(provider['data']['gross_tax'].toString()),
+                        TotalOrders(
+                            provider['data']['total_orders'].toString()),
+                        TotalProducts(
+                            provider['data']['total_products'].toString())
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: height * 0.02),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        'New Order',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 36, 71, 100),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22),
+                      ),
+                      Text(
+                        'See All Orders',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 39, 138, 42),
+                            // fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: height * 0.025),
+                  NewOrders(),
+                  SizedBox(height: height * 0.04),
                 ],
               ),
             ),
-            SizedBox(height: height * 0.02),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'New Order',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 36, 71, 100),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22),
-                ),
-                Text(
-                  'See All Orders',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 39, 138, 42),
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 15),
-                )
-              ],
-            ),
-            SizedBox(height: height * 0.025),
-            NewOrders(),
-            SizedBox(height: height * 0.04),
-          ],
-        ),
-      ),
     );
   }
 }
