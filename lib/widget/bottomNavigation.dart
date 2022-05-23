@@ -31,6 +31,8 @@ class CustomBottomNavigationState extends State<CustomBottomNavigation> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
     final provider =
         Provider.of<StatusProvider>(context, listen: false).profileStatus;
 
@@ -63,7 +65,7 @@ class CustomBottomNavigationState extends State<CustomBottomNavigation> {
               Center(
                 child: Container(
                   width: width * 0.75,
-                  height: height * 0.05,
+                  height: tabLayout ? height * 0.1 : height * 0.05,
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -102,7 +104,8 @@ class CustomBottomNavigationState extends State<CustomBottomNavigation> {
 
                               // });
 
-                              child: const Icon(Icons.menu_book,
+                              child: Icon(Icons.menu_book,
+                                  size: tabLayout ? 45 : 24,
                                   color: Color.fromARGB(255, 36, 71, 100)),
                             ),
                             SizedBox(width: width * 0.1),
@@ -123,7 +126,8 @@ class CustomBottomNavigationState extends State<CustomBottomNavigation> {
 
                               //   // });
                               // },
-                              child: const Icon(Icons.shopping_bag,
+                              child: Icon(Icons.shopping_bag,
+                                  size: tabLayout ? 45 : 24,
                                   color: Color.fromARGB(255, 36, 71, 100)),
                             )
                           ],
@@ -155,7 +159,8 @@ class CustomBottomNavigationState extends State<CustomBottomNavigation> {
 
                                 //   // });
                                 // },
-                                child: const Icon(Icons.money,
+                                child: Icon(Icons.money,
+                                    size: tabLayout ? 45 : 24,
                                     color: Color.fromARGB(255, 36, 71, 100)),
                               ),
                             ),
@@ -177,7 +182,8 @@ class CustomBottomNavigationState extends State<CustomBottomNavigation> {
                                     index = 4;
                                   });
                                 },
-                                child: const Icon(Icons.person,
+                                child: Icon(Icons.person,
+                                    size: tabLayout ? 45 : 24,
                                     color: Color.fromARGB(255, 36, 71, 100)))
                           ],
                         ),

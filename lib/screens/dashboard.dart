@@ -33,13 +33,15 @@ class DashboardState extends State<Dashboard> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final provider = Provider.of<MonthlyStatsProvider>(context).stats;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
-        toolbarHeight: height * 0.1,
+        toolbarHeight: tabLayout ? height * 0.15 : height * 0.1,
         elevation: 0,
         title: Stack(
           children: [
@@ -58,18 +60,18 @@ class DashboardState extends State<Dashboard> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Hi, Ankit',
                             style: TextStyle(
                                 color: Color.fromARGB(255, 36, 71, 100),
                                 fontWeight: FontWeight.bold,
-                                fontSize: 30),
+                                fontSize: tabLayout ? 40 : 30),
                           ),
                           SizedBox(height: height * 0.005),
                           Text(DateFormat.yMMMMd().format(DateTime.now()),
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Color.fromARGB(255, 99, 118, 134),
-                                  fontSize: 18))
+                                  fontSize: tabLayout ? 40 : 30))
                         ],
                       ),
                     ),
@@ -87,7 +89,7 @@ class DashboardState extends State<Dashboard> {
                         children: [
                           Icon(
                             Icons.notifications,
-                            size: height * 0.04,
+                            size: tabLayout ? height * 0.05 : height * 0.04,
                             color: const Color.fromARGB(255, 99, 118, 134),
                           )
                         ],
@@ -103,12 +105,12 @@ class DashboardState extends State<Dashboard> {
                 child: CircleAvatar(
                   radius: width * 0.02,
                   backgroundColor: Colors.red,
-                  child: const Text(
+                  child: Text(
                     '9+',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 12),
+                        fontSize: tabLayout ? 16 : 12),
                   ),
                 ))
           ],
@@ -128,19 +130,19 @@ class DashboardState extends State<Dashboard> {
               child: ListView(
                 children: [
                   Row(
-                    children: const [
+                    children: [
                       Text(
                         'This Month',
                         style: TextStyle(
                             color: Color.fromARGB(255, 36, 71, 100),
                             fontWeight: FontWeight.bold,
-                            fontSize: 22),
+                            fontSize: tabLayout ? 28 : 22),
                       )
                     ],
                   ),
                   // SizedBox(height: height * 0.01),
                   Container(
-                    height: height * 0.48,
+                    height: tabLayout ? height * 0.7 : height * 0.48,
                     width: double.infinity,
                     // color: Colors.amber,
                     padding: EdgeInsets.only(

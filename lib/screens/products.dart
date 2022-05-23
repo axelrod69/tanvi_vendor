@@ -24,15 +24,14 @@ class ProductsState extends State<Products> {
     super.initState();
   }
 
-  recall() async {
-    print('Called');
-    await Provider.of<ProductsProvider>(context, listen: false)
+  Future<void> recall() async {
+    Provider.of<ProductsProvider>(context, listen: false)
         .getProducts()
         .then((_) {
       setState(() {
         isLoading = false;
-        _mapData = Provider.of<ProductsProvider>(context, listen: false)
-            .vendorProducts;
+        // _mapData = Provider.of<ProductsProvider>(context, listen: false)
+        //     .vendorProducts;
       });
     });
 
@@ -92,7 +91,7 @@ class ProductsState extends State<Products> {
                   margin: EdgeInsets.only(bottom: height * 0.02),
                   padding: EdgeInsets.all(width * 0.01),
                   width: double.infinity,
-                  height: height * 0.15,
+                  height: height * 0.158,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -204,18 +203,6 @@ class ProductsState extends State<Products> {
                                             provider['data'][index]['uom']
                                                     ['short_name']
                                                 .toString(),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ))
-                                      ],
-                                    ),
-                                    SizedBox(width: width * 0.015),
-                                    Column(
-                                      children: [
-                                        const Text('Status',
-                                            style:
-                                                TextStyle(color: Colors.grey)),
-                                        Text(provider['data'][index]['status'],
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ))

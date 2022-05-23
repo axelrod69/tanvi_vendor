@@ -589,7 +589,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                               decoration: const InputDecoration(
                                   hintText: 'Enter Quantity',
                                   hintStyle: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 12,
                                   ),
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none),
@@ -622,7 +622,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                               decoration: const InputDecoration(
                                   hintText: 'Enter Weight',
                                   hintStyle: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 12,
                                   ),
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none),
@@ -653,7 +653,8 @@ class AddProductsPageState extends State<AddProductsPage> {
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton(
                                   value: measureDropDownValue,
-                                  hint: const Text('Measure'),
+                                  hint: const Text('Measure',
+                                      style: TextStyle(fontSize: 12)),
                                   items: measureList.map((list) {
                                     return DropdownMenuItem(
                                         child: Text(list['short_name']),
@@ -720,7 +721,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                                         decoration: const InputDecoration(
                                             hintText: 'Enter Amount',
                                             hintStyle: TextStyle(
-                                              fontSize: 14,
+                                              fontSize: 12,
                                             ),
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none),
@@ -742,8 +743,8 @@ class AddProductsPageState extends State<AddProductsPage> {
                           SizedBox(width: width * 0.02),
                           Container(
                             height: double.infinity,
-                            width: width * 0.35,
-                            // color: Colors.blue,
+                            width: width * 0.36,
+                            color: Colors.blue,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -782,7 +783,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                                         decoration: const InputDecoration(
                                             hintText: 'Enter Tax Amount',
                                             hintStyle: TextStyle(
-                                              fontSize: 14,
+                                              fontSize: 12,
                                             ),
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none),
@@ -887,19 +888,31 @@ class AddProductsPageState extends State<AddProductsPage> {
   }
 
   dynamic addProducts(BuildContext context) async {
-    await Provider.of<ProductsProvider>(context, listen: false).postProducts(
-        nameOfProduct!,
-        shortDescription!,
-        description!,
-        availablityDropDownValue!,
-        weightOfProduct!,
-        quantityOfProduct!,
-        priceOfProduct!,
-        taxAmount!,
-        image!,
-        dropDownValue!,
-        sizeDropDownValue!,
-        measureDropDownValue!);
+    print('nameOfProduct: ${_title.text}');
+    Provider.of<ProductsProvider>(context, listen: false)
+        .postProducts(
+            // nameOfProduct,
+            _title.text,
+            shortDescription,
+            description,
+            availablityDropDownValue,
+            weightOfProduct,
+            quantityOfProduct,
+            priceOfProduct,
+            taxAmount,
+            image,
+            dropDownValue,
+            sizeDropDownValue,
+            measureDropDownValue)
+        .then((_) {
+      Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Products()))
+          .then((_) {
+        setState(() {
+          Provider.of<ProductsProvider>(context, listen: false).getProducts();
+        });
+      });
+    });
 
     // await Provider.of<ProductsProvider>(context, listen: false).getProducts();
 
@@ -919,11 +932,5 @@ class AddProductsPageState extends State<AddProductsPage> {
     //   ));
     // }
     // Navigator.of(context).pop().then((_) {});
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Products()))
-        .then((_) {
-      setState(() {
-        Provider.of<ProductsProvider>(context, listen: false).getProducts();
-      });
-    });
   }
 }

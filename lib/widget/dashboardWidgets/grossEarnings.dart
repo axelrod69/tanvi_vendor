@@ -12,11 +12,13 @@ class GrossEarningsState extends State<GrossEarnings> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Container(
       height: height * 0.1,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(tabLayout ? 20 : 10),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -34,9 +36,9 @@ class GrossEarningsState extends State<GrossEarnings> {
               Icon(Icons.money, color: Colors.green, size: 80),
               Text('View',
                   style: TextStyle(
-                    color: Color.fromARGB(255, 36, 71, 100),
-                    fontWeight: FontWeight.bold,
-                  ))
+                      color: Color.fromARGB(255, 36, 71, 100),
+                      fontWeight: FontWeight.bold,
+                      fontSize: tabLayout ? 18 : 14))
             ],
           ),
           Padding(

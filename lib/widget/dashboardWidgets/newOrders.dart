@@ -45,7 +45,7 @@ class NewOrdersState extends State<NewOrders> {
                           style: TextStyle(
                               color: Color.fromARGB(255, 36, 71, 100),
                               fontWeight: FontWeight.bold,
-                              fontSize: 16),
+                              fontSize: 14),
                         ),
                         SizedBox(height: height * 0.002),
                         Text(

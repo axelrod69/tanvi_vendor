@@ -15,19 +15,32 @@ class ProductsProvider with ChangeNotifier {
   }
 
   Future<dynamic> postProducts(
-      String name,
-      String shortDescription,
-      String description,
-      String status,
-      String weight,
-      String quantity,
-      String price,
-      String tax,
-      File image,
-      String category,
-      String size,
-      String uom) async {
+      String? name,
+      String? shortDescription,
+      String? description,
+      String? status,
+      String? weight,
+      String? quantity,
+      String? price,
+      String? tax,
+      File? image,
+      String? category,
+      String? size,
+      String? uom) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
+
+    print('name $name');
+    print('shortDescription $shortDescription');
+    print('description $description');
+    print('status $status');
+    print('weight $weight');
+    print('quantity $quantity');
+    print('price $price');
+    print('tax $tax');
+    print('image $image');
+    print('category $category');
+    print('size $size');
+    print('uom $uom');
 
     var formData = FormData.fromMap({
       'name': name,
@@ -38,7 +51,7 @@ class ProductsProvider with ChangeNotifier {
       'qty': quantity,
       'price': price,
       'tax': tax,
-      'main_image': await MultipartFile.fromFile(image.path),
+      'main_image': await MultipartFile.fromFile(image!.path),
       'brand_name': 1,
       'category': category,
       'sizes': size,

@@ -11,7 +11,8 @@ class SignIn extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor * 1.2;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Scaffold(
@@ -31,19 +32,28 @@ class SignIn extends StatelessWidget {
             Center(
               child: Text(
                 'Welcome',
-                textScaleFactor: textScaleFactor,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+                // // textScaleFactor: textScaleFactor,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: tabLayout
+                        ? width * 0.06
+                        : largeLayout
+                            ? 35
+                            : 18),
               ),
             ),
             Center(
               child: Text(
                 'Login to Start Selling',
-                textScaleFactor: textScaleFactor,
-                style: const TextStyle(
+                // // textScaleFactor: textScaleFactor,
+                style: TextStyle(
                     // fontWeight: FontWeight.bold,
                     color: Color.fromRGBO(154, 154, 154, 1),
-                    fontSize: 20),
+                    fontSize: tabLayout
+                        ? width * 0.02
+                        : largeLayout
+                            ? 20
+                            : 14),
               ),
             ),
             SizedBox(height: height * 0.04),
