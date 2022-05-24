@@ -63,15 +63,15 @@ class DashboardState extends State<Dashboard> {
                           Text(
                             'Hi, Ankit',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 36, 71, 100),
+                                color: const Color.fromARGB(255, 36, 71, 100),
                                 fontWeight: FontWeight.bold,
-                                fontSize: tabLayout ? 40 : 30),
+                                fontSize: tabLayout ? 40 : 25),
                           ),
                           SizedBox(height: height * 0.005),
                           Text(DateFormat.yMMMMd().format(DateTime.now()),
                               style: TextStyle(
                                   color: Color.fromARGB(255, 99, 118, 134),
-                                  fontSize: tabLayout ? 40 : 30))
+                                  fontSize: tabLayout ? 40 : 20))
                         ],
                       ),
                     ),
@@ -103,14 +103,14 @@ class DashboardState extends State<Dashboard> {
                 top: height * 0.01,
                 right: width * 0.02,
                 child: CircleAvatar(
-                  radius: width * 0.02,
+                  radius: width * 0.023,
                   backgroundColor: Colors.red,
                   child: Text(
                     '9+',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: tabLayout ? 16 : 12),
+                        fontSize: tabLayout ? 16 : 10),
                   ),
                 ))
           ],
@@ -134,7 +134,7 @@ class DashboardState extends State<Dashboard> {
                       Text(
                         'This Month',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 36, 71, 100),
+                            color: const Color.fromARGB(255, 36, 71, 100),
                             fontWeight: FontWeight.bold,
                             fontSize: tabLayout ? 28 : 22),
                       )

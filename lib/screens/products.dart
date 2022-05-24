@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:tanvi_vendor/screens/editProductScreen.dart';
 import '../model/products/productsProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -271,9 +274,75 @@ class ProductsState extends State<Products> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Icon(Icons.edit,
-                                                color: Colors.green,
-                                                size: tabLayout ? 40 : 24),
+                                            InkWell(
+                                              // onTap: () => Navigator.of(context)
+                                              //     .pushNamed('/edit-products',
+                                              //         arguments: {
+                                              // 'id': provider['data']
+                                              //     [index]['id'],
+                                              // 'name': provider['data']
+                                              //     [index]['name'],
+                                              // 'short_description':
+                                              //     provider['data'][index][
+                                              //         'short_description'],
+                                              // 'description':
+                                              //     provider['data'][index]
+                                              //         ['description'],
+                                              // 'status': provider['data']
+                                              //     [index]['status'],
+                                              // 'weight': provider['data']
+                                              //     [index]['weight'],
+                                              // 'qty': provider['data']
+                                              //     [index]['qty'],
+                                              // 'price': provider['data']
+                                              //     [index]['price'],
+                                              // 'tax': provider['data']
+                                              //     [index]['tax'],
+                                              // 'main_image':
+                                              //     provider['data'][index]
+                                              //         ['main_image'],
+                                              // 'category': provider['data']
+                                              //         [index]['category']
+                                              //     ['name'],
+                                              // 'size': provider['data']
+                                              //         [index]['sizes']
+                                              //     ['size'],
+                                              // 'uom': provider['data']
+                                              //         [index]['uom']
+                                              //     ['short_name']
+                                              //     }),
+                                              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                                                  builder: (context) => EditProductsPage(
+                                                      provider['data'][index]
+                                                          ['id'],
+                                                      provider['data'][index]
+                                                          ['name'],
+                                                      provider['data'][index]
+                                                          ['short_description'],
+                                                      provider['data'][index]
+                                                          ['description'],
+                                                      provider['data'][index]
+                                                          ['status'],
+                                                      provider['data'][index]
+                                                          ['weight'],
+                                                      provider['data'][index]
+                                                          ['qty'],
+                                                      provider['data'][index]
+                                                          ['price'],
+                                                      provider['data'][index]
+                                                          ['tax'],
+                                                      provider['data'][index]
+                                                          ['main_image'],
+                                                      provider['data'][index]
+                                                          ['category']['name'],
+                                                      provider['data'][index]
+                                                          ['sizes']['size'],
+                                                      provider['data'][index]
+                                                          ['uom']['short_name']))),
+                                              child: Icon(Icons.edit,
+                                                  color: Colors.green,
+                                                  size: tabLayout ? 40 : 24),
+                                            ),
                                             InkWell(
                                               onTap: () async {
                                                 Provider.of<ProductsProvider>(
@@ -282,11 +351,17 @@ class ProductsState extends State<Products> {
                                                     .deleteProduct(
                                                         provider['data'][index]
                                                                 ['id']
-                                                            .toString());
-                                                setState(() {
-                                                  isLoading = true;
+                                                            .toString())
+                                                    .then((_) {
+                                                  setState(() {
+                                                    provider['data']
+                                                        .removeAt(index);
+                                                  });
                                                 });
-                                                recall();
+                                                // setState(() {
+                                                //   isLoading = true;
+                                                // });
+                                                // recall();
                                               },
                                               child: Icon(Icons.delete,
                                                   color: Colors.red,

@@ -15,6 +15,7 @@ import './model/products/productsProvider.dart';
 import './model/sizeList/sizeListProvider.dart';
 import './model/measureList/measureListProvider.dart';
 import './model/dashboard/monthlyStats.dart';
+import './screens/editProductScreen.dart';
 
 void main() => runApp(TanviVendor());
 
@@ -80,6 +81,7 @@ class TanviVendorState extends State<TanviVendor> {
             '/sign-in': (context) => SignIn(),
             '/sign-up': (context) => SignUp(),
             '/change-password': (context) => ChangePassword(),
+            // '/edit-products': (context) => EditProductsPage()
           },
         );
       },

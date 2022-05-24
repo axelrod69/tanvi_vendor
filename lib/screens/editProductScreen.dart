@@ -9,16 +9,45 @@ import '../model/sizeList/sizeListProvider.dart';
 import '../model/measureList/measureListProvider.dart';
 import './products.dart';
 
-class AddProductsPage extends StatefulWidget {
-  AddProductsPageState createState() => AddProductsPageState();
+class EditProductsPage extends StatefulWidget {
+  final int id;
+  final String name;
+  final String shortDescription;
+  final String description;
+  final String status;
+  final String weight;
+  final int qty;
+  final double price;
+  final String tax;
+  final String mainImage;
+  final String category;
+  final String size;
+  final String measure;
+
+  EditProductsPageState createState() => EditProductsPageState();
+
+  EditProductsPage(
+      this.id,
+      this.name,
+      this.shortDescription,
+      this.description,
+      this.status,
+      this.weight,
+      this.qty,
+      this.price,
+      this.tax,
+      this.mainImage,
+      this.category,
+      this.size,
+      this.measure);
 }
 
-class AddProductsPageState extends State<AddProductsPage> {
+class EditProductsPageState extends State<EditProductsPage> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final TextEditingController _title = TextEditingController();
   final TextEditingController _shortDesc = TextEditingController();
   final TextEditingController _desc = TextEditingController();
-  final TextEditingController _size = TextEditingController();
+  // final TextEditingController _size = TextEditingController();
   final TextEditingController _quantities = TextEditingController();
   final TextEditingController _weighht = TextEditingController();
   final TextEditingController _priceeee = TextEditingController();
@@ -97,6 +126,13 @@ class AddProductsPageState extends State<AddProductsPage> {
         });
       });
     });
+    _title.text = widget.name;
+    _shortDesc.text = widget.shortDescription;
+    _desc.text = widget.description;
+    _quantities.text = widget.qty.toString();
+    _weighht.text = widget.weight;
+    _priceeee.text = widget.price.toString();
+    _taxxx.text = widget.tax.toString();
     super.initState();
   }
 
@@ -109,9 +145,23 @@ class AddProductsPageState extends State<AddProductsPage> {
     final measureList = Provider.of<MeasureListProvider>(context).measureList;
     final tabLayout = width > 600;
     final largeLayout = width > 350 && width < 600;
-    // list = provider;
 
-    // print('LIST $list');
+    // final routes =
+    //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    // final id = routes['id'];
+    // final name = routes['name'];
+    // final productShortDescription = routes['short_description'];
+    // final productDescription = routes['description'];
+    // final status = routes['status'];
+    // final weight = routes['weight'];
+    // final qty = routes['qty'];
+    // final price = routes['price'];
+    // final tax = routes['tax'];
+    // final mainImage = routes['main_image'];
+    // final category = routes['category'];
+    // final size = routes['size'];
+    // final uom = routes['uom'];
 
     // TODO: implement build
     return Scaffold(
@@ -134,7 +184,7 @@ class AddProductsPageState extends State<AddProductsPage> {
           ),
         ),
         title: Text(
-          'Add Products',
+          'Edit Products',
           style: TextStyle(
               color: const Color.fromARGB(255, 36, 71, 100),
               fontWeight: FontWeight.bold,
@@ -183,7 +233,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                               value: dropDownValue,
-                              hint: const Text('Category'),
+                              hint: Text(widget.category),
                               style: TextStyle(fontSize: tabLayout ? 20 : 14),
                               items: provider.map((list) {
                                 return DropdownMenuItem(
@@ -393,12 +443,13 @@ class AddProductsPageState extends State<AddProductsPage> {
                                                 fit: BoxFit.cover,
                                               ),
                                             )
-                                          : Center(
-                                              child: Text('Pick An Image',
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          tabLayout ? 18 : 14)),
-                                            ),
+                                          : ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.network(
+                                                'http://3.109.206.91:8000${widget.mainImage}',
+                                                fit: BoxFit.cover,
+                                              )),
                                     ),
                                     SizedBox(height: height * 0.01),
                                     InkWell(
@@ -477,13 +528,13 @@ class AddProductsPageState extends State<AddProductsPage> {
                                                 fit: BoxFit.cover,
                                               ),
                                             )
-                                          : Center(
-                                              child: Text('Pick An Image',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize:
-                                                          tabLayout ? 18 : 14)),
-                                            ),
+                                          : ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.network(
+                                                'http://3.109.206.91:8000${widget.mainImage}',
+                                                fit: BoxFit.cover,
+                                              )),
                                     ),
                                     SizedBox(height: height * 0.01),
                                     InkWell(
@@ -554,7 +605,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton(
                                   value: sizeDropDownValue,
-                                  hint: const Text('Select Size'),
+                                  hint: Text(widget.size),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -679,7 +730,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton(
                                   value: measureDropDownValue,
-                                  hint: Text('Measure',
+                                  hint: Text(widget.measure,
                                       style: TextStyle(
                                           fontSize: tabLayout ? 20 : 12)),
                                   items: measureList.map((list) {
@@ -740,7 +791,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                                           : height * 0.035,
                                       padding: EdgeInsets.only(
                                           left: width * 0.02,
-                                          top: height * 0.002),
+                                          top: height * 0.003),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -758,7 +809,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                                         decoration: InputDecoration(
                                             hintText: 'Enter Amount',
                                             hintStyle: TextStyle(
-                                              fontSize: tabLayout ? 22 : 12,
+                                              fontSize: tabLayout ? 22 : 13,
                                             ),
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none),
@@ -876,7 +927,9 @@ class AddProductsPageState extends State<AddProductsPage> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                               value: availablityDropDownValue,
-                              hint: Text('Set Availability'),
+                              hint: Text(widget.status == 'in_stock'
+                                  ? 'Available'
+                                  : 'Out Of Stock'),
                               style: TextStyle(fontSize: tabLayout ? 20 : 14),
                               items: available.map((list) {
                                 return DropdownMenuItem(
@@ -903,7 +956,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                       child: InkWell(
                         onTap: () {
                           if (_key.currentState!.validate()) {
-                            addProducts(context);
+                            editProducts(context);
                           }
                         },
                         child: Container(
@@ -920,7 +973,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                               ]),
                           child: Center(
                             child: Text(
-                              'Upload',
+                              'Update',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -938,23 +991,28 @@ class AddProductsPageState extends State<AddProductsPage> {
     );
   }
 
-  dynamic addProducts(BuildContext context) async {
+  dynamic editProducts(BuildContext context) async {
     print('nameOfProduct: ${_title.text}');
     Provider.of<ProductsProvider>(context, listen: false)
-        .postProducts(
+        .putProducts(
             // nameOfProduct,
+            widget.id.toString(),
             _title.text,
-            shortDescription,
-            description,
-            availablityDropDownValue,
-            weightOfProduct,
-            quantityOfProduct,
-            priceOfProduct,
-            taxAmount,
-            image,
-            dropDownValue,
-            sizeDropDownValue,
-            measureDropDownValue)
+            _shortDesc.text,
+            _desc.text,
+            availablityDropDownValue == null
+                ? widget.status
+                : availablityDropDownValue!,
+            _weighht.text,
+            _quantities.text,
+            _priceeee.text,
+            _taxxx.text,
+            image == null ? File(widget.mainImage) : image!,
+            dropDownValue == null ? widget.category : dropDownValue!,
+            sizeDropDownValue == null ? widget.size : sizeDropDownValue!,
+            measureDropDownValue == null
+                ? widget.measure
+                : measureDropDownValue!)
         .then((_) {
       Navigator.push(
               context, MaterialPageRoute(builder: (context) => Products()))

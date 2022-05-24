@@ -44,16 +44,16 @@ class GrossSalesState extends State<GrossSales> {
           ),
           SizedBox(height: tabLayout ? height * 0.02 : 0),
           Padding(
-            padding: EdgeInsets.only(left: width * 0.02),
+            padding: EdgeInsets.only(left: width * 0.02, top: height * 0.01),
             child: Text('₹${widget.grossSale}',
                 style: TextStyle(
-                    fontSize: tabLayout ? 45 : 30,
+                    fontSize: tabLayout ? 45 : 22,
                     fontWeight: FontWeight.bold,
                     color: const Color.fromARGB(255, 36, 71, 100))),
           ),
           Text('Gross Sales',
               style: TextStyle(
-                  fontSize: tabLayout ? 35 : 20,
+                  fontSize: tabLayout ? 35 : 18,
                   fontWeight: FontWeight.bold,
                   color: const Color.fromARGB(255, 36, 71, 100)))
         ],
