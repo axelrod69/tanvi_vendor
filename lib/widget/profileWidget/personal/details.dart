@@ -17,6 +17,8 @@ class Details extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textColor = Color.fromARGB(255, 36, 71, 100);
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
     // final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     // final provider = Provider.of<ProfileProvider>(context).profile;
 
@@ -33,14 +35,14 @@ class Details extends StatelessWidget {
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
             firstName!,
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
           Text(
@@ -49,14 +51,14 @@ class Details extends StatelessWidget {
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
             lastName!,
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
           Text(
@@ -65,14 +67,14 @@ class Details extends StatelessWidget {
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
             email!,
             // provider['email'],
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
           Text(
@@ -81,14 +83,14 @@ class Details extends StatelessWidget {
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
             mobileNumber!,
             // provider['phone'],
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
           Text(
@@ -97,13 +99,13 @@ class Details extends StatelessWidget {
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
             alternateEmail ?? 'null',
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.1),
           // Padding(

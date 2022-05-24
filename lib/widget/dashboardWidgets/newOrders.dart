@@ -10,6 +10,8 @@ class NewOrdersState extends State<NewOrders> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Container(
@@ -18,7 +20,7 @@ class NewOrdersState extends State<NewOrders> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(color: Colors.grey, blurRadius: 2, offset: Offset(1, 2))
           ]),
       child: Column(
@@ -40,20 +42,20 @@ class NewOrdersState extends State<NewOrders> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           '#20220421-01234567',
                           style: TextStyle(
-                              color: Color.fromARGB(255, 36, 71, 100),
+                              color: const Color.fromARGB(255, 36, 71, 100),
                               fontWeight: FontWeight.bold,
-                              fontSize: 14),
+                              fontSize: tabLayout ? 22 : 14),
                         ),
                         SizedBox(height: height * 0.002),
                         Text(
                           '${DateFormat.yMMMMd().format(DateTime.now())} ${DateFormat('HH:mm:ss').format(DateTime.now())}',
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
-                              fontSize: 14),
+                              fontSize: tabLayout ? 22 : 14),
                         )
                       ],
                     ),
@@ -66,23 +68,23 @@ class NewOrdersState extends State<NewOrders> {
                     height: double.infinity,
                     // color: Colors.amber,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           '₹ 230.44',
                           style: TextStyle(
-                              color: Color.fromARGB(255, 36, 71, 100),
+                              color: const Color.fromARGB(255, 36, 71, 100),
                               fontWeight: FontWeight.bold,
-                              fontSize: 24),
+                              fontSize: tabLayout ? 30 : 24),
                         ),
                         SizedBox(width: width * 0.002),
-                        const Text(
+                        Text(
                           '(Paid)',
                           style: TextStyle(
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
-                              fontSize: 15),
+                              fontSize: tabLayout ? 22 : 15),
                         )
                       ],
                     ),
@@ -93,7 +95,9 @@ class NewOrdersState extends State<NewOrders> {
           ),
           SizedBox(height: height * 0.002),
           Padding(
-            padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
+            padding: EdgeInsets.only(
+                left: tabLayout ? width * 0.05 : width * 0.1,
+                right: tabLayout ? width * 0.05 : width * 0.1),
             child: const Divider(
               color: Colors.grey,
               thickness: 2,
@@ -107,27 +111,29 @@ class NewOrdersState extends State<NewOrders> {
             margin: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'Customer Name',
                   style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15),
+                      fontSize: tabLayout ? 22 : 14),
                 ),
                 Text(
                   'Ankit Gupta',
                   style: TextStyle(
-                      color: Color.fromARGB(255, 36, 71, 100),
+                      color: const Color.fromARGB(255, 36, 71, 100),
                       fontWeight: FontWeight.bold,
-                      fontSize: 18),
+                      fontSize: tabLayout ? 22 : 14),
                 )
               ],
             ),
           ),
           // SizedBox(height: height * 0.001),
           Padding(
-            padding: EdgeInsets.only(left: width * 0.1, right: width * 0.1),
+            padding: EdgeInsets.only(
+                left: tabLayout ? width * 0.05 : width * 0.1,
+                right: tabLayout ? width * 0.05 : width * 0.1),
             child: const Divider(
               color: Colors.grey,
               thickness: 2,
@@ -141,33 +147,33 @@ class NewOrdersState extends State<NewOrders> {
             margin: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'Delivery Status',
                   style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15),
+                      fontSize: tabLayout ? 22 : 14),
                 ),
                 Text(
                   'In Transit',
                   style: TextStyle(
-                      color: Color.fromARGB(255, 36, 71, 100),
+                      color: const Color.fromARGB(255, 36, 71, 100),
                       fontWeight: FontWeight.bold,
-                      fontSize: 18),
+                      fontSize: tabLayout ? 22 : 18),
                 )
               ],
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text(
                 'View Details',
                 style: TextStyle(
-                  color: Color.fromARGB(255, 36, 71, 100),
-                  fontWeight: FontWeight.bold,
-                ),
+                    color: const Color.fromARGB(255, 36, 71, 100),
+                    fontWeight: FontWeight.bold,
+                    fontSize: tabLayout ? 18 : 14),
               )
             ],
           ),

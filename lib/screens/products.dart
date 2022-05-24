@@ -44,31 +44,27 @@ class ProductsState extends State<Products> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final provider = Provider.of<ProductsProvider>(context).vendorProducts;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         elevation: 5,
+        toolbarHeight: tabLayout ? 100 : 56,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: InkWell(
           onTap: () => Navigator.of(context).pushNamed('/home'),
-          child: Container(
-            width: width * 0.1,
-            height: height * 0.05,
-            decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(
-                  color: Colors.grey, blurRadius: 10, offset: Offset(1, 2))
-            ]),
-            child: const Icon(Icons.arrow_back_ios, color: Colors.green),
-          ),
+          child: Icon(Icons.arrow_back_ios,
+              color: Colors.green, size: tabLayout ? 40 : 24),
         ),
-        title: const Text(
+        title: Text(
           'Products',
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: tabLayout ? 35 : 14),
         ),
       ),
       body: isLoading
@@ -91,7 +87,7 @@ class ProductsState extends State<Products> {
                   margin: EdgeInsets.only(bottom: height * 0.02),
                   padding: EdgeInsets.all(width * 0.01),
                   width: double.infinity,
-                  height: height * 0.158,
+                  height: tabLayout ? height * 0.175 : height * 0.158,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -110,7 +106,9 @@ class ProductsState extends State<Products> {
                             color: const Color.fromARGB(255, 132, 175, 134),
                             borderRadius: BorderRadius.circular(20)),
                         child: Image.network(
-                            'http://3.109.206.91:8000${provider['data'][index]['main_image']}'),
+                          'http://3.109.206.91:8000${provider['data'][index]['main_image']}',
+                          // fit: BoxFit.contain,
+                        ),
                       ),
                       SizedBox(width: width * 0.02),
                       Expanded(
@@ -128,10 +126,10 @@ class ProductsState extends State<Products> {
                                   children: [
                                     Text(
                                       provider['data'][index]['name'],
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: tabLayout ? 25 : 14),
                                     ),
                                     SizedBox(width: width * 0.02),
                                     Expanded(
@@ -139,10 +137,10 @@ class ProductsState extends State<Products> {
                                         provider['data'][index]['category']
                                             ['name'],
                                         overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: tabLayout ? 25 : 14),
                                       ),
                                     )
                                   ],
@@ -154,58 +152,62 @@ class ProductsState extends State<Products> {
                                   children: [
                                     Column(
                                       children: [
-                                        const Text('Size',
-                                            style:
-                                                TextStyle(color: Colors.grey)),
+                                        Text('Size',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: tabLayout ? 25 : 14)),
                                         Text(
                                             provider['data'][index]['sizes']
                                                 ['size'],
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ))
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: tabLayout ? 25 : 14))
                                       ],
                                     ),
                                     SizedBox(width: width * 0.015),
                                     Column(
                                       children: [
-                                        const Text('Quantity',
-                                            style:
-                                                TextStyle(color: Colors.grey)),
+                                        Text('Quantity',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: tabLayout ? 25 : 14)),
                                         Text(
                                             provider['data'][index]['qty']
                                                 .toString(),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ))
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: tabLayout ? 25 : 14))
                                       ],
                                     ),
                                     SizedBox(width: width * 0.015),
                                     Column(
                                       children: [
-                                        const Text('Weight',
-                                            style:
-                                                TextStyle(color: Colors.grey)),
+                                        Text('Weight',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: tabLayout ? 25 : 14)),
                                         Text(
                                             provider['data'][index]['weight']
                                                 .toString(),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ))
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: tabLayout ? 25 : 14))
                                       ],
                                     ),
                                     SizedBox(width: width * 0.015),
                                     Column(
                                       children: [
-                                        const Text('Unit',
-                                            style:
-                                                TextStyle(color: Colors.grey)),
+                                        Text('Unit',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: tabLayout ? 25 : 14)),
                                         Text(
                                             provider['data'][index]['uom']
                                                     ['short_name']
                                                 .toString(),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ))
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: tabLayout ? 25 : 14))
                                       ],
                                     ),
                                   ],
@@ -222,14 +224,17 @@ class ProductsState extends State<Products> {
                                         // color: Colors.red,
                                         child: Column(
                                           children: [
-                                            const Text('Price',
+                                            Text('Price',
                                                 style: TextStyle(
-                                                    color: Colors.grey)),
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14)),
                                             Text(
                                                 '₹ ${provider['data'][index]['price']}',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ))
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14))
                                           ],
                                         ),
                                       ),
@@ -242,14 +247,17 @@ class ProductsState extends State<Products> {
                                         // color: Colors.amber,
                                         child: Column(
                                           children: [
-                                            const Text('Tax',
+                                            Text('Tax',
                                                 style: TextStyle(
-                                                    color: Colors.grey)),
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14)),
                                             Text(
                                                 '${provider['data'][index]['tax']}%',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ))
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14))
                                           ],
                                         ),
                                       ),
@@ -263,8 +271,9 @@ class ProductsState extends State<Products> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            const Icon(Icons.edit,
-                                                color: Colors.green),
+                                            Icon(Icons.edit,
+                                                color: Colors.green,
+                                                size: tabLayout ? 40 : 24),
                                             InkWell(
                                               onTap: () async {
                                                 Provider.of<ProductsProvider>(
@@ -279,8 +288,9 @@ class ProductsState extends State<Products> {
                                                 });
                                                 recall();
                                               },
-                                              child: const Icon(Icons.delete,
-                                                  color: Colors.red),
+                                              child: Icon(Icons.delete,
+                                                  color: Colors.red,
+                                                  size: tabLayout ? 40 : 24),
                                             )
                                           ],
                                         ),
@@ -307,11 +317,12 @@ class ProductsState extends State<Products> {
         child: InkWell(
           onTap: () => Navigator.of(context).pushNamed('/add-products'),
           child: CircleAvatar(
-            radius: width * 0.07,
+            radius: tabLayout ? width * 0.05 : width * 0.07,
             backgroundColor: Colors.green,
-            child: const Text(
+            child: Text(
               '+',
-              style: TextStyle(color: Colors.white, fontSize: 35),
+              style:
+                  TextStyle(color: Colors.white, fontSize: tabLayout ? 55 : 35),
             ),
           ),
         ),

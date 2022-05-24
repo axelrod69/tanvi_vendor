@@ -94,6 +94,8 @@ class EditProfileState extends State<EditProfile> {
         widget.bankDetails['message'] == 'You don\'t have any Bank details'
             ? true
             : false;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Padding(
@@ -114,15 +116,17 @@ class EditProfileState extends State<EditProfile> {
                   child: TextFormField(
                     controller: orgName,
                     autofocus: true,
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
                     keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         //hintText: 'Siddhartha Chatterjee',
                         label: Text(
                           'Organization Name',
                           // textScaleFactor: textScale,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (org) {
                       if (org!.isEmpty) {
@@ -144,16 +148,18 @@ class EditProfileState extends State<EditProfile> {
                   ),
                   child: TextFormField(
                     controller: telephoneNumberOne,
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
                     autofocus: true,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         // //: 'Siddhartha Chatterjee',
                         label: Text(
                           'Telephone Number 1',
                           // textScaleFactor: textScale,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (tele1) {
                       if (tele1!.isEmpty) {
@@ -175,14 +181,17 @@ class EditProfileState extends State<EditProfile> {
                   child: TextFormField(
                     controller: telephoneNumberTwo,
                     autofocus: true,
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         // //: 'Siddhartha Chatterjee',
                         label: Text(
                           'Telephone Number 2',
                           // textScaleFactor: textScale,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (tele2) {
                       if (tele2!.isEmpty) {
@@ -204,15 +213,17 @@ class EditProfileState extends State<EditProfile> {
                   child: TextFormField(
                     controller: companyPanCard,
                     autofocus: true,
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
                     keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         // //: 'Siddhartha Chatterjee',
                         label: Text(
                           'Company Pan Card',
                           // textScaleFactor: textScale,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (panCard) {
                       if (panCard!.isEmpty) {
@@ -278,10 +289,11 @@ class EditProfileState extends State<EditProfile> {
                                       blurRadius: 8,
                                       offset: Offset(1, 2))
                                 ]),
-                            child: const Center(
+                            child: Center(
                               child: Text('Upload Pan Card',
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 12)),
+                                      color: Colors.white,
+                                      fontSize: tabLayout ? 18 : 12)),
                             ),
                           ),
                         ),
@@ -293,9 +305,9 @@ class EditProfileState extends State<EditProfile> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: width * 0.03),
-                    child: const Text('PDF Only',
+                    child: Text('PDF Only',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: tabLayout ? 14 : 12,
                         )),
                   )
                 ],
@@ -312,13 +324,16 @@ class EditProfileState extends State<EditProfile> {
                   child: TextFormField(
                     // autofocus: true,
                     controller: aadharUdyamUdoyog,
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         label: Text(
                           'Aadhar Udyam Udoyog',
                           // textScaleFactor: textScale,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (aadhar) {
                       if (aadhar!.isEmpty) {
@@ -384,11 +399,12 @@ class EditProfileState extends State<EditProfile> {
                                       blurRadius: 8,
                                       offset: Offset(1, 2))
                                 ]),
-                            child: const Center(
+                            child: Center(
                               child: Text('Upload Aadhar Udyam Udoyog',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 11)),
+                                      color: Colors.white,
+                                      fontSize: tabLayout ? 15 : 11)),
                             ),
                           ),
                         ),
@@ -400,9 +416,9 @@ class EditProfileState extends State<EditProfile> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: width * 0.03),
-                    child: const Text('PDF Only',
+                    child: Text('PDF Only',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: tabLayout ? 14 : 12,
                         )),
                   )
                 ],
@@ -420,12 +436,15 @@ class EditProfileState extends State<EditProfile> {
                     controller: gstNumber,
                     // autofocus: true,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         label: Text(
                           'GST Number',
                           // textScaleFactor: textScale,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (gst) {
                       if (gst!.isEmpty) {
@@ -447,13 +466,16 @@ class EditProfileState extends State<EditProfile> {
                   child: TextFormField(
                     // autofocus: true,
                     controller: bankName,
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
                     keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         label: Text(
                           'Bank Name',
                           // textScaleFactor: textScale,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (nameBank) {
                       if (nameBank!.isEmpty) {
@@ -477,12 +499,15 @@ class EditProfileState extends State<EditProfile> {
                     controller: branchName,
                     // autofocus: true,
                     keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         label: Text(
                           'Branch Name',
                           // textScaleFactor: textScale,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (nameBranch) {
                       if (nameBranch!.isEmpty) {
@@ -506,12 +531,15 @@ class EditProfileState extends State<EditProfile> {
                     controller: ifscCode,
                     // autofocus: true,
                     keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         label: Text(
                           'Branch IFSC Code',
                           // textScaleFactor: textScale,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (ifscNo) {
                       if (ifscNo!.isEmpty) {
@@ -535,12 +563,14 @@ class EditProfileState extends State<EditProfile> {
                   // autofocus: true,
                   controller: accountNumber,
                   keyboardType: TextInputType.name,
-                  decoration: const InputDecoration(
+                  style: TextStyle(fontSize: tabLayout ? 20 : 14),
+                  decoration: InputDecoration(
                       border: InputBorder.none,
                       label: Text(
                         'Account Number',
                         // textScaleFactor: textScale,
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                        style: TextStyle(
+                            color: Colors.grey, fontSize: tabLayout ? 20 : 14),
                       )),
                   validator: (numberAccount) {
                     if (numberAccount!.isEmpty) {
@@ -608,11 +638,13 @@ class EditProfileState extends State<EditProfile> {
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(
                           color: Color.fromARGB(255, 36, 71, 100), width: 1)),
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       'Save',
                       // textScaleFactor: textScale,
-                      style: TextStyle(color: Color.fromARGB(255, 36, 71, 100)),
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 36, 71, 100),
+                          fontSize: tabLayout ? 25 : 14),
                     ),
                   ),
                 ),

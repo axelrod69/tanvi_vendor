@@ -66,6 +66,8 @@ class BusinessState extends State<Business> {
         Provider.of<BusinessProfileProvider>(context).businessProfile;
     final bankProvider =
         Provider.of<BusinessProfileProvider>(context).bankDetails;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Scaffold(
@@ -106,14 +108,14 @@ class BusinessState extends State<Business> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.edit, color: textColor),
+                        Icon(Icons.edit,
+                            color: textColor, size: tabLayout ? 36 : 24),
                         SizedBox(width: width * 0.01),
                         Text(
                           'Edit Business Details',
                           textScaleFactor: textScale,
                           style: TextStyle(
-                            color: textColor,
-                          ),
+                              color: textColor, fontSize: tabLayout ? 25 : 18),
                         )
                       ],
                     ),

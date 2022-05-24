@@ -46,7 +46,7 @@ class AddProductsPageState extends State<AddProductsPage> {
   PickedFile? _secondImageFile;
   bool second = false;
   final ImagePicker? _imagePicker = ImagePicker();
-  final measure = ['Kg', 'gm', 'ltr'];
+  // final measure = ['Kg', 'gm', 'ltr'];
   // final available = [
   //   {'value': true, 'data': 'Available'},
   //   {'value': false, 'data': 'Out Of Stock'}
@@ -108,6 +108,8 @@ class AddProductsPageState extends State<AddProductsPage> {
     final provider = Provider.of<CategoryProvider>(context).categoryList;
     final sizeProvider = Provider.of<SizeListProvider>(context).sizeList;
     final measureList = Provider.of<MeasureListProvider>(context).measureList;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
     // list = provider;
 
     // print('LIST $list');
@@ -117,6 +119,7 @@ class AddProductsPageState extends State<AddProductsPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
+        toolbarHeight: tabLayout ? 100 : 56,
         elevation: 0,
         centerTitle: true,
         leading: InkWell(
@@ -127,29 +130,16 @@ class AddProductsPageState extends State<AddProductsPage> {
                 top: height * 0.003,
                 right: width * 0.005,
                 bottom: height * 0.003),
-            child: Container(
-              width: width * 0.1,
-              height: height * 0.1,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 10,
-                      offset: Offset(1, 2),
-                    )
-                  ]),
-              child: const Icon(Icons.arrow_back_ios, color: Colors.green),
-            ),
+            child: Icon(Icons.arrow_back_ios,
+                color: Colors.green, size: tabLayout ? 40 : 24),
           ),
         ),
-        title: const Text(
+        title: Text(
           'Add Products',
           style: TextStyle(
-              color: Color.fromARGB(255, 36, 71, 100),
+              color: const Color.fromARGB(255, 36, 71, 100),
               fontWeight: FontWeight.bold,
-              fontSize: 25),
+              fontSize: tabLayout ? 35 : 14),
         ),
       ),
       body: isLoading
@@ -167,12 +157,12 @@ class AddProductsPageState extends State<AddProductsPage> {
                 key: _key,
                 child: ListView(
                   children: [
-                    const Text(
+                    Text(
                       'Select Category',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 36, 71, 100),
+                          color: const Color.fromARGB(255, 36, 71, 100),
                           fontWeight: FontWeight.bold,
-                          fontSize: 15),
+                          fontSize: tabLayout ? 25 : 15),
                     ),
                     SizedBox(height: height * 0.01),
                     Padding(
@@ -194,10 +184,15 @@ class AddProductsPageState extends State<AddProductsPage> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                               value: dropDownValue,
-                              hint: Text('Category'),
+                              hint: const Text('Category'),
+                              style: TextStyle(fontSize: tabLayout ? 20 : 14),
                               items: provider.map((list) {
                                 return DropdownMenuItem(
-                                    child: Text(list['name']),
+                                    child: Text(list['name'],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: tabLayout ? 20 : 14,
+                                            color: Colors.black)),
                                     value: list['id'].toString());
                               }).toList(),
                               onChanged: (selectedDropdownValue) {
@@ -210,12 +205,12 @@ class AddProductsPageState extends State<AddProductsPage> {
                       ),
                     ),
                     SizedBox(height: height * 0.025),
-                    const Text(
+                    Text(
                       'Title',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 36, 71, 100),
+                          color: const Color.fromARGB(255, 36, 71, 100),
                           fontWeight: FontWeight.bold,
-                          fontSize: 15),
+                          fontSize: tabLayout ? 25 : 15),
                     ),
                     SizedBox(height: height * 0.01),
                     Padding(
@@ -225,7 +220,9 @@ class AddProductsPageState extends State<AddProductsPage> {
                         // width: width * 0.1,
                         height: height * 0.05,
                         padding: EdgeInsets.only(
-                            left: width * 0.02, right: width * 0.02),
+                            left: width * 0.02,
+                            top: height * 0.005,
+                            right: width * 0.02),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
@@ -237,8 +234,11 @@ class AddProductsPageState extends State<AddProductsPage> {
                             ]),
                         child: TextFormField(
                           controller: _title,
-                          decoration: const InputDecoration(
+                          style: TextStyle(fontSize: tabLayout ? 20 : 14),
+                          decoration: InputDecoration(
                               hintText: 'Enter Name Of Product',
+                              hintStyle:
+                                  TextStyle(fontSize: tabLayout ? 20 : 14),
                               focusedBorder: InputBorder.none,
                               enabledBorder: InputBorder.none),
                           validator: (name) {
@@ -253,12 +253,12 @@ class AddProductsPageState extends State<AddProductsPage> {
                       ),
                     ),
                     SizedBox(height: height * 0.025),
-                    const Text(
+                    Text(
                       'Short Description',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 36, 71, 100),
+                          color: const Color.fromARGB(255, 36, 71, 100),
                           fontWeight: FontWeight.bold,
-                          fontSize: 15),
+                          fontSize: tabLayout ? 25 : 15),
                     ),
                     SizedBox(height: height * 0.01),
                     Padding(
@@ -279,9 +279,12 @@ class AddProductsPageState extends State<AddProductsPage> {
                             ]),
                         child: TextFormField(
                           controller: _shortDesc,
+                          style: TextStyle(fontSize: tabLayout ? 20 : 14),
                           maxLines: 5,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                               hintText: 'Enter Description',
+                              hintStyle:
+                                  TextStyle(fontSize: tabLayout ? 20 : 14),
                               focusedBorder: InputBorder.none,
                               enabledBorder: InputBorder.none),
                           validator: (short) {
@@ -296,12 +299,12 @@ class AddProductsPageState extends State<AddProductsPage> {
                       ),
                     ),
                     SizedBox(height: height * 0.025),
-                    const Text(
+                    Text(
                       'Description',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 36, 71, 100),
+                          color: const Color.fromARGB(255, 36, 71, 100),
                           fontWeight: FontWeight.bold,
-                          fontSize: 15),
+                          fontSize: tabLayout ? 25 : 15),
                     ),
                     SizedBox(height: height * 0.01),
                     Padding(
@@ -322,9 +325,12 @@ class AddProductsPageState extends State<AddProductsPage> {
                             ]),
                         child: TextFormField(
                           controller: _desc,
+                          style: TextStyle(fontSize: tabLayout ? 20 : 14),
                           maxLines: 5,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                               hintText: 'Enter Description',
+                              hintStyle:
+                                  TextStyle(fontSize: tabLayout ? 20 : 14),
                               focusedBorder: InputBorder.none,
                               enabledBorder: InputBorder.none),
                           validator: (desc) {
@@ -339,14 +345,14 @@ class AddProductsPageState extends State<AddProductsPage> {
                       ),
                     ),
                     SizedBox(height: height * 0.025),
-                    const Text('Images',
+                    Text('Images',
                         style: TextStyle(
                             color: Color.fromARGB(255, 36, 71, 100),
                             fontWeight: FontWeight.bold,
-                            fontSize: 15)),
+                            fontSize: tabLayout ? 25 : 15)),
                     SizedBox(height: height * 0.01),
                     SizedBox(
-                      height: height * 0.22,
+                      height: tabLayout ? height * 0.24 : height * 0.22,
                       child: Row(
                         children: [
                           Flexible(
@@ -363,7 +369,9 @@ class AddProductsPageState extends State<AddProductsPage> {
                                   children: [
                                     Container(
                                       width: width * 0.3,
-                                      height: height * 0.14,
+                                      height: tabLayout
+                                          ? height * 0.165
+                                          : height * 0.14,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -386,8 +394,11 @@ class AddProductsPageState extends State<AddProductsPage> {
                                                 fit: BoxFit.cover,
                                               ),
                                             )
-                                          : const Center(
-                                              child: Text('Pick An Image'),
+                                          : Center(
+                                              child: Text('Pick An Image',
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          tabLayout ? 18 : 14)),
                                             ),
                                     ),
                                     SizedBox(height: height * 0.01),
@@ -415,11 +426,12 @@ class AddProductsPageState extends State<AddProductsPage> {
                                             const Icon(Icons.attachment,
                                                 color: Colors.white),
                                             SizedBox(width: width * 0.01),
-                                            const Text('Choose Image',
+                                            Text('Choose Image',
                                                 style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                ))
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        tabLayout ? 18 : 14))
                                           ],
                                         ),
                                       ),
@@ -441,7 +453,9 @@ class AddProductsPageState extends State<AddProductsPage> {
                                   children: [
                                     Container(
                                       width: width * 0.3,
-                                      height: height * 0.14,
+                                      height: tabLayout
+                                          ? height * 0.165
+                                          : height * 0.14,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -464,10 +478,12 @@ class AddProductsPageState extends State<AddProductsPage> {
                                                 fit: BoxFit.cover,
                                               ),
                                             )
-                                          : const Center(
+                                          : Center(
                                               child: Text('Pick An Image',
                                                   style: TextStyle(
-                                                      color: Colors.black)),
+                                                      color: Colors.black,
+                                                      fontSize:
+                                                          tabLayout ? 18 : 14)),
                                             ),
                                     ),
                                     SizedBox(height: height * 0.01),
@@ -495,11 +511,12 @@ class AddProductsPageState extends State<AddProductsPage> {
                                             const Icon(Icons.attachment,
                                                 color: Colors.white),
                                             SizedBox(width: width * 0.01),
-                                            const Text('Choose Image',
+                                            Text('Choose Image',
                                                 style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                ))
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        tabLayout ? 18 : 14))
                                           ],
                                         ),
                                       ),
@@ -511,11 +528,11 @@ class AddProductsPageState extends State<AddProductsPage> {
                       ),
                     ),
                     SizedBox(height: height * 0.015),
-                    const Text('Size',
+                    Text('Size',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 36, 71, 100),
+                            color: const Color.fromARGB(255, 36, 71, 100),
                             fontWeight: FontWeight.bold,
-                            fontSize: 15)),
+                            fontSize: tabLayout ? 25 : 15)),
                     SizedBox(height: height * 0.01),
                     Row(
                       children: [
@@ -523,8 +540,9 @@ class AddProductsPageState extends State<AddProductsPage> {
                           padding: EdgeInsets.only(left: width * 0.01),
                           child: Container(
                             // width: width * 0.35,
-                            height: height * 0.035,
-                            padding: EdgeInsets.only(left: width * 0.02),
+                            height: tabLayout ? height * 0.04 : height * 0.035,
+                            padding: EdgeInsets.only(
+                                left: tabLayout ? width * 0.01 : width * 0.02),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
@@ -538,9 +556,16 @@ class AddProductsPageState extends State<AddProductsPage> {
                               child: DropdownButton(
                                   value: sizeDropDownValue,
                                   hint: const Text('Select Size'),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                   items: sizeProvider.map((sizeList) {
                                     return DropdownMenuItem(
-                                        child: Text(sizeList['size']),
+                                        child: Text(sizeList['size'],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: tabLayout ? 20 : 14,
+                                                color: Colors.black)),
                                         value: sizeList['id'].toString());
                                   }).toList(),
                                   onChanged: (selectedDropdownValue) {
@@ -557,14 +582,14 @@ class AddProductsPageState extends State<AddProductsPage> {
                       ],
                     ),
                     SizedBox(height: height * 0.015),
-                    const Text('Quantity',
+                    Text('Quantity',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 36, 71, 100),
+                            color: const Color.fromARGB(255, 36, 71, 100),
                             fontWeight: FontWeight.bold,
-                            fontSize: 15)),
+                            fontSize: tabLayout ? 25 : 15)),
                     SizedBox(height: height * 0.01),
                     Container(
-                      height: height * 0.04,
+                      height: tabLayout ? height * 0.06 : height * 0.04,
                       // color: Colors.red,
                       padding: EdgeInsets.only(
                           left: width * 0.01, top: height * 0.005),
@@ -573,8 +598,9 @@ class AddProductsPageState extends State<AddProductsPage> {
                         children: [
                           Container(
                             width: width * 0.25,
-                            height: height * 0.035,
-                            padding: EdgeInsets.only(left: width * 0.02),
+                            height: tabLayout ? height * 0.045 : height * 0.035,
+                            padding: EdgeInsets.only(
+                                left: width * 0.02, top: height * 0.005),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
@@ -586,11 +612,11 @@ class AddProductsPageState extends State<AddProductsPage> {
                                 ]),
                             child: TextFormField(
                               controller: _quantities,
-                              decoration: const InputDecoration(
+                              style: TextStyle(fontSize: tabLayout ? 20 : 14),
+                              decoration: InputDecoration(
                                   hintText: 'Enter Quantity',
-                                  hintStyle: TextStyle(
-                                    fontSize: 12,
-                                  ),
+                                  hintStyle:
+                                      TextStyle(fontSize: tabLayout ? 20 : 14),
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none),
                               validator: (quantity) {
@@ -606,8 +632,9 @@ class AddProductsPageState extends State<AddProductsPage> {
                           SizedBox(width: width * 0.02),
                           Container(
                             width: width * 0.25,
-                            height: height * 0.035,
-                            padding: EdgeInsets.only(left: width * 0.02),
+                            height: tabLayout ? height * 0.045 : height * 0.035,
+                            padding: EdgeInsets.only(
+                                left: width * 0.02, top: height * 0.004),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
@@ -619,11 +646,11 @@ class AddProductsPageState extends State<AddProductsPage> {
                                 ]),
                             child: TextFormField(
                               controller: _weighht,
-                              decoration: const InputDecoration(
+                              style: TextStyle(fontSize: tabLayout ? 20 : 14),
+                              decoration: InputDecoration(
                                   hintText: 'Enter Weight',
-                                  hintStyle: TextStyle(
-                                    fontSize: 12,
-                                  ),
+                                  hintStyle:
+                                      TextStyle(fontSize: tabLayout ? 20 : 14),
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none),
                               validator: (weight) {
@@ -639,7 +666,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                           SizedBox(width: width * 0.02),
                           Container(
                             // width: width * 0.35,
-                            height: height * 0.035,
+                            height: tabLayout ? height * 0.045 : height * 0.035,
                             padding: EdgeInsets.only(left: width * 0.02),
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -653,11 +680,16 @@ class AddProductsPageState extends State<AddProductsPage> {
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton(
                                   value: measureDropDownValue,
-                                  hint: const Text('Measure',
-                                      style: TextStyle(fontSize: 12)),
+                                  hint: Text('Measure',
+                                      style: TextStyle(
+                                          fontSize: tabLayout ? 20 : 12)),
                                   items: measureList.map((list) {
                                     return DropdownMenuItem(
-                                        child: Text(list['short_name']),
+                                        child: Text(list['short_name'],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: tabLayout ? 20 : 14,
+                                                color: Colors.black)),
                                         value: list['id'].toString());
                                   }).toList(),
                                   onChanged: (selectedDropdownValue) {
@@ -674,7 +706,7 @@ class AddProductsPageState extends State<AddProductsPage> {
                     ),
                     SizedBox(height: height * 0.025),
                     Container(
-                      height: height * 0.07,
+                      height: tabLayout ? height * 0.09 : height * 0.07,
                       width: width * 0.9,
                       // color: Colors.red,
                       child: Row(
@@ -686,26 +718,30 @@ class AddProductsPageState extends State<AddProductsPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Price',
+                                Text('Price',
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 36, 71, 100),
+                                        color: const Color.fromARGB(
+                                            255, 36, 71, 100),
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 15)),
+                                        fontSize: tabLayout ? 25 : 15)),
                                 SizedBox(height: height * 0.005),
                                 Row(
                                   children: [
-                                    const Text('₹',
+                                    Text('₹',
                                         style: TextStyle(
-                                            color: Color.fromARGB(
+                                            color: const Color.fromARGB(
                                                 255, 36, 71, 100),
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 25)),
+                                            fontSize: tabLayout ? 35 : 25)),
                                     SizedBox(width: width * 0.005),
                                     Container(
                                       width: width * 0.25,
-                                      height: height * 0.035,
-                                      padding:
-                                          EdgeInsets.only(left: width * 0.02),
+                                      height: tabLayout
+                                          ? height * 0.045
+                                          : height * 0.035,
+                                      padding: EdgeInsets.only(
+                                          left: width * 0.02,
+                                          top: height * 0.003),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -718,10 +754,12 @@ class AddProductsPageState extends State<AddProductsPage> {
                                           ]),
                                       child: TextFormField(
                                         controller: _priceeee,
-                                        decoration: const InputDecoration(
+                                        style: TextStyle(
+                                            fontSize: tabLayout ? 20 : 14),
+                                        decoration: InputDecoration(
                                             hintText: 'Enter Amount',
                                             hintStyle: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: tabLayout ? 22 : 12,
                                             ),
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none),
@@ -744,30 +782,27 @@ class AddProductsPageState extends State<AddProductsPage> {
                           Container(
                             height: double.infinity,
                             width: width * 0.36,
-                            color: Colors.blue,
+                            // color: Colors.blue,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text('Tax',
+                                Text('Tax',
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 36, 71, 100),
+                                        color: const Color.fromARGB(
+                                            255, 36, 71, 100),
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 15)),
+                                        fontSize: tabLayout ? 25 : 15)),
                                 SizedBox(height: height * 0.005),
                                 Row(
                                   children: [
-                                    const Text('₹',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 36, 71, 100),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 25)),
-                                    SizedBox(width: width * 0.005),
                                     Container(
                                       width: width * 0.31,
-                                      height: height * 0.035,
-                                      padding:
-                                          EdgeInsets.only(left: width * 0.02),
+                                      height: tabLayout
+                                          ? height * 0.045
+                                          : height * 0.035,
+                                      padding: EdgeInsets.only(
+                                          left: width * 0.02,
+                                          top: height * 0.002),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -780,10 +815,13 @@ class AddProductsPageState extends State<AddProductsPage> {
                                           ]),
                                       child: TextFormField(
                                         controller: _taxxx,
-                                        decoration: const InputDecoration(
+                                        style: TextStyle(
+                                          fontSize: tabLayout ? 20 : 12,
+                                        ),
+                                        decoration: InputDecoration(
                                             hintText: 'Enter Tax Amount',
                                             hintStyle: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: tabLayout ? 20 : 12,
                                             ),
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none),
@@ -797,6 +835,14 @@ class AddProductsPageState extends State<AddProductsPage> {
                                         },
                                       ),
                                     ),
+                                    SizedBox(width: width * 0.01),
+                                    Text('%',
+                                        style: TextStyle(
+                                            color: const Color.fromARGB(
+                                                255, 36, 71, 100),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: tabLayout ? 35 : 25)),
+                                    // SizedBox(width: width * 0.005)
                                   ],
                                 ),
                               ],
@@ -806,18 +852,18 @@ class AddProductsPageState extends State<AddProductsPage> {
                       ),
                     ),
                     SizedBox(height: height * 0.025),
-                    const Text('Availability',
+                    Text('Availability',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 36, 71, 100),
+                            color: const Color.fromARGB(255, 36, 71, 100),
                             fontWeight: FontWeight.bold,
-                            fontSize: 15)),
+                            fontSize: tabLayout ? 25 : 15)),
                     SizedBox(height: height * 0.01),
                     Padding(
                       padding: EdgeInsets.only(
                           left: width * 0.02, right: width * 0.02),
                       child: Container(
                         // width: width * 0.35,
-                        height: height * 0.04,
+                        height: tabLayout ? height * 0.05 : height * 0.04,
                         padding: EdgeInsets.only(left: width * 0.02),
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -831,10 +877,16 @@ class AddProductsPageState extends State<AddProductsPage> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
                               value: availablityDropDownValue,
-                              hint: const Text('Set Availability'),
+                              hint: Text('Set Availability'),
+                              style: TextStyle(fontSize: tabLayout ? 20 : 14),
                               items: available.map((list) {
                                 return DropdownMenuItem(
-                                    child: Text(list), value: list);
+                                    child: Text(list,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: tabLayout ? 20 : 14,
+                                            color: Colors.black)),
+                                    value: list);
                               }).toList(),
                               onChanged: (selectedDropdownValue) {
                                 setState(() {
@@ -867,13 +919,13 @@ class AddProductsPageState extends State<AddProductsPage> {
                                     blurRadius: 8,
                                     offset: Offset(1, 2))
                               ]),
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'Upload',
                               style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: tabLayout ? 20 : 14),
                             ),
                           ),
                         ),

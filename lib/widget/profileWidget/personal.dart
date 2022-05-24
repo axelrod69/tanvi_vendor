@@ -67,6 +67,8 @@ class PersonalState extends State<Personal> {
     // final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     const textColor = Color.fromARGB(255, 36, 71, 100);
     final provider = Provider.of<ProfileProvider>(context).profile;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
     // final provider = Provider.of<PersonalProvider>(context).Personal;
 
     // TODO: implement build
@@ -128,12 +130,13 @@ class PersonalState extends State<Personal> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(Icons.edit, color: textColor),
+                  Icon(Icons.edit, color: textColor, size: tabLayout ? 36 : 24),
                   SizedBox(width: width * 0.01),
-                  const Text(
+                  Text(
                     'Edit Personal',
                     // textScaleFactor: textScale,
-                    style: TextStyle(color: textColor, fontSize: 18),
+                    style: TextStyle(
+                        color: textColor, fontSize: tabLayout ? 25 : 18),
                   )
                 ],
               ),
@@ -154,13 +157,13 @@ class PersonalState extends State<Personal> {
             Center(
               child: Padding(
                 padding: EdgeInsets.only(left: width * 0.04),
-                child: const Text(
+                child: Text(
                   'Sign Out',
                   // textScaleFactor: textScale,
                   style: TextStyle(
                       color: textColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15),
+                      fontSize: tabLayout ? 18 : 15),
                 ),
               ),
             ),

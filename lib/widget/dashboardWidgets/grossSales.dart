@@ -42,6 +42,7 @@ class GrossSalesState extends State<GrossSales> {
                       fontSize: tabLayout ? 18 : 14))
             ],
           ),
+          SizedBox(height: tabLayout ? height * 0.02 : 0),
           Padding(
             padding: EdgeInsets.only(left: width * 0.02),
             child: Text('₹${widget.grossSale}',

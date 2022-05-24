@@ -16,6 +16,8 @@ class Details extends StatelessWidget {
     bool bank = bankDetails['message'] == 'You don\'t have any Bank details'
         ? true
         : false;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Padding(
@@ -24,29 +26,29 @@ class Details extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         // mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Organization Name',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
             businessDetails['data']['org_name'] ?? '',
             // textScaleFactor: textScale,
-            style: const TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
-          const Text(
+          Text(
             'Telephone Number 1',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
@@ -54,16 +56,16 @@ class Details extends StatelessWidget {
             businessDetails['data']['telephone_1'] ??
                 'Please Enter Primary Phone Number',
             // textScaleFactor: textScale,
-            style: const TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
-          const Text(
+          Text(
             'Telephone Number 2',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
@@ -71,16 +73,16 @@ class Details extends StatelessWidget {
                 'Please Enter Secondary Phone Number',
             // provider['email'],
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
-          const Text(
+          Text(
             'Company Pan Card',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
@@ -88,7 +90,7 @@ class Details extends StatelessWidget {
                 'Please Enter the Comapany PAN Card Number',
             // provider['phone'],
             // textScaleFactor: textScale,
-            style: const TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.005),
           Text(
@@ -97,19 +99,19 @@ class Details extends StatelessWidget {
                 : 'Pan Card Document Not Uploaded',
             // 'Pan Card Document Uploaded',
             // textScaleFactor: textScale,
-            style: const TextStyle(
+            style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 12),
+                fontSize: tabLayout ? 15 : 12),
           ),
           SizedBox(height: height * 0.02),
-          const Text(
+          Text(
             'Aadhar Udyam Udoyog',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
@@ -117,7 +119,7 @@ class Details extends StatelessWidget {
             businessDetails['data']['adhar_udyam_udoyog'] ??
                 'Please Enter Aadhar Udyog Number',
             // textScaleFactor: textScale,
-            style: const TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.005),
           Text(
@@ -125,35 +127,35 @@ class Details extends StatelessWidget {
                 ? 'Aadhar Card Document Uploaded'
                 : 'Aadhar Card Document Not Uploaded',
             // textScaleFactor: textScale,
-            style: const TextStyle(
+            style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 12),
+                fontSize: tabLayout ? 15 : 12),
           ),
           SizedBox(height: height * 0.02),
-          const Text(
+          Text(
             'GST Number',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
             // provider['name'],
             businessDetails['data']['gst_number'] ?? 'Please Enter GST Number',
             // textScaleFactor: textScale,
-            style: TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
-          const Text(
+          Text(
             'Bank Name',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
@@ -163,16 +165,16 @@ class Details extends StatelessWidget {
                 : bankDetails['data']['acc_bank_name'],
             // bankDetails['data']['acc_bank_name'] ?? 'Bank Details Incomplete',
             // textScaleFactor: textScale,
-            style: const TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
-          const Text(
+          Text(
             'Branch Name',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
@@ -181,16 +183,16 @@ class Details extends StatelessWidget {
                 : bankDetails['data']['acc_branch_name'],
             //bankDetails['data']['acc_branch_name'] ?? 'Bank Details Incomplete',
             // textScaleFactor: textScale,
-            style: const TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
-          const Text(
+          Text(
             'Branch IFSC Code',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
@@ -198,16 +200,16 @@ class Details extends StatelessWidget {
                 ? 'Bank Details Incomplete'
                 : bankDetails['data']['acc_ifsc'],
             // textScaleFactor: textScale,
-            style: const TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           SizedBox(height: height * 0.02),
-          const Text(
+          Text(
             'Account Number',
             // textScaleFactor: textScale,
             style: TextStyle(
                 // color: Color.fromRGBO(131, 131, 131, 1),
                 color: textColor,
-                fontSize: 17),
+                fontSize: tabLayout ? 28 : 17),
           ),
           SizedBox(height: height * 0.01),
           Text(
@@ -215,7 +217,7 @@ class Details extends StatelessWidget {
                 ? 'Bank Details Incomplete'
                 : bankDetails['data']['acc_no'],
             // textScaleFactor: textScale,
-            style: const TextStyle(color: textColor, fontSize: 12),
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
           // SizedBox(height: height * 0.02),
           // Text(

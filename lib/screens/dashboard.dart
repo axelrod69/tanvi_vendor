@@ -169,20 +169,20 @@ class DashboardState extends State<Dashboard> {
                   SizedBox(height: height * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
                         'New Order',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 36, 71, 100),
+                            color: const Color.fromARGB(255, 36, 71, 100),
                             fontWeight: FontWeight.bold,
-                            fontSize: 22),
+                            fontSize: tabLayout ? 28 : 22),
                       ),
                       Text(
                         'See All Orders',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 39, 138, 42),
+                            color: const Color.fromARGB(255, 39, 138, 42),
                             // fontWeight: FontWeight.bold,
-                            fontSize: 15),
+                            fontSize: tabLayout ? 22 : 15),
                       )
                     ],
                   ),

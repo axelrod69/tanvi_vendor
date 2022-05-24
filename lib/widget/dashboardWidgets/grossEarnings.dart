@@ -33,27 +33,29 @@ class GrossEarningsState extends State<GrossEarnings> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.money, color: Colors.green, size: 80),
+              Icon(Icons.money,
+                  color: Colors.green, size: tabLayout ? 200 : 80),
               Text('View',
                   style: TextStyle(
-                      color: Color.fromARGB(255, 36, 71, 100),
+                      color: const Color.fromARGB(255, 36, 71, 100),
                       fontWeight: FontWeight.bold,
                       fontSize: tabLayout ? 18 : 14))
             ],
           ),
+          SizedBox(height: tabLayout ? height * 0.02 : 0),
           Padding(
             padding: EdgeInsets.only(left: width * 0.02),
             child: Text('₹${widget.grossEarnings}',
                 style: TextStyle(
-                    fontSize: 30,
+                    fontSize: tabLayout ? 45 : 30,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 36, 71, 100))),
+                    color: const Color.fromARGB(255, 36, 71, 100))),
           ),
           Text('Gross Earnings',
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: tabLayout ? 35 : 20,
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 36, 71, 100)))
+                  color: const Color.fromARGB(255, 36, 71, 100)))
         ],
       ),
     );

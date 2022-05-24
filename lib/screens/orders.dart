@@ -40,6 +40,8 @@ class OrdersState extends State<Orders> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Scaffold(
@@ -65,18 +67,18 @@ class OrdersState extends State<Orders> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Hi, Ankit',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 36, 71, 100),
+                                color: const Color.fromARGB(255, 36, 71, 100),
                                 fontWeight: FontWeight.bold,
-                                fontSize: 30),
+                                fontSize: tabLayout ? 40 : 30),
                           ),
                           SizedBox(height: height * 0.005),
                           Text(DateFormat.yMMMMd().format(DateTime.now()),
                               style: TextStyle(
                                   color: Color.fromARGB(255, 99, 118, 134),
-                                  fontSize: 18))
+                                  fontSize: tabLayout ? 40 : 30))
                         ],
                       ),
                     ),
@@ -94,8 +96,8 @@ class OrdersState extends State<Orders> {
                         children: [
                           Icon(
                             Icons.notifications,
-                            size: height * 0.04,
-                            color: Color.fromARGB(255, 99, 118, 134),
+                            size: tabLayout ? height * 0.05 : height * 0.04,
+                            color: const Color.fromARGB(255, 99, 118, 134),
                           )
                         ],
                       ),
@@ -110,12 +112,12 @@ class OrdersState extends State<Orders> {
                 child: CircleAvatar(
                   radius: width * 0.02,
                   backgroundColor: Colors.red,
-                  child: const Text(
+                  child: Text(
                     '9+',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 12),
+                        fontSize: tabLayout ? 16 : 12),
                   ),
                 ))
           ],
@@ -125,179 +127,182 @@ class OrdersState extends State<Orders> {
         height: double.infinity,
         // color: Colors.red,
         child: ListView.builder(
-          itemBuilder: (context, index) => Container(
-            width: double.infinity,
-            // height: height * 0.24,
-            margin: EdgeInsets.only(
-                left: width * 0.01,
-                top: height * 0.01,
-                right: width * 0.01,
-                bottom: height * 0.01),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey, blurRadius: 2, offset: Offset(1, 2))
-                ]),
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: height * 0.045,
-                  // color: Colors.green,
-                  margin: EdgeInsets.only(
-                      left: width * 0.02,
-                      top: height * 0.01,
-                      right: width * 0.02),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        fit: FlexFit.tight,
-                        child: Container(
-                          height: double.infinity,
-                          // color: Colors.red,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _orderList[index]['orderId'],
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 36, 71, 100),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14),
-                              ),
-                              SizedBox(height: height * 0.002),
-                              Text(
-                                '${DateFormat.yMMMMd().format(DateTime.now())} ${DateFormat('HH:mm:ss').format(DateTime.now())}',
-                                style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14),
-                              )
-                            ],
+          itemBuilder: (context, index) => Padding(
+            padding: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
+            child: Container(
+              width: double.infinity,
+              // height: height * 0.24,
+              margin: EdgeInsets.only(bottom: height * 0.02),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.grey, blurRadius: 2, offset: Offset(1, 2))
+                  ]),
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: height * 0.045,
+                    // color: Colors.green,
+                    margin: EdgeInsets.only(
+                        left: width * 0.02,
+                        top: height * 0.01,
+                        right: width * 0.02),
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          fit: FlexFit.tight,
+                          child: Container(
+                            height: double.infinity,
+                            // color: Colors.red,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _orderList[index]['orderId'],
+                                  style: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 36, 71, 100),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: tabLayout ? 22 : 14),
+                                ),
+                                SizedBox(height: height * 0.002),
+                                Text(
+                                  '${DateFormat.yMMMMd().format(DateTime.now())} ${DateFormat('HH:mm:ss').format(DateTime.now())}',
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: tabLayout ? 22 : 14),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        fit: FlexFit.tight,
-                        child: Container(
-                          height: double.infinity,
-                          // color: Colors.amber,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                '₹${_orderList[index]['price']}',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 36, 71, 100),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 24),
-                              ),
-                              SizedBox(width: width * 0.002),
-                              Text(
-                                '(${_orderList[index]['paymentStatus']})',
-                                style: TextStyle(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
-                              )
-                            ],
+                        Flexible(
+                          flex: 1,
+                          fit: FlexFit.tight,
+                          child: Container(
+                            height: double.infinity,
+                            // color: Colors.amber,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '₹${_orderList[index]['price']}',
+                                  style: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 36, 71, 100),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: tabLayout ? 30 : 24),
+                                ),
+                                SizedBox(width: width * 0.002),
+                                Text(
+                                  '(${_orderList[index]['paymentStatus']})',
+                                  style: TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: tabLayout ? 22 : 15),
+                                )
+                              ],
+                            ),
                           ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: height * 0.002),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: tabLayout ? width * 0.05 : width * 0.1,
+                        right: tabLayout ? width * 0.05 : width * 0.1),
+                    child: const Divider(
+                      color: Colors.grey,
+                      thickness: 2,
+                    ),
+                  ),
+                  // SizedBox(height: height * 0.02),
+                  Container(
+                    width: double.infinity,
+                    height: height * 0.06,
+                    // color: Colors.blue,
+                    margin: EdgeInsets.only(
+                        left: width * 0.02, right: width * 0.02),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Customer Name',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: tabLayout ? 22 : 14),
                         ),
-                      )
-                    ],
+                        Text(
+                          _orderList[index]['name'],
+                          style: TextStyle(
+                              color: const Color.fromARGB(255, 36, 71, 100),
+                              fontWeight: FontWeight.bold,
+                              fontSize: tabLayout ? 22 : 14),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: height * 0.002),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: width * 0.1, right: width * 0.1),
-                  child: const Divider(
-                    color: Colors.grey,
-                    thickness: 2,
+                  // SizedBox(height: height * 0.001),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: tabLayout ? width * 0.05 : width * 0.1,
+                        right: tabLayout ? width * 0.05 : width * 0.1),
+                    child: const Divider(
+                      color: Colors.grey,
+                      thickness: 2,
+                    ),
                   ),
-                ),
-                // SizedBox(height: height * 0.02),
-                Container(
-                  width: double.infinity,
-                  height: height * 0.06,
-                  // color: Colors.blue,
-                  margin:
-                      EdgeInsets.only(left: width * 0.02, right: width * 0.02),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  // SizedBox(height: height * 0.01),
+                  Container(
+                    width: double.infinity,
+                    height: height * 0.06,
+                    // color: Colors.blue,
+                    margin: EdgeInsets.only(
+                        left: width * 0.02, right: width * 0.02),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Delivery Status',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: tabLayout ? 22 : 14),
+                        ),
+                        Text(
+                          _orderList[index]['deliveryStatus'],
+                          style: TextStyle(
+                              color: const Color.fromARGB(255, 36, 71, 100),
+                              fontWeight: FontWeight.bold,
+                              fontSize: tabLayout ? 22 : 18),
+                        )
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Customer Name',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15),
-                      ),
-                      Text(
-                        _orderList[index]['name'],
+                        'View Details',
                         style: TextStyle(
                             color: Color.fromARGB(255, 36, 71, 100),
                             fontWeight: FontWeight.bold,
-                            fontSize: 18),
+                            fontSize: tabLayout ? 18 : 14),
                       )
                     ],
                   ),
-                ),
-                // SizedBox(height: height * 0.001),
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: width * 0.1, right: width * 0.1),
-                  child: const Divider(
-                    color: Colors.grey,
-                    thickness: 2,
-                  ),
-                ),
-                // SizedBox(height: height * 0.01),
-                Container(
-                  width: double.infinity,
-                  height: height * 0.06,
-                  // color: Colors.blue,
-                  margin:
-                      EdgeInsets.only(left: width * 0.02, right: width * 0.02),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Delivery Status',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15),
-                      ),
-                      Text(
-                        _orderList[index]['deliveryStatus'],
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 36, 71, 100),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                      )
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
-                      'View Details',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 36, 71, 100),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: height * 0.01)
-              ],
+                  SizedBox(height: height * 0.01)
+                ],
+              ),
             ),
           ),
           itemCount: _orderList.length,

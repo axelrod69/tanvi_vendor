@@ -49,6 +49,8 @@ class EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    final tabLayout = width > 600;
+    final largeLayout = width > 350 && width < 600;
     // final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     // final provider = Provider.of<ProfileProvider>(context).profile;
 
@@ -71,14 +73,16 @@ class EditProfileState extends State<EditProfile> {
                 child: TextFormField(
                   autofocus: true,
                   initialValue: widget.firstName,
+                  style: TextStyle(fontSize: tabLayout ? 20 : 14),
                   keyboardType: TextInputType.name,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                       border: InputBorder.none,
                       // hintText: widget.firstName,
                       label: Text(
                         'First Name',
                         // textScaleFactor: textScale,
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                        style: TextStyle(
+                            color: Colors.grey, fontSize: tabLayout ? 20 : 14),
                       )),
                   validator: (fName) {
                     if (fName!.isEmpty && widget.firstName!.isEmpty) {
@@ -101,15 +105,18 @@ class EditProfileState extends State<EditProfile> {
                   ),
                   child: TextFormField(
                     autofocus: true,
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
                     initialValue: widget.lastName,
                     keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         // hintText: widget.lastName,
                         label: Text(
                           'Last Name',
                           // textScaleFactor: textScale,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (lName) {
                       if (lName!.isEmpty && widget.lastName!.isEmpty) {
@@ -132,14 +139,17 @@ class EditProfileState extends State<EditProfile> {
                   child: TextFormField(
                     autofocus: true,
                     initialValue: widget.email,
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
                     keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         // hintText: widget.email,
                         label: Text(
                           'Email',
                           // textScaleFactor: textScale,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (inputEmail) {
                       if (inputEmail!.isEmpty && widget.email!.isEmpty) {
@@ -162,14 +172,17 @@ class EditProfileState extends State<EditProfile> {
                   child: TextFormField(
                     autofocus: true,
                     initialValue: widget.alternateEmail ?? '',
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
                     keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         // hintText: widget.alternateEmail ?? 'null',
                         label: Text(
                           'Alternate Email',
                           // textScaleFactor: textScale,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (altEmail) {
                       if (altEmail!.isEmpty && widget.alternateEmail!.isEmpty) {
@@ -192,14 +205,17 @@ class EditProfileState extends State<EditProfile> {
                   child: TextFormField(
                     // autofocus: true,
                     initialValue: widget.mobileNo,
+                    style: TextStyle(fontSize: tabLayout ? 20 : 14),
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         border: InputBorder.none,
                         // hintText: widget.mobileNo,
                         label: Text(
                           'Mobile No',
                           // textScaleFactor: textScale,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: tabLayout ? 20 : 14),
                         )),
                     validator: (number) {
                       if (number!.isEmpty && widget.mobileNo!.isEmpty) {
@@ -242,11 +258,13 @@ class EditProfileState extends State<EditProfile> {
                       border: Border.all(
                           color: const Color.fromARGB(255, 36, 71, 100),
                           width: 1)),
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       'Save',
                       // textScaleFactor: textScale,
-                      style: TextStyle(color: Color.fromARGB(255, 36, 71, 100)),
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 36, 71, 100),
+                          fontSize: tabLayout ? 25 : 14),
                     ),
                   ),
                 ),
