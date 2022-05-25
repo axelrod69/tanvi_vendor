@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../model/orderSummary/orderSummary.dart';
+import '../screens/viewOrderDetails.dart';
 
 class Orders extends StatefulWidget {
   OrdersState createState() => OrdersState();
@@ -42,6 +45,7 @@ class OrdersState extends State<Orders> {
     final width = MediaQuery.of(context).size.width;
     final tabLayout = width > 600;
     final largeLayout = width > 350 && width < 600;
+    final provider = Provider.of<OrderSummaryProvider>(context).orderList;
 
     // TODO: implement build
     return Scaffold(
@@ -162,7 +166,8 @@ class OrdersState extends State<Orders> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _orderList[index]['orderId'],
+                                  provider['data'][index]['order']
+                                      ['order_number'],
                                   style: TextStyle(
                                       color: const Color.fromARGB(
                                           255, 36, 71, 100),
@@ -192,7 +197,7 @@ class OrdersState extends State<Orders> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  '₹${_orderList[index]['price']}',
+                                  '₹${provider['data'][index]['order']['grand_total']}',
                                   style: TextStyle(
                                       color: const Color.fromARGB(
                                           255, 36, 71, 100),
@@ -201,7 +206,7 @@ class OrdersState extends State<Orders> {
                                 ),
                                 SizedBox(width: width * 0.002),
                                 Text(
-                                  '(${_orderList[index]['paymentStatus']})',
+                                  '(${provider['data'][index]['order']['payment_status']})',
                                   style: TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,
@@ -242,7 +247,7 @@ class OrdersState extends State<Orders> {
                               fontSize: tabLayout ? 22 : 14),
                         ),
                         Text(
-                          _orderList[index]['name'],
+                          '${provider['data'][index]['order']['user']['first_name']} ${provider['data'][index]['order']['user']['last_name']}',
                           style: TextStyle(
                               color: const Color.fromARGB(255, 36, 71, 100),
                               fontWeight: FontWeight.bold,
@@ -279,7 +284,7 @@ class OrdersState extends State<Orders> {
                               fontSize: tabLayout ? 22 : 14),
                         ),
                         Text(
-                          _orderList[index]['deliveryStatus'],
+                          provider['data'][index]['order']['order_status'],
                           style: TextStyle(
                               color: const Color.fromARGB(255, 36, 71, 100),
                               fontWeight: FontWeight.bold,
@@ -291,12 +296,18 @@ class OrdersState extends State<Orders> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'View Details',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 36, 71, 100),
-                            fontWeight: FontWeight.bold,
-                            fontSize: tabLayout ? 18 : 14),
+                      InkWell(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => ViewOrderDetails(
+                                    provider['data'][index]['id'].toString()))),
+                        child: Text(
+                          'View Details',
+                          style: TextStyle(
+                              color: const Color.fromARGB(255, 36, 71, 100),
+                              fontWeight: FontWeight.bold,
+                              fontSize: tabLayout ? 18 : 14),
+                        ),
                       )
                     ],
                   ),
@@ -305,7 +316,7 @@ class OrdersState extends State<Orders> {
               ),
             ),
           ),
-          itemCount: _orderList.length,
+          itemCount: provider['data'].length,
         ),
       ),
     );

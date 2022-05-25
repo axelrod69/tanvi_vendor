@@ -15,6 +15,8 @@ import './model/products/productsProvider.dart';
 import './model/sizeList/sizeListProvider.dart';
 import './model/measureList/measureListProvider.dart';
 import './model/dashboard/monthlyStats.dart';
+import './model/orderSummary/orderSummary.dart';
+import './screens/viewOrderDetails.dart';
 
 void main() => runApp(TanviVendor());
 
@@ -60,7 +62,8 @@ class TanviVendorState extends State<TanviVendor> {
         ChangeNotifierProvider(create: (context) => ProductsProvider()),
         ChangeNotifierProvider(create: (context) => SizeListProvider()),
         ChangeNotifierProvider(create: (context) => MeasureListProvider()),
-        ChangeNotifierProvider(create: (context) => MonthlyStatsProvider())
+        ChangeNotifierProvider(create: (context) => MonthlyStatsProvider()),
+        ChangeNotifierProvider(create: (context) => OrderSummaryProvider())
       ],
 
       builder: (context, child) {
@@ -80,6 +83,7 @@ class TanviVendorState extends State<TanviVendor> {
             '/sign-in': (context) => SignIn(),
             '/sign-up': (context) => SignUp(),
             '/change-password': (context) => ChangePassword(),
+            // '/view-order-details': (context) => ViewOrderDetails()
             // '/edit-products': (context) => EditProductsPage()
           },
         );

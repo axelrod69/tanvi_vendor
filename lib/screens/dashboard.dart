@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tanvi_vendor/model/orderSummary/orderSummary.dart';
 import '../widget/dashboardWidgets/grossSales.dart';
 import '../widget/dashboardWidgets/grossEarnings.dart';
 import '../widget/dashboardWidgets/totalOrders.dart';

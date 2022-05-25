@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:tanvi_vendor/screens/viewOrderDetails.dart';
+import '../../model/orderSummary/orderSummary.dart';
 
 class NewOrders extends StatefulWidget {
   NewOrdersState createState() => NewOrdersState();
@@ -12,6 +15,7 @@ class NewOrdersState extends State<NewOrders> {
     final width = MediaQuery.of(context).size.width;
     final tabLayout = width > 600;
     final largeLayout = width > 350 && width < 600;
+    final recentOrder = Provider.of<OrderSummaryProvider>(context).orderRecent;
 
     // TODO: implement build
     return Container(
@@ -43,7 +47,7 @@ class NewOrdersState extends State<NewOrders> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '#20220421-01234567',
+                          recentOrder['data'][0]['order']['order_number'],
                           style: TextStyle(
                               color: const Color.fromARGB(255, 36, 71, 100),
                               fontWeight: FontWeight.bold,
@@ -72,7 +76,7 @@ class NewOrdersState extends State<NewOrders> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          '₹ 230.44',
+                          '₹${recentOrder['data'][0]['order']['grand_total']}',
                           style: TextStyle(
                               color: const Color.fromARGB(255, 36, 71, 100),
                               fontWeight: FontWeight.bold,
@@ -80,7 +84,7 @@ class NewOrdersState extends State<NewOrders> {
                         ),
                         SizedBox(width: width * 0.002),
                         Text(
-                          '(Paid)',
+                          '(${recentOrder['data'][0]['order']['payment_status']})',
                           style: TextStyle(
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
@@ -120,7 +124,7 @@ class NewOrdersState extends State<NewOrders> {
                       fontSize: tabLayout ? 22 : 14),
                 ),
                 Text(
-                  'Ankit Gupta',
+                  '${recentOrder['data'][0]['order']['user']['first_name']} ${recentOrder['data'][0]['order']['user']['last_name']}',
                   style: TextStyle(
                       color: const Color.fromARGB(255, 36, 71, 100),
                       fontWeight: FontWeight.bold,
@@ -156,7 +160,7 @@ class NewOrdersState extends State<NewOrders> {
                       fontSize: tabLayout ? 22 : 14),
                 ),
                 Text(
-                  'In Transit',
+                  recentOrder['data'][0]['order']['order_status'],
                   style: TextStyle(
                       color: const Color.fromARGB(255, 36, 71, 100),
                       fontWeight: FontWeight.bold,
@@ -168,12 +172,17 @@ class NewOrdersState extends State<NewOrders> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'View Details',
-                style: TextStyle(
-                    color: const Color.fromARGB(255, 36, 71, 100),
-                    fontWeight: FontWeight.bold,
-                    fontSize: tabLayout ? 18 : 14),
+              InkWell(
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ViewOrderDetails(
+                        recentOrder['data'][0]['id'].toString()))),
+                child: Text(
+                  'View Details',
+                  style: TextStyle(
+                      color: const Color.fromARGB(255, 36, 71, 100),
+                      fontWeight: FontWeight.bold,
+                      fontSize: tabLayout ? 18 : 14),
+                ),
               )
             ],
           ),
