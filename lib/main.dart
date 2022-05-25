@@ -15,7 +15,6 @@ import './model/products/productsProvider.dart';
 import './model/sizeList/sizeListProvider.dart';
 import './model/measureList/measureListProvider.dart';
 import './model/dashboard/monthlyStats.dart';
-import './screens/editProductScreen.dart';
 
 void main() => runApp(TanviVendor());
 

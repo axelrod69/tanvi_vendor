@@ -993,6 +993,7 @@ class EditProductsPageState extends State<EditProductsPage> {
 
   dynamic editProducts(BuildContext context) async {
     print('nameOfProduct: ${_title.text}');
+    print('imageOfProduct: $image');
     Provider.of<ProductsProvider>(context, listen: false)
         .putProducts(
             // nameOfProduct,
@@ -1007,7 +1008,8 @@ class EditProductsPageState extends State<EditProductsPage> {
             _quantities.text,
             _priceeee.text,
             _taxxx.text,
-            image == null ? File(widget.mainImage) : image!,
+            // image == null ? File(widget.mainImage) : image!,
+            image!,
             dropDownValue == null ? widget.category : dropDownValue!,
             sizeDropDownValue == null ? widget.size : sizeDropDownValue!,
             measureDropDownValue == null
