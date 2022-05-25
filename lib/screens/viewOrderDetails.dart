@@ -11,6 +11,10 @@ class ViewOrderDetails extends StatefulWidget {
 
 class ViewOrderDetailsState extends State<ViewOrderDetails> {
   bool isLoading = true;
+  final List<String> moreItems = [
+    'Cutomer Details',
+    'Delivery Executive Details'
+  ];
 
   @override
   void initState() {
