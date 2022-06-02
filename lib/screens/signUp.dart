@@ -257,13 +257,17 @@ class SignUpState extends State<SignUp> {
                                   ]),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton(
-                                    hint: Text('Gender'),
+                                    hint: const Text('Gender'),
                                     style: TextStyle(
                                         fontSize: tabLayout ? 25 : 18),
                                     value: dropDownValue,
                                     items: gender.map((e) {
                                       return DropdownMenuItem(
-                                        child: Text(e),
+                                        child: Text(e,
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            )),
                                         value: e,
                                       );
                                     }).toList(),

@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 class ProfileProvider with ChangeNotifier {
-  String baseUrl = 'http://192.168.0.3:3000/';
+  String baseUrl = 'http://54.80.135.220/';
   Map<String, dynamic> _profile = {};
 
   Map<String, dynamic> get profile {
@@ -53,7 +53,7 @@ class ProfileProvider with ChangeNotifier {
     print('Form Data: $formData');
 
     final response = await Dio().post(
-        'http://192.168.0.3:3000/api/vendor/profile/basic/',
+        'http://54.80.135.220/api/vendor/profile/basic/',
         data: formData,
         options: Options(headers: {
           'Authorization': 'Bearer ${localStorage.getString('token')}'

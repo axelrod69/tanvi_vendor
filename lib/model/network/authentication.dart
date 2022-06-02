@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class Authentication with ChangeNotifier {
-  String baseUrl = 'http://192.168.0.3:3000/';
+  String baseUrl = 'http://54.80.135.220/';
 
   dynamic signUp(data, url) async {
     final fullUrl = Uri.parse(baseUrl + url);

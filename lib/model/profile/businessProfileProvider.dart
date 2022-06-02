@@ -8,7 +8,7 @@ import 'dart:io';
 import './businessProfileModel.dart';
 
 class BusinessProfileProvider with ChangeNotifier {
-  String baseUrl = 'http://192.168.0.3:3000/';
+  String baseUrl = 'http://54.80.135.220/';
   Map<String, dynamic> _bankDetails = {};
   Map<String, dynamic> _businessProfile = {};
 
@@ -104,7 +104,7 @@ class BusinessProfileProvider with ChangeNotifier {
     print('Form Data $formData');
 
     final response =
-        await Dio().post('http://192.168.0.3:3000/api/vendor/profile/business/',
+        await Dio().post('http://54.80.135.220/api/vendor/profile/business/',
             data: formData,
             options: Options(headers: {
               'Authorization': 'Bearer ${localStorage.getString('token')}',

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class MeasureListProvider with ChangeNotifier {
-  String baseUrl = 'http://192.168.0.3:3000/';
+  String baseUrl = 'http://54.80.135.220/';
   List<dynamic> _measureList = [];
 
   List<dynamic> get measureList {
