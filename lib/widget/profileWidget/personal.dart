@@ -90,7 +90,7 @@ class PersonalState extends State<Personal> {
                     // ),
                     child: widget.profilePic != ''
                         ? Image.network(
-                            'http://3.109.206.91:8000${widget.profilePic}',
+                            'http://54.80.135.220${widget.profilePic}',
                             fit: BoxFit.cover,
                           )
                         // ? Image.file(widget.profilePic, fit: BoxFit.cover)

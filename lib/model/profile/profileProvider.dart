@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 
 class ProfileProvider with ChangeNotifier {
   String baseUrl = 'http://54.80.135.220/';
@@ -47,7 +48,10 @@ class ProfileProvider with ChangeNotifier {
       'email': email,
       'alternate_email': alternateEmail,
       'mobile': mobileNo,
-      'profile_pic': await MultipartFile.fromFile(image!.path)
+      'profile_pic': await MultipartFile.fromFile(
+        image!.path,
+        // contentType: MediaType("image", "jpeg")
+      )
     });
 
     print('Form Data: $formData');
