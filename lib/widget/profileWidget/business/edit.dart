@@ -603,7 +603,7 @@ class EditProfileState extends State<EditProfile> {
                         .then((_) {
                       Provider.of<BusinessProfileProvider>(context,
                               listen: false)
-                          .postOrganisationDetails(
+                          .postMethod(
                               organisation!.isEmpty
                                   ? widget.businessDetails['data']['org_name']
                                   : organisation,

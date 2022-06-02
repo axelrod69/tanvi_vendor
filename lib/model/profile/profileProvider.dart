@@ -27,7 +27,49 @@ class ProfileProvider with ChangeNotifier {
     print(_profile);
   }
 
-  Future<dynamic> postProfileUpdate(
+  // Future<dynamic> postProfileUpdate(
+  //     String? firstName,
+  //     String? lastName,
+  //     String? email,
+  //     String? alternateEmail,
+  //     String? mobileNo,
+  //     File? image) async {
+  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
+
+  //   print('Provider First Name $firstName');
+  //   print('Provider Last Name $lastName');
+  //   print('Provder Email $email');
+  //   print('Provider Alternate Email $alternateEmail');
+  //   print('Provider Mobile Number $mobileNo');
+  //   print('Provider Image $image');
+
+  //   var formData = FormData.fromMap({
+  //     'first_name': firstName,
+  //     'last_name': lastName,
+  //     'email': email,
+  //     'alternate_email': alternateEmail,
+  //     'mobile': mobileNo,
+  //     'profile_pic': await MultipartFile.fromFile(
+  //       image!.path,
+  //       // contentType: MediaType("image", "jpeg")
+  //     )
+  //   });
+
+  //   print('Form Data: $formData');
+
+  //   final response = await Dio().post(
+  //       'http://54.80.135.220/api/vendor/profile/basic/',
+  //       data: formData,
+  //       options: Options(headers: {
+  //         'Authorization': 'Bearer ${localStorage.getString('token')}'
+  //       }));
+
+  //   print('Response from Dio $response');
+
+  //   return response;
+  // }
+
+  Future<void> postProfileUpdate(
       String? firstName,
       String? lastName,
       String? email,
@@ -35,36 +77,21 @@ class ProfileProvider with ChangeNotifier {
       String? mobileNo,
       File? image) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-
-    print('Provider First Name $firstName');
-    print('Provider Last Name $lastName');
-    print('Provder Email $email');
-    print('Provider Alternate Email $alternateEmail');
-    print('Provider Mobile Number $mobileNo');
-
-    var formData = FormData.fromMap({
-      'first_name': firstName,
-      'last_name': lastName,
-      'email': email,
-      'alternate_email': alternateEmail,
-      'mobile': mobileNo,
-      'profile_pic': await MultipartFile.fromFile(
-        image!.path,
-        // contentType: MediaType("image", "jpeg")
-      )
-    });
-
-    print('Form Data: $formData');
-
-    final response = await Dio().post(
-        'http://54.80.135.220/api/vendor/profile/basic/',
-        data: formData,
-        options: Options(headers: {
-          'Authorization': 'Bearer ${localStorage.getString('token')}'
-        }));
-
-    print('Response from Dio $response');
-
-    return response;
+    final url = Uri.parse(baseUrl + 'api/vendor/profile/basic/');
+    var request = http.MultipartRequest('POST', url);
+    request.headers
+        .addAll({'Authorization': 'Bearer ${localStorage.getString('token')}'});
+    request.fields['first_name'] = firstName!;
+    request.fields['last_name'] = lastName!;
+    request.fields['email'] = email!;
+    request.fields['alternate_email'] = alternateEmail!;
+    request.fields['mobile_no'] = mobileNo!;
+    request.files.add(await http.MultipartFile.fromPath(
+        'profile_pic', image!.path,
+        contentType: MediaType('application', 'x-tar')));
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      print('Uploaded');
+    }
   }
 }

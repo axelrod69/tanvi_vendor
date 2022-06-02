@@ -230,6 +230,18 @@ class EditProfileState extends State<EditProfile> {
               InkWell(
                 onTap: () {
                   if (key.currentState!.validate()) {
+                    // Provider.of<ProfileProvider>(context, listen: false)
+                    //     .postProfileUpdate(
+                    //         firstNames.isEmpty ? widget.firstName : firstNames,
+                    //         lastNames.isEmpty ? widget.lastName : lastNames,
+                    //         emailId.isEmpty ? widget.email : emailId,
+                    //         alternateEmailId.isEmpty
+                    //             ? widget.alternateEmail
+                    //             : alternateEmailId,
+                    //         mobileNumber.isEmpty
+                    //             ? widget.mobileNo
+                    //             : mobileNumber,
+                    //         widget.image);
                     Provider.of<ProfileProvider>(context, listen: false)
                         .postProfileUpdate(
                             firstNames.isEmpty ? widget.firstName : firstNames,

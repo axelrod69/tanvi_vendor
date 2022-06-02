@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -113,5 +114,43 @@ class BusinessProfileProvider with ChangeNotifier {
     print('Response from Dio $response');
 
     return response;
+  }
+
+  Future<void> postMethod(
+      String? organizationName,
+      String? telephoneNumberOne,
+      String? telephoneNumberTwo,
+      String? companyPanCard,
+      PlatformFile? panCard,
+      String? aadharUdyamUdoyog,
+      PlatformFile? aadharCard,
+      String? gstNumber) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // final File filePanCard = File(panCard!.path.toString());
+    // final File fileAadharCard = File(aadharCard!.path.toString());
+    final url = Uri.parse(baseUrl + 'api/vendor/profile/business/');
+    var request = http.MultipartRequest('POST', url);
+    request.headers
+        .addAll({'Authorization': 'Bearer ${localStorage.getString('token')}'});
+    request.fields['org_name'] = organizationName!;
+    request.fields['telephone_1'] = telephoneNumberOne!;
+    request.fields['telephone_2'] = telephoneNumberTwo!;
+    request.fields['company_pancard'] = companyPanCard!;
+    request.files.add(http.MultipartFile.fromBytes(
+        'company_pancard_doc', File(panCard!.toString()).readAsBytesSync()));
+    request.fields['adhar_udyam_udoyog'] = aadharUdyamUdoyog!;
+    request.files.add(http.MultipartFile.fromBytes('adhar_udyam_udoyog_doc',
+        File(aadharCard!.toString()).readAsBytesSync()));
+    request.fields['gst_number'] = gstNumber!;
+
+    var response = await request.send();
+
+    print('Response: $response');
+
+    if (response.statusCode == 200) {
+      print('Uploaded');
+    } else {
+      print('Failed');
+    }
   }
 }
