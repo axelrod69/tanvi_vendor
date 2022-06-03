@@ -9,7 +9,7 @@ import 'dart:io';
 import './businessProfileModel.dart';
 
 class BusinessProfileProvider with ChangeNotifier {
-  String baseUrl = 'http://54.80.135.220/';
+  String baseUrl = 'http://54.80.135.220:8000/';
   Map<String, dynamic> _bankDetails = {};
   Map<String, dynamic> _businessProfile = {};
 
@@ -104,8 +104,8 @@ class BusinessProfileProvider with ChangeNotifier {
 
     print('Form Data $formData');
 
-    final response =
-        await Dio().post('http://54.80.135.220/api/vendor/profile/business/',
+    final response = await Dio()
+        .post('http://54.80.135.220:8000/api/vendor/profile/business/',
             data: formData,
             options: Options(headers: {
               'Authorization': 'Bearer ${localStorage.getString('token')}',
@@ -121,9 +121,9 @@ class BusinessProfileProvider with ChangeNotifier {
       String? telephoneNumberOne,
       String? telephoneNumberTwo,
       String? companyPanCard,
-      PlatformFile? panCard,
+      File? panCard,
       String? aadharUdyamUdoyog,
-      PlatformFile? aadharCard,
+      File? aadharCard,
       String? gstNumber) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     // final File filePanCard = File(panCard!.path.toString());
@@ -136,11 +136,17 @@ class BusinessProfileProvider with ChangeNotifier {
     request.fields['telephone_1'] = telephoneNumberOne!;
     request.fields['telephone_2'] = telephoneNumberTwo!;
     request.fields['company_pancard'] = companyPanCard!;
-    request.files.add(http.MultipartFile.fromBytes(
-        'company_pancard_doc', File(panCard!.toString()).readAsBytesSync()));
-    request.fields['adhar_udyam_udoyog'] = aadharUdyamUdoyog!;
-    request.files.add(http.MultipartFile.fromBytes('adhar_udyam_udoyog_doc',
-        File(aadharCard!.toString()).readAsBytesSync()));
+    request.files.add(await http.MultipartFile.fromPath(
+        'company_pancard_doc', panCard!.path));
+    request.files.add(await http.MultipartFile.fromPath(
+        'adhar_udyam_udoyog', aadharCard!.path));
+
+    // request.files.add(http.MultipartFile.fromBytes(
+    //     'company_pancard_doc', File(panCard!.toString()).readAsBytesSync()));
+    // request.fields['adhar_udyam_udoyog'] = aadharUdyamUdoyog!;
+    // request.files.add(http.MultipartFile.fromBytes('adhar_udyam_udoyog_doc',
+    //     File(aadharCard!.toString()).readAsBytesSync()));
+
     request.fields['gst_number'] = gstNumber!;
 
     var response = await request.send();

@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class StatusProvider with ChangeNotifier {
-  String baseUrl = 'http://54.80.135.220/';
+  String baseUrl = 'http://54.80.135.220:8000/';
   Map<String, dynamic> _profileStatus = {};
 
   Map<String, dynamic> get profileStatus {

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../../model/profile/businessProfileProvider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:open_file/open_file.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:file_picker/file_picker.dart';
 
 class EditProfile extends StatefulWidget {
   final Map<String, dynamic> businessDetails;
@@ -18,6 +21,8 @@ class EditProfile extends StatefulWidget {
 class EditProfileState extends State<EditProfile> {
   final key = GlobalKey<FormState>();
   late String organizationName;
+  File? imageOne;
+  File? imageTwo;
 
   TextEditingController orgName = TextEditingController();
   TextEditingController telephoneNumberOne = TextEditingController();
@@ -57,6 +62,34 @@ class EditProfileState extends State<EditProfile> {
     super.initState();
   }
 
+  Future pickFirstImage(ImageSource source) async {
+    try {
+      final img = await ImagePicker().pickImage(source: source);
+      final imageTemporary = File(img!.path);
+      print('Temp Image: $imageTemporary');
+      setState(() {
+        imageOne = imageTemporary;
+        print('Image $imageOne');
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future pickSecondImage(ImageSource source) async {
+    try {
+      final img = await ImagePicker().pickImage(source: source);
+      final imageTemporary = File(img!.path);
+      print('Temp Image: $imageTemporary');
+      setState(() {
+        imageTwo = imageTemporary;
+        print('Image $imageTwo');
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
   String? organisation;
   String? teleOne;
   String? teleTwo;
@@ -67,8 +100,8 @@ class EditProfileState extends State<EditProfile> {
   String? nameOfBranch;
   String? ifsc;
   String? accountNo;
-  PlatformFile? panDoc;
-  PlatformFile? aadharDoc;
+  // PlatformFile? panDoc;
+  // PlatformFile? aadharDoc;
 
   String fileOneName = '';
   String fileTwoName = '';
@@ -245,37 +278,39 @@ class EditProfileState extends State<EditProfile> {
                       children: [
                         // Text('Upload Pan Card Document'),
                         InkWell(
-                          onTap: () async {
-                            final filePickerOne = await FilePicker.platform
-                                .pickFiles(
-                                    type: FileType.custom,
-                                    allowedExtensions: [
-                                  'pdf',
-                                  'jpg',
-                                  'jpeg',
-                                  'png'
-                                ]);
-                            if (filePickerOne == null) return;
+                          onTap: () => pickFirstImage(ImageSource.gallery),
+                          // () async {
+                          // final filePickerOne = await FilePicker.platform
+                          //     .pickFiles(
+                          //         type: FileType.custom,
+                          //         allowedExtensions: [
+                          //       'pdf',
+                          //       'jpg',
+                          //       'jpeg',
+                          //       'png'
+                          //     ]);
+                          // if (filePickerOne == null) return;
 
-                            final fileOne = filePickerOne.files.first;
-                            openFile(fileOne);
-                            print('Name: ${fileOne.name}');
+                          // final fileOne = filePickerOne.files.first;
+                          // openFile(fileOne);
+                          // print('Name: ${fileOne.name}');
 
-                            setState(() {
-                              fileOneName = fileOne.name;
-                              panDoc = fileOne;
-                            });
+                          // setState(() {
+                          //   fileOneName = fileOne.name;
+                          //   panDoc = fileOne;
+                          // });
 
-                            print('Bytes: ${fileOne.bytes}');
-                            print('Size: ${fileOne.size}');
-                            print('Extension: ${fileOne.extension}');
-                            print('Path: ${fileOne.path}');
+                          // print('Bytes: ${fileOne.bytes}');
+                          // print('Size: ${fileOne.size}');
+                          // print('Extension: ${fileOne.extension}');
+                          // print('Path: ${fileOne.path}');
 
-                            final newFile = await saveFile(fileOne);
+                          // final newFile = await saveFile(fileOne);
 
-                            print('From Path: ${fileOne.path!}');
-                            print('To Path: ${fileOne.path}');
-                          },
+                          // print('From Path: ${fileOne.path!}');
+                          // print('To Path: ${fileOne.path}');
+
+                          // },
                           child: Container(
                             width: width * 0.25,
                             height: height * 0.035,
@@ -355,37 +390,38 @@ class EditProfileState extends State<EditProfile> {
                       children: [
                         // Text('Upload Pan Card Document'),
                         InkWell(
-                          onTap: () async {
-                            final filePickerTwo = await FilePicker.platform
-                                .pickFiles(
-                                    type: FileType.custom,
-                                    allowedExtensions: [
-                                  'pdf',
-                                  'jpg',
-                                  'jpeg',
-                                  'png'
-                                ]);
-                            if (filePickerTwo == null) return;
+                          onTap: () => pickSecondImage(ImageSource.gallery),
+                          // onTap: () async {
+                          //   final filePickerTwo = await FilePicker.platform
+                          //       .pickFiles(
+                          //           type: FileType.custom,
+                          //           allowedExtensions: [
+                          //         'pdf',
+                          //         'jpg',
+                          //         'jpeg',
+                          //         'png'
+                          //       ]);
+                          //   if (filePickerTwo == null) return;
 
-                            final fileTwo = filePickerTwo.files.first;
-                            openFile(fileTwo);
-                            print('Name: ${fileTwo.name}');
+                          //   final fileTwo = filePickerTwo.files.first;
+                          //   openFile(fileTwo);
+                          //   print('Name: ${fileTwo.name}');
 
-                            setState(() {
-                              fileTwoName = fileTwo.name;
-                              aadharDoc = fileTwo;
-                            });
+                          //   setState(() {
+                          //     fileTwoName = fileTwo.name;
+                          //     aadharDoc = fileTwo;
+                          //   });
 
-                            print('Bytes: ${fileTwo.bytes}');
-                            print('Size: ${fileTwo.size}');
-                            print('Extension: ${fileTwo.extension}');
-                            print('Path: ${fileTwo.path}');
+                          //   print('Bytes: ${fileTwo.bytes}');
+                          //   print('Size: ${fileTwo.size}');
+                          //   print('Extension: ${fileTwo.extension}');
+                          //   print('Path: ${fileTwo.path}');
 
-                            final newFile = await saveFile(fileTwo);
+                          //   final newFile = await saveFile(fileTwo);
 
-                            print('From Path: ${fileTwo.path!}');
-                            print('To Path: ${fileTwo.path}');
-                          },
+                          //   print('From Path: ${fileTwo.path!}');
+                          //   print('To Path: ${fileTwo.path}');
+                          // },
                           child: Container(
                             width: width * 0.25,
                             height: height * 0.035,
@@ -619,12 +655,12 @@ class EditProfileState extends State<EditProfile> {
                                   ? widget.businessDetails['data']
                                       ['company_pancard']
                                   : panCardNumber,
-                              panDoc,
+                              imageOne,
                               aadharUdyom!.isEmpty
                                   ? widget.businessDetails['data']
                                       ['adhar_udyam_udoyog']
                                   : aadharUdyom,
-                              aadharDoc,
+                              imageTwo,
                               gstNo!.isEmpty
                                   ? widget.businessDetails['data']['gst_number']
                                   : gstNo);

@@ -939,9 +939,9 @@ class AddProductsPageState extends State<AddProductsPage> {
   }
 
   dynamic addProducts(BuildContext context) async {
-    print('nameOfProduct: ${_title.text}');
+    // print('nameOfProduct: ${_title.text}');
     Provider.of<ProductsProvider>(context, listen: false)
-        .postProducts(
+        .postItem(
             // nameOfProduct,
             _title.text,
             shortDescription,

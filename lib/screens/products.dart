@@ -76,314 +76,332 @@ class ProductsState extends State<Products> {
                 color: Colors.green,
               ),
             )
-          : Container(
-              width: double.infinity,
-              height: double.infinity,
-              // color: Colors.red,
-              padding: EdgeInsets.only(
-                  left: width * 0.02,
-                  top: height * 0.02,
-                  right: width * 0.02,
-                  bottom: height * 0.02),
-              child: ListView.builder(
-                itemBuilder: (context, index) => Container(
-                  margin: EdgeInsets.only(bottom: height * 0.02),
-                  padding: EdgeInsets.all(width * 0.01),
+          : provider['data'].length == 0
+              ? const Center(
+                  child: Text('No Products Added'),
+                )
+              : Container(
                   width: double.infinity,
-                  height: tabLayout ? height * 0.175 : height * 0.158,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 10,
-                            offset: Offset(1, 2))
-                      ]),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: width * 0.3,
-                        height: double.infinity,
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 132, 175, 134),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Image.network(
-                          'http://54.80.135.220${provider['data'][index]['main_image']}',
-                          // fit: BoxFit.contain,
-                        ),
-                      ),
-                      SizedBox(width: width * 0.02),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              top: height * 0.01, bottom: height * 0.01),
-                          // width: width * 0.7,
-                          height: double.infinity,
-                          // color: Colors.blue,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      provider['data'][index]['name'],
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: tabLayout ? 25 : 14),
-                                    ),
-                                    SizedBox(width: width * 0.02),
-                                    Expanded(
-                                      child: Text(
-                                        provider['data'][index]['category']
-                                            ['name'],
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: tabLayout ? 25 : 14),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: height * 0.01),
-                              SizedBox(
-                                child: Row(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Text('Size',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: tabLayout ? 25 : 14)),
-                                        Text(
-                                            provider['data'][index]['sizes']
-                                                ['size'],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: tabLayout ? 25 : 14))
-                                      ],
-                                    ),
-                                    SizedBox(width: width * 0.015),
-                                    Column(
-                                      children: [
-                                        Text('Quantity',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: tabLayout ? 25 : 14)),
-                                        Text(
-                                            provider['data'][index]['qty']
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: tabLayout ? 25 : 14))
-                                      ],
-                                    ),
-                                    SizedBox(width: width * 0.015),
-                                    Column(
-                                      children: [
-                                        Text('Weight',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: tabLayout ? 25 : 14)),
-                                        Text(
-                                            provider['data'][index]['weight']
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: tabLayout ? 25 : 14))
-                                      ],
-                                    ),
-                                    SizedBox(width: width * 0.015),
-                                    Column(
-                                      children: [
-                                        Text('Unit',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: tabLayout ? 25 : 14)),
-                                        Text(
-                                            provider['data'][index]['uom']
-                                                    ['short_name']
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: tabLayout ? 25 : 14))
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: height * 0.01),
-                              SizedBox(
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      flex: 1,
-                                      fit: FlexFit.tight,
-                                      child: Container(
-                                        // color: Colors.red,
-                                        child: Column(
-                                          children: [
-                                            Text('Price',
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize:
-                                                        tabLayout ? 25 : 14)),
-                                            Text(
-                                                '₹ ${provider['data'][index]['price']}',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        tabLayout ? 25 : 14))
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    // SizedBox(width: width * 0.01),
-                                    Flexible(
-                                      flex: 1,
-                                      fit: FlexFit.tight,
-                                      child: Container(
-                                        // color: Colors.amber,
-                                        child: Column(
-                                          children: [
-                                            Text('Tax',
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize:
-                                                        tabLayout ? 25 : 14)),
-                                            Text(
-                                                '${provider['data'][index]['tax']}%',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        tabLayout ? 25 : 14))
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      flex: 1,
-                                      fit: FlexFit.tight,
-                                      child: Container(
-                                        // color: Colors.purple,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            InkWell(
-                                              // onTap: () => Navigator.of(context)
-                                              //     .pushNamed('/edit-products',
-                                              //         arguments: {
-                                              // 'id': provider['data']
-                                              //     [index]['id'],
-                                              // 'name': provider['data']
-                                              //     [index]['name'],
-                                              // 'short_description':
-                                              //     provider['data'][index][
-                                              //         'short_description'],
-                                              // 'description':
-                                              //     provider['data'][index]
-                                              //         ['description'],
-                                              // 'status': provider['data']
-                                              //     [index]['status'],
-                                              // 'weight': provider['data']
-                                              //     [index]['weight'],
-                                              // 'qty': provider['data']
-                                              //     [index]['qty'],
-                                              // 'price': provider['data']
-                                              //     [index]['price'],
-                                              // 'tax': provider['data']
-                                              //     [index]['tax'],
-                                              // 'main_image':
-                                              //     provider['data'][index]
-                                              //         ['main_image'],
-                                              // 'category': provider['data']
-                                              //         [index]['category']
-                                              //     ['name'],
-                                              // 'size': provider['data']
-                                              //         [index]['sizes']
-                                              //     ['size'],
-                                              // 'uom': provider['data']
-                                              //         [index]['uom']
-                                              //     ['short_name']
-                                              //     }),
-                                              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                                                  builder: (context) => EditProductsPage(
-                                                      provider['data'][index]
-                                                          ['id'],
-                                                      provider['data'][index]
-                                                          ['name'],
-                                                      provider['data'][index]
-                                                          ['short_description'],
-                                                      provider['data'][index]
-                                                          ['description'],
-                                                      provider['data'][index]
-                                                          ['status'],
-                                                      provider['data'][index]
-                                                          ['weight'],
-                                                      provider['data'][index]
-                                                          ['qty'],
-                                                      provider['data'][index]
-                                                          ['price'],
-                                                      provider['data'][index]
-                                                          ['tax'],
-                                                      provider['data'][index]
-                                                          ['main_image'],
-                                                      provider['data'][index]
-                                                          ['category']['name'],
-                                                      provider['data'][index]
-                                                          ['sizes']['size'],
-                                                      provider['data'][index]
-                                                          ['uom']['short_name']))),
-                                              child: Icon(Icons.edit,
-                                                  color: Colors.green,
-                                                  size: tabLayout ? 40 : 24),
-                                            ),
-                                            InkWell(
-                                              onTap: () async {
-                                                Provider.of<ProductsProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .deleteProduct(
-                                                        provider['data'][index]
-                                                                ['id']
-                                                            .toString())
-                                                    .then((_) {
-                                                  setState(() {
-                                                    provider['data']
-                                                        .removeAt(index);
-                                                  });
-                                                });
-                                                // setState(() {
-                                                //   isLoading = true;
-                                                // });
-                                                // recall();
-                                              },
-                                              child: Icon(Icons.delete,
-                                                  color: Colors.red,
-                                                  size: tabLayout ? 40 : 24),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
+                  height: double.infinity,
+                  // color: Colors.red,
+                  padding: EdgeInsets.only(
+                      left: width * 0.02,
+                      top: height * 0.02,
+                      right: width * 0.02,
+                      bottom: height * 0.02),
+                  child: ListView.builder(
+                    itemBuilder: (context, index) => Container(
+                      margin: EdgeInsets.only(bottom: height * 0.02),
+                      padding: EdgeInsets.all(width * 0.01),
+                      width: double.infinity,
+                      height: tabLayout ? height * 0.175 : height * 0.158,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 10,
+                                offset: Offset(1, 2))
+                          ]),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: width * 0.3,
+                            height: double.infinity,
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 132, 175, 134),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Image.network(
+                              'http://54.80.135.220:8000${provider['data'][index]['main_image']}',
+                              // fit: BoxFit.contain,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                          SizedBox(width: width * 0.02),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  top: height * 0.01, bottom: height * 0.01),
+                              // width: width * 0.7,
+                              height: double.infinity,
+                              // color: Colors.blue,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          provider['data'][index]['name'],
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: tabLayout ? 25 : 14),
+                                        ),
+                                        SizedBox(width: width * 0.02),
+                                        Expanded(
+                                          child: Text(
+                                            provider['data'][index]['category']
+                                                ['name'],
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: tabLayout ? 25 : 14),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.01),
+                                  SizedBox(
+                                    child: Row(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text('Size',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14)),
+                                            Text(
+                                                provider['data'][index]['sizes']
+                                                    ['size'],
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14))
+                                          ],
+                                        ),
+                                        SizedBox(width: width * 0.015),
+                                        Column(
+                                          children: [
+                                            Text('Quantity',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14)),
+                                            Text(
+                                                provider['data'][index]['qty']
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14))
+                                          ],
+                                        ),
+                                        SizedBox(width: width * 0.015),
+                                        Column(
+                                          children: [
+                                            Text('Weight',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14)),
+                                            Text(
+                                                provider['data'][index]
+                                                        ['weight']
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14))
+                                          ],
+                                        ),
+                                        SizedBox(width: width * 0.015),
+                                        Column(
+                                          children: [
+                                            Text('Unit',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14)),
+                                            Text(
+                                                provider['data'][index]['uom']
+                                                        ['short_name']
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        tabLayout ? 25 : 14))
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.01),
+                                  SizedBox(
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          flex: 1,
+                                          fit: FlexFit.tight,
+                                          child: Container(
+                                            // color: Colors.red,
+                                            child: Column(
+                                              children: [
+                                                Text('Price',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: tabLayout
+                                                            ? 25
+                                                            : 14)),
+                                                Text(
+                                                    '₹ ${provider['data'][index]['price']}',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: tabLayout
+                                                            ? 25
+                                                            : 14))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        // SizedBox(width: width * 0.01),
+                                        Flexible(
+                                          flex: 1,
+                                          fit: FlexFit.tight,
+                                          child: Container(
+                                            // color: Colors.amber,
+                                            child: Column(
+                                              children: [
+                                                Text('Tax',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: tabLayout
+                                                            ? 25
+                                                            : 14)),
+                                                Text(
+                                                    '${provider['data'][index]['tax']}%',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: tabLayout
+                                                            ? 25
+                                                            : 14))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Flexible(
+                                          flex: 1,
+                                          fit: FlexFit.tight,
+                                          child: Container(
+                                            // color: Colors.purple,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                InkWell(
+                                                  // onTap: () => Navigator.of(context)
+                                                  //     .pushNamed('/edit-products',
+                                                  //         arguments: {
+                                                  // 'id': provider['data']
+                                                  //     [index]['id'],
+                                                  // 'name': provider['data']
+                                                  //     [index]['name'],
+                                                  // 'short_description':
+                                                  //     provider['data'][index][
+                                                  //         'short_description'],
+                                                  // 'description':
+                                                  //     provider['data'][index]
+                                                  //         ['description'],
+                                                  // 'status': provider['data']
+                                                  //     [index]['status'],
+                                                  // 'weight': provider['data']
+                                                  //     [index]['weight'],
+                                                  // 'qty': provider['data']
+                                                  //     [index]['qty'],
+                                                  // 'price': provider['data']
+                                                  //     [index]['price'],
+                                                  // 'tax': provider['data']
+                                                  //     [index]['tax'],
+                                                  // 'main_image':
+                                                  //     provider['data'][index]
+                                                  //         ['main_image'],
+                                                  // 'category': provider['data']
+                                                  //         [index]['category']
+                                                  //     ['name'],
+                                                  // 'size': provider['data']
+                                                  //         [index]['sizes']
+                                                  //     ['size'],
+                                                  // 'uom': provider['data']
+                                                  //         [index]['uom']
+                                                  //     ['short_name']
+                                                  //     }),
+                                                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                                                      builder: (context) => EditProductsPage(
+                                                          provider['data']
+                                                              [index]['id'],
+                                                          provider['data']
+                                                              [index]['name'],
+                                                          provider['data'][index][
+                                                              'short_description'],
+                                                          provider['data'][index]
+                                                              ['description'],
+                                                          provider['data']
+                                                              [index]['status'],
+                                                          provider['data']
+                                                              [index]['weight'],
+                                                          provider['data']
+                                                              [index]['qty'],
+                                                          provider['data']
+                                                              [index]['price'],
+                                                          provider['data']
+                                                              [index]['tax'],
+                                                          provider['data'][index]['main_image'],
+                                                          provider['data'][index]['category']['name'],
+                                                          provider['data'][index]['sizes']['size'],
+                                                          provider['data'][index]['uom']['short_name']))),
+                                                  child: Icon(Icons.edit,
+                                                      color: Colors.green,
+                                                      size:
+                                                          tabLayout ? 40 : 24),
+                                                ),
+                                                InkWell(
+                                                  onTap: () async {
+                                                    Provider.of<ProductsProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .deleteProduct(
+                                                            provider['data']
+                                                                        [index]
+                                                                    ['id']
+                                                                .toString())
+                                                        .then((_) {
+                                                      setState(() {
+                                                        provider['data']
+                                                            .removeAt(index);
+                                                      });
+                                                    });
+                                                    // setState(() {
+                                                    //   isLoading = true;
+                                                    // });
+                                                    // recall();
+                                                  },
+                                                  child: Icon(Icons.delete,
+                                                      color: Colors.red,
+                                                      size:
+                                                          tabLayout ? 40 : 24),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    itemCount: provider['data'].length,
                   ),
                 ),
-                itemCount: provider['data'].length,
-              ),
-            ),
       floatingActionButton: Container(
         margin: EdgeInsets.only(bottom: height * 0.07),
         decoration: const BoxDecoration(shape: BoxShape.circle, boxShadow: [

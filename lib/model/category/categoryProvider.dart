@@ -4,7 +4,7 @@ import './categoryModel.dart';
 import 'dart:convert';
 
 class CategoryProvider with ChangeNotifier {
-  String baseUrl = 'http://54.80.135.220/';
+  String baseUrl = 'http://54.80.135.220:8000/';
   List<dynamic> _categoryList = [];
   List<dynamic> _list = [];
 

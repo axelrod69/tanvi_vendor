@@ -447,7 +447,7 @@ class EditProductsPageState extends State<EditProductsPage> {
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               child: Image.network(
-                                                'http://54.80.135.220${widget.mainImage}',
+                                                'http://54.80.135.220:8000${widget.mainImage}',
                                                 fit: BoxFit.cover,
                                               )),
                                     ),
@@ -532,7 +532,7 @@ class EditProductsPageState extends State<EditProductsPage> {
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               child: Image.network(
-                                                'http://54.80.135.220${widget.mainImage}',
+                                                'http://54.80.135.220:8000${widget.mainImage}',
                                                 fit: BoxFit.cover,
                                               )),
                                     ),
