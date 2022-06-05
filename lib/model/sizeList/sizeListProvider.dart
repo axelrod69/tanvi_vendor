@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class SizeListProvider with ChangeNotifier {
-  String baseUrl = 'http://54.80.135.220:8000/';
+  String baseUrl = 'http://54.80.135.220/';
   List<dynamic> _sizeList = [];
 
   List<dynamic> get sizeList {

@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 import './productsModel.dart';
 
 class ProductsProvider with ChangeNotifier {
-  String baseUrl = 'http://54.80.135.220:8000/';
+  String baseUrl = 'http://54.80.135.220/';
   Map<String, dynamic> _vendorProducts = {};
 
   Map<String, dynamic> get vendorProducts {
@@ -62,7 +62,7 @@ class ProductsProvider with ChangeNotifier {
   //   print('Form Data $formData');
 
   //   final response = await Dio().post(
-  //       'http://54.80.135.220:8000/api/vendor/product/',
+  //       'http://54.80.135.220/api/vendor/product/',
   //       data: formData,
   //       options: Options(headers: {
   //         'Authorization': 'Bearer ${localStorage.getString('token')}'
@@ -107,7 +107,8 @@ class ProductsProvider with ChangeNotifier {
     request.fields['name'] = name!;
     request.fields['short_description'] = shortDescription!;
     request.fields['description'] = description!;
-    request.fields['status'] = status!;
+    request.fields['status'] =
+        status == 'Available' ? 'in_stock' : 'out_of_stock';
     request.fields['weight'] = weight!;
     request.fields['qty'] = quantity!;
     request.fields['price'] = price!;
@@ -209,8 +210,7 @@ class ProductsProvider with ChangeNotifier {
 
     print('Form Data $formData');
 
-    final response = await Dio().put(
-        'http://54.80.135.220:8000/api/vendor/product/',
+    final response = await Dio().put('http://54.80.135.220/api/vendor/product/',
         data: formData,
         options: Options(headers: {
           'Authorization': 'Bearer ${localStorage.getString('token')}'

@@ -88,24 +88,27 @@ class PersonalState extends State<Personal> {
                     // child: Image.asset(
                     //   'assets/images/NoPath - Copy (14).png',
                     // ),
-                    child: widget.profilePic != ''
-                        ? Image.network(
-                            'http://54.80.135.220:8000${widget.profilePic}',
-                            fit: BoxFit.cover,
-                          )
-                        // ? Image.file(widget.profilePic, fit: BoxFit.cover)
-                        : image != null
-                            ? ClipRRect(
-                                borderRadius:
-                                    BorderRadius.circular(width * 0.12),
-                                child: Image.file(
-                                  image!,
-                                  fit: BoxFit.cover,
-                                ),
-                              )
-                            : const Center(
-                                child: Text('Pick An Image'),
-                              ),
+                    backgroundImage: NetworkImage(
+                        'http://54.80.135.220${widget.profilePic}'),
+                    backgroundColor: Colors.blue,
+                    // child: widget.profilePic != ''
+                    //     ? Image.network(
+                    //       'http://54.80.135.220${widget.profilePic}',
+                    //       // fit: BoxFit.fitHeight,
+                    //     )
+                    //     // ? Image.file(widget.profilePic, fit: BoxFit.cover)
+                    //     : image != null
+                    //         ? ClipRRect(
+                    //             borderRadius:
+                    //                 BorderRadius.circular(width * 0.12),
+                    //             child: Image.file(
+                    //               image!,
+                    //               fit: BoxFit.cover,
+                    //             ),
+                    //           )
+                    //         : const Center(
+                    //             child: Text('Pick An Image'),
+                    //           ),
                   ),
                 ),
                 Positioned(

@@ -63,7 +63,7 @@ class FormWidgetState extends State<FormWidget> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                           hintText: 'Enter Your Email',
-                          hintStyle: TextStyle(fontSize: tabLayout ? 25 : 14),
+                          hintStyle: TextStyle(fontSize: tabLayout ? 25 : 18),
                           // suffixIcon: mobileNumber!.length < 10
                           //     ? null
                           //     : const Icon(Icons.check_circle,
@@ -112,7 +112,7 @@ class FormWidgetState extends State<FormWidget> {
                       obscureText: true,
                       decoration: InputDecoration(
                           hintText: 'Enter Your Password',
-                          hintStyle: TextStyle(fontSize: tabLayout ? 25 : 14),
+                          hintStyle: TextStyle(fontSize: tabLayout ? 25 : 18),
                           // suffixIcon: mobileNumber!.length < 10
                           //     ? null
                           //     : const Icon(Icons.check_circle,
@@ -318,6 +318,19 @@ class FormWidgetState extends State<FormWidget> {
     if (res['status'] == 'success') {
       await localStorage.setString('token', res['data']['access']);
       Navigator.of(context).pushNamed('/home');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green,
+        content: Text(res['message'],
+            style: const TextStyle(
+              color: Colors.white,
+            )),
+        action: SnackBarAction(
+            label: 'OK',
+            textColor: Colors.white,
+            onPressed: () =>
+                ScaffoldMessenger.of(context).hideCurrentSnackBar()),
+      ));
     }
     print(json.decode(response.body));
   }

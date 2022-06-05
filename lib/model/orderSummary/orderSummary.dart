@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class OrderSummaryProvider with ChangeNotifier {
-  String baseUrl = 'http://54.80.135.220:8000/';
+  String baseUrl = 'http://54.80.135.220/';
   Map<String, dynamic> _orderList = {};
   Map<String, dynamic> _orderRecent = {};
   Map<String, dynamic> _orderDetails = {};

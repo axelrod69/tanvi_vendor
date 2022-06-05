@@ -143,7 +143,7 @@ class DashboardState extends State<Dashboard> {
                   ),
                   // SizedBox(height: height * 0.01),
                   Container(
-                    height: tabLayout ? height * 0.7 : height * 0.48,
+                    height: tabLayout ? height * 0.7 : height * 0.56,
                     width: double.infinity,
                     // color: Colors.amber,
                     padding: EdgeInsets.only(
@@ -152,7 +152,7 @@ class DashboardState extends State<Dashboard> {
                         right: width * 0.02,
                         bottom: height * 0.02),
                     child: GridView(
-                      physics: NeverScrollableScrollPhysics(),
+                      // physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           crossAxisSpacing: width * 0.065,
                           mainAxisSpacing: height * 0.03,

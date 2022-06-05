@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class MonthlyStatsProvider with ChangeNotifier {
-  String baseUrl = 'http://54.80.135.220:8000/';
+  String baseUrl = 'http://54.80.135.220/';
   Map<String, dynamic> _stats = {};
 
   Map<String, dynamic> get stats {
