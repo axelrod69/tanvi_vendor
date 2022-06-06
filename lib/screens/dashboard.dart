@@ -8,6 +8,7 @@ import '../widget/dashboardWidgets/totalProducts.dart';
 import '../widget/dashboardWidgets/newOrders.dart';
 import 'package:provider/provider.dart';
 import '../model/dashboard/monthlyStats.dart';
+import '../model/profile/profileProvider.dart';
 
 class Dashboard extends StatefulWidget {
   DashboardState createState() => DashboardState();
@@ -25,6 +26,11 @@ class DashboardState extends State<Dashboard> {
       setState(() {
         isLoading = false;
       });
+      // Provider.of<ProfileProvider>(context, listen: false)
+      //     .fetchProfileDetails()
+      //     .then((_) {
+
+      // });
     });
     super.initState();
   }
@@ -34,6 +40,7 @@ class DashboardState extends State<Dashboard> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final provider = Provider.of<MonthlyStatsProvider>(context).stats;
+    final profileProvider = Provider.of<ProfileProvider>(context).profile;
     final tabLayout = width > 600;
     final largeLayout = width > 350 && width < 600;
 
@@ -62,11 +69,13 @@ class DashboardState extends State<Dashboard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Hi, Ankit',
+                            isLoading
+                                ? 'Loading...'
+                                : 'Hi, ${profileProvider['data']['first_name']}',
                             style: TextStyle(
                                 color: const Color.fromARGB(255, 36, 71, 100),
                                 fontWeight: FontWeight.bold,
-                                fontSize: tabLayout ? 40 : 25),
+                                fontSize: tabLayout ? 40 : 22),
                           ),
                           SizedBox(height: height * 0.005),
                           Text(DateFormat.yMMMMd().format(DateTime.now()),
@@ -143,7 +152,7 @@ class DashboardState extends State<Dashboard> {
                   ),
                   // SizedBox(height: height * 0.01),
                   Container(
-                    height: tabLayout ? height * 0.7 : height * 0.56,
+                    height: tabLayout ? height * 0.7 : height * 0.458,
                     width: double.infinity,
                     // color: Colors.amber,
                     padding: EdgeInsets.only(
@@ -152,7 +161,7 @@ class DashboardState extends State<Dashboard> {
                         right: width * 0.02,
                         bottom: height * 0.02),
                     child: GridView(
-                      // physics: NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           crossAxisSpacing: width * 0.065,
                           mainAxisSpacing: height * 0.03,

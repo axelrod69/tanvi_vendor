@@ -56,83 +56,100 @@ class ViewOrderDetailsState extends State<ViewOrderDetails> {
           ),
         ],
       ),
-      body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: ListView.builder(
-            itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                margin:
-                    EdgeInsets.only(top: height * 0.02, bottom: height * 0.001),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 10,
-                          offset: Offset(1, 2))
-                    ]),
-                child: Row(
-                  children: [
-                    Container(
-                      width: width * 0.32,
-                      height: height * 0.15,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.network(
-                          'http://192.168.0.3:3000${provider['data']['productDetails'][index]['product']['main_image']}',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Expanded(
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Colors.green,
+              ),
+            )
+          : provider['data']['deliveryExeDetails'] == null
+              ? const Center(
+                  child: Text('No Delivery Executive Assigned'),
+                )
+              : Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: ListView.builder(
+                    itemBuilder: (context, index) => Padding(
+                      padding: EdgeInsets.only(
+                          left: width * 0.02, right: width * 0.02),
                       child: Container(
-                        height: height * 0.15,
-                        padding: EdgeInsets.only(left: width * 0.03),
-                        // color: Colors.red,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(10),
+                        margin: EdgeInsets.only(
+                            top: height * 0.02, bottom: height * 0.001),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Colors.grey,
+                                  blurRadius: 10,
+                                  offset: Offset(1, 2))
+                            ]),
+                        child: Row(
                           children: [
-                            Text(
-                                provider['data']['productDetails'][index]
-                                    ['product']['name'],
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 24)),
-                            Text(
-                                provider['data']['productDetails'][index]
-                                            ['product']['status'] ==
-                                        'in_stock'
-                                    ? 'Status: Available'
-                                    : 'Status: Out Of Stock',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20)),
-                            Text(
-                                'Quantity: ${provider['data']['productDetails'][index]['product']['qty']}'
-                                    .toString(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20)),
-                            Text(
-                                'Price: ₹${provider['data']['productDetails'][index]['product']['price']}',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20)),
-                            Text(
-                                'Tax: ₹${provider['data']['productDetails'][index]['product']['price']}',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20))
+                            Container(
+                              width: width * 0.32,
+                              height: height * 0.15,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.network(
+                                  'http://54.80.135.220${provider['data']['productDetails'][index]['product']['main_image']}',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                height: height * 0.15,
+                                padding: EdgeInsets.only(left: width * 0.03),
+                                // color: Colors.red,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        provider['data']['productDetails']
+                                            [index]['product']['name'],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 24)),
+                                    Text(
+                                        provider['data']['productDetails']
+                                                        [index]['product']
+                                                    ['status'] ==
+                                                'in_stock'
+                                            ? 'Status: Available'
+                                            : 'Status: Out Of Stock',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20)),
+                                    Text(
+                                        'Quantity: ${provider['data']['orderDetails']['total_quantity']}'
+                                            .toString(),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20)),
+                                    Text(
+                                        'Price: ₹${provider['data']['productDetails'][index]['product']['price']}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20)),
+                                    Text(
+                                        'Tax: ${provider['data']['productDetails'][index]['product']['tax']}%',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20))
+                                  ],
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            itemCount: provider['data']['productDetails'].length,
-          )),
+                    ),
+                    itemCount: provider['data']['productDetails'].length,
+                  )),
     );
   }
 }

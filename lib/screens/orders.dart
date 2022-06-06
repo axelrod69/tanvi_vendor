@@ -3,49 +3,20 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../model/orderSummary/orderSummary.dart';
 import '../screens/viewOrderDetails.dart';
+import '../model/profile/profileProvider.dart';
 
 class Orders extends StatefulWidget {
   OrdersState createState() => OrdersState();
 }
 
 class OrdersState extends State<Orders> {
-  // final List<dynamic> _orderList = [
-  //   {
-  //     'orderId': '#20220421-01234567',
-  //     'name': "Siddhartha Chatterjee",
-  //     'price': '230.44',
-  //     'paymentStatus': 'Paid',
-  //     'deliveryStatus': 'In Transit'
-  //   },
-  //   {
-  //     'orderId': '#20220421-01234567',
-  //     'name': "Soumyajit Das",
-  //     'price': '231.44',
-  //     'paymentStatus': 'Unpaid',
-  //     'deliveryStatus': 'Confirmed'
-  //   },
-  //   {
-  //     'orderId': '#20220421-01234567',
-  //     'name': "Tanay Banerjee",
-  //     'price': '232.44',
-  //     'paymentStatus': 'Paid',
-  //     'deliveryStatus': 'Delivered'
-  //   },
-  //   {
-  //     'orderId': '#20220421-01234567',
-  //     'name': "Rachhel Sekh",
-  //     'price': '233.44',
-  //     'paymentStatus': 'Unpaid',
-  //     'deliveryStatus': 'Delivered'
-  //   }
-  // ];
-
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final tabLayout = width > 600;
     final largeLayout = width > 350 && width < 600;
     final provider = Provider.of<OrderSummaryProvider>(context).orderList;
+    final profileProvider = Provider.of<ProfileProvider>(context).profile;
 
     // TODO: implement build
     return Scaffold(
@@ -72,17 +43,17 @@ class OrdersState extends State<Orders> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Hi, Ankit',
+                            'Hi, ${profileProvider['data']['first_name']}',
                             style: TextStyle(
                                 color: const Color.fromARGB(255, 36, 71, 100),
                                 fontWeight: FontWeight.bold,
-                                fontSize: tabLayout ? 40 : 30),
+                                fontSize: tabLayout ? 40 : 22),
                           ),
                           SizedBox(height: height * 0.005),
                           Text(DateFormat.yMMMMd().format(DateTime.now()),
                               style: TextStyle(
                                   color: Color.fromARGB(255, 99, 118, 134),
-                                  fontSize: tabLayout ? 40 : 30))
+                                  fontSize: tabLayout ? 40 : 22))
                         ],
                       ),
                     ),
@@ -211,7 +182,7 @@ class OrdersState extends State<Orders> {
                                             color: const Color.fromARGB(
                                                 255, 36, 71, 100),
                                             fontWeight: FontWeight.bold,
-                                            fontSize: tabLayout ? 30 : 24),
+                                            fontSize: tabLayout ? 30 : 20),
                                       ),
                                       SizedBox(width: width * 0.002),
                                       Text(
@@ -256,7 +227,7 @@ class OrdersState extends State<Orders> {
                                     fontSize: tabLayout ? 22 : 14),
                               ),
                               Text(
-                                '${provider['data'][index]['order']['user']['first_name']} ${provider['data'][index]['order']['user']['last_name']}',
+                                provider['data'][0]['order']['address']['name'],
                                 style: TextStyle(
                                     color:
                                         const Color.fromARGB(255, 36, 71, 100),

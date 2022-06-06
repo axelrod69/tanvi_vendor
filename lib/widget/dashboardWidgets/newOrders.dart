@@ -9,6 +9,19 @@ class NewOrders extends StatefulWidget {
 }
 
 class NewOrdersState extends State<NewOrders> {
+  bool isLoading = true;
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   Provider.of<OrderSummaryProvider>(context, listen: false)
+  //       .getRecentOrder()
+  //       .then((_) {
+  //     isLoading = false;
+  //   });
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -18,7 +31,15 @@ class NewOrdersState extends State<NewOrders> {
     final recentOrder = Provider.of<OrderSummaryProvider>(context).orderRecent;
 
     // TODO: implement build
-    return Container(
+    return
+        // isLoading
+        //     ? const Center(
+        //         child: CircularProgressIndicator(
+        //           color: Colors.green,
+        //         ),
+        //       )
+        //     :
+        Container(
       width: double.infinity,
       // height: height * 0.24,
       decoration: BoxDecoration(
@@ -88,7 +109,7 @@ class NewOrdersState extends State<NewOrders> {
                                     color:
                                         const Color.fromARGB(255, 36, 71, 100),
                                     fontWeight: FontWeight.bold,
-                                    fontSize: tabLayout ? 30 : 24),
+                                    fontSize: tabLayout ? 30 : 20),
                               ),
                               SizedBox(width: width * 0.002),
                               Text(
@@ -133,7 +154,7 @@ class NewOrdersState extends State<NewOrders> {
                             fontSize: tabLayout ? 22 : 14),
                       ),
                       Text(
-                        '${recentOrder['data'][0]['order']['user']['first_name']} ${recentOrder['data'][0]['order']['user']['last_name']}',
+                        recentOrder['data'][0]['order']['address']['name'],
                         style: TextStyle(
                             color: const Color.fromARGB(255, 36, 71, 100),
                             fontWeight: FontWeight.bold,

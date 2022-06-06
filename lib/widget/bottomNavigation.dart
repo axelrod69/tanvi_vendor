@@ -7,6 +7,7 @@ import '../screens/profile.dart';
 import 'package:provider/provider.dart';
 import '../model/profileStatus/statusProvider.dart';
 import '../model/orderSummary/orderSummary.dart';
+import '../model/profile/profileProvider.dart';
 
 class CustomBottomNavigation extends StatefulWidget {
   CustomBottomNavigationState createState() => CustomBottomNavigationState();
@@ -27,8 +28,12 @@ class CustomBottomNavigationState extends State<CustomBottomNavigation> {
         Provider.of<OrderSummaryProvider>(context, listen: false)
             .getRecentOrder()
             .then((_) {
-          setState(() {
-            isLoading = false;
+          Provider.of<ProfileProvider>(context, listen: false)
+              .fetchProfileDetails()
+              .then((_) {
+            setState(() {
+              isLoading = false;
+            });
           });
         });
       });
