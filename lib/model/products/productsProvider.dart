@@ -159,7 +159,7 @@ class ProductsProvider with ChangeNotifier {
     var formData;
 
     print('name $name');
-    print('image $image');
+    print('image: $image');
     print('shortDescription $shortDescription');
     print('description $description');
     print('status $status');
@@ -183,7 +183,7 @@ class ProductsProvider with ChangeNotifier {
         'qty': quantity,
         'price': price,
         'tax': tax,
-        // 'main_image': await MultipartFile.fromFile(image!.path),
+        'main_image': await MultipartFile.fromFile(image.path),
         'brand_name': 1,
         'category': category,
         'sizes': size,

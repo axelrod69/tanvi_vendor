@@ -48,7 +48,11 @@ class OrderSummaryProvider with ChangeNotifier {
 
     var res = json.decode(response.body);
 
-    _orderRecent = res;
+    if (res['data'].length > 0) {
+      _orderRecent = res;
+    } else {
+      _orderRecent = {'data': []};
+    }
 
     print('Recent Order: $_orderRecent');
   }

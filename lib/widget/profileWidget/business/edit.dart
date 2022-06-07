@@ -8,14 +8,16 @@ import 'package:open_file/open_file.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:file_picker/file_picker.dart';
+import '../../../screens/changeAddressScreen.dart';
 
 class EditProfile extends StatefulWidget {
   final Map<String, dynamic> businessDetails;
   final Map<String, dynamic> bankDetails;
+  final Map<String, dynamic> addressDetails;
 
   EditProfileState createState() => EditProfileState();
 
-  EditProfile(this.businessDetails, this.bankDetails);
+  EditProfile(this.businessDetails, this.bankDetails, this.addressDetails);
 }
 
 class EditProfileState extends State<EditProfile> {
@@ -127,6 +129,10 @@ class EditProfileState extends State<EditProfile> {
         widget.bankDetails['message'] == 'You don\'t have any Bank details'
             ? true
             : false;
+    final provider =
+        Provider.of<BusinessProfileProvider>(context).businessAddress;
+    final providerAddress =
+        Provider.of<BusinessProfileProvider>(context).deliveryAddress;
     final tabLayout = width > 600;
     final largeLayout = width > 350 && width < 600;
 
@@ -617,6 +623,32 @@ class EditProfileState extends State<EditProfile> {
                     }
                   },
                 ),
+              ),
+              SizedBox(height: height * 0.02),
+              InkWell(
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ChangeNewLocation())),
+                child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.only(
+                        left: width * 0.05,
+                        top: height * 0.005,
+                        right: width * 0.05,
+                        bottom: height * 0.005),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Address',
+                            style: TextStyle(color: Colors.grey, fontSize: 12)),
+                        Text(provider['status'] == 'Warning'
+                            ? 'No Address Selected'
+                            : providerAddress)
+                      ],
+                    )),
               ),
               SizedBox(height: height * 0.02),
               InkWell(

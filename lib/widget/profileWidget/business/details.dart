@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tanvi_vendor/model/profile/businessProfileProvider.dart';
 // import '../../model/profile/profileProvider.dart';
 
 class Details extends StatelessWidget {
   final Map<String, dynamic> businessDetails;
   final Map<String, dynamic> bankDetails;
+  final Map<String, dynamic> addressDetails;
 
-  Details(this.businessDetails, this.bankDetails);
+  Details(this.businessDetails, this.bankDetails, this.addressDetails);
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,9 @@ class Details extends StatelessWidget {
     bool bank = bankDetails['message'] == 'You don\'t have any Bank details'
         ? true
         : false;
+    bool address = addressDetails['status'] == 'warning' ? true : false;
+    final provider =
+        Provider.of<BusinessProfileProvider>(context).deliveryAddress;
     final tabLayout = width > 600;
     final largeLayout = width > 350 && width < 600;
 
@@ -219,7 +224,24 @@ class Details extends StatelessWidget {
             // textScaleFactor: textScale,
             style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
           ),
-          // SizedBox(height: height * 0.02),
+          SizedBox(height: height * 0.02),
+          Text(
+            'Business Address',
+            // textScaleFactor: textScale,
+            style: TextStyle(
+                // color: Color.fromRGBO(131, 131, 131, 1),
+                color: textColor,
+                fontSize: tabLayout ? 28 : 17),
+          ),
+          SizedBox(height: height * 0.01),
+          Text(
+            address == true
+                ? 'Please Enter Address'
+                // : '${addressDetails['data']['address']}, ${addressDetails['data']['locality']}, ${addressDetails['data']['city']}, ${addressDetails['data']['state']}, ${addressDetails['data']['postcode']}',
+                : provider,
+            // textScaleFactor: t: extScale,
+            style: TextStyle(color: textColor, fontSize: tabLayout ? 20 : 12),
+          ),
           // Text(
           //   'Business Name',
           //   // textScaleFactor: textScale,

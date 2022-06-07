@@ -48,8 +48,12 @@ class BusinessState extends State<Business> {
       Provider.of<BusinessProfileProvider>(context, listen: false)
           .getBankDetails()
           .then((_) {
-        setState(() {
-          isLoading = false;
+        Provider.of<BusinessProfileProvider>(context, listen: false)
+            .getBusinessAddress()
+            .then((_) {
+          setState(() {
+            isLoading = false;
+          });
         });
       });
     });
@@ -66,6 +70,8 @@ class BusinessState extends State<Business> {
         Provider.of<BusinessProfileProvider>(context).businessProfile;
     final bankProvider =
         Provider.of<BusinessProfileProvider>(context).bankDetails;
+    final addressProvider =
+        Provider.of<BusinessProfileProvider>(context).businessAddress;
     final tabLayout = width > 600;
     final largeLayout = width > 350 && width < 600;
 
@@ -148,8 +154,9 @@ class BusinessState extends State<Business> {
                   // ),
                   SizedBox(height: height * 0.01),
                   !clicked
-                      ? Details(businessProvider, bankProvider)
-                      : EditProfile(businessProvider, bankProvider)
+                      ? Details(businessProvider, bankProvider, addressProvider)
+                      : EditProfile(
+                          businessProvider, bankProvider, addressProvider)
                 ],
               ),
             ),

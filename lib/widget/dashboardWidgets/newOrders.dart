@@ -31,15 +31,7 @@ class NewOrdersState extends State<NewOrders> {
     final recentOrder = Provider.of<OrderSummaryProvider>(context).orderRecent;
 
     // TODO: implement build
-    return
-        // isLoading
-        //     ? const Center(
-        //         child: CircularProgressIndicator(
-        //           color: Colors.green,
-        //         ),
-        //       )
-        //     :
-        Container(
+    return Container(
       width: double.infinity,
       // height: height * 0.24,
       decoration: BoxDecoration(

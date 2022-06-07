@@ -122,10 +122,12 @@ class EditProductsPageState extends State<EditProductsPage> {
             .then((_) {
           setState(() {
             isLoading = false;
+            // image = File(widget.mainImage);
           });
         });
       });
     });
+    print('Image Edit: $image');
     _title.text = widget.name;
     _shortDesc.text = widget.shortDescription;
     _desc.text = widget.description;
@@ -1008,8 +1010,8 @@ class EditProductsPageState extends State<EditProductsPage> {
             _quantities.text,
             _priceeee.text,
             _taxxx.text,
-            // image == null ? File(widget.mainImage) : image!,
-            image!,
+            image == null ? File(widget.mainImage) : image!,
+            // image!,
             dropDownValue == null ? widget.category : dropDownValue!,
             sizeDropDownValue == null ? widget.size : sizeDropDownValue!,
             measureDropDownValue == null
