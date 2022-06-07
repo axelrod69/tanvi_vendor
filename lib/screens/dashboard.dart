@@ -159,10 +159,12 @@ class DashboardState extends State<Dashboard> {
                         left: width * 0.02,
                         top: height * 0.02,
                         right: width * 0.02,
-                        bottom: height * 0.02),
+                        bottom: height * 0.005),
                     child: GridView(
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          childAspectRatio:
+                              !tabLayout && !largeLayout ? 2.4 / 2 : 2.1 / 2,
                           crossAxisSpacing: width * 0.065,
                           mainAxisSpacing: height * 0.03,
                           maxCrossAxisExtent: width * 0.45),

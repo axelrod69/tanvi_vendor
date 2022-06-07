@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -229,9 +230,11 @@ class BusinessProfileProvider with ChangeNotifier {
     request.fields['telephone_2'] = telephoneNumberTwo!;
     request.fields['company_pancard'] = companyPanCard!;
     request.files.add(await http.MultipartFile.fromPath(
-        'company_pancard_doc', panCard!.path));
+        'company_pancard_doc', panCard!.path,
+        contentType: MediaType('application', 'x-tar')));
     request.files.add(await http.MultipartFile.fromPath(
-        'adhar_udyam_udoyog', aadharCard!.path));
+        'adhar_udyam_udoyog', aadharCard!.path,
+        contentType: MediaType('application', 'x-tar')));
 
     // request.files.add(http.MultipartFile.fromBytes(
     //     'company_pancard_doc', File(panCard!.toString()).readAsBytesSync()));

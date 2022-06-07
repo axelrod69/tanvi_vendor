@@ -71,7 +71,7 @@ class EditProfileState extends State<EditProfile> {
       print('Temp Image: $imageTemporary');
       setState(() {
         imageOne = imageTemporary;
-        print('Image $imageOne');
+        print('Image Oneeee $imageOne');
       });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
@@ -85,7 +85,7 @@ class EditProfileState extends State<EditProfile> {
       print('Temp Image: $imageTemporary');
       setState(() {
         imageTwo = imageTemporary;
-        print('Image $imageTwo');
+        print('Image Twoooooooo $imageTwo');
       });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
@@ -344,13 +344,13 @@ class EditProfileState extends State<EditProfile> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(left: width * 0.03),
-                    child: Text('PDF Only',
-                        style: TextStyle(
-                          fontSize: tabLayout ? 14 : 12,
-                        )),
-                  )
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: width * 0.03),
+                  //   child: Text('PDF Only',
+                  //       style: TextStyle(
+                  //         fontSize: tabLayout ? 14 : 12,
+                  //       )),
+                  // )
                 ],
               ),
               SizedBox(height: height * 0.02),

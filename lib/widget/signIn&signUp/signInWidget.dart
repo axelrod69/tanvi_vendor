@@ -143,12 +143,12 @@ class FormWidgetState extends State<FormWidget> {
         ],
       ),
       SizedBox(height: height * 0.04),
-      Text(
-        'Forgot your password?',
-        textAlign: TextAlign.center,
-        // textScaleFactor: textScaleFactor,
-        style: TextStyle(color: Colors.grey, fontSize: tabLayout ? 25 : 14),
-      ),
+      // Text(
+      //   'Forgot your password?',
+      //   textAlign: TextAlign.center,
+      //   // textScaleFactor: textScaleFactor,
+      //   style: TextStyle(color: Colors.grey, fontSize: tabLayout ? 25 : 14),
+      // ),
       Padding(
         padding: EdgeInsets.only(left: width * 0.08, right: width * 0.08),
         child: InkWell(
@@ -280,19 +280,19 @@ class FormWidgetState extends State<FormWidget> {
       //   ],
       // ),
       SizedBox(height: height * 0.04),
-      Text(
-          'Please Change your Password if you are Logging In For the First Time',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: tabLayout
-                ? 23
-                : largeLayout
-                    ? 16
-                    : 12,
-            fontWeight: FontWeight.bold,
-          )),
-      SizedBox(height: height * 0.02),
+      // Text(
+      //     'Please Change your Password if you are Logging In For the First Time',
+      //     textAlign: TextAlign.center,
+      //     style: TextStyle(
+      //       color: Colors.grey,
+      //       fontSize: tabLayout
+      //           ? 23
+      //           : largeLayout
+      //               ? 16
+      //               : 12,
+      //       fontWeight: FontWeight.bold,
+      //     )),
+      // SizedBox(height: height * 0.02),
       //   InkWell(
       //     onTap: () => Navigator.of(context).pushNamed('/change-password'),
       //     child: const Text('Change Password',
