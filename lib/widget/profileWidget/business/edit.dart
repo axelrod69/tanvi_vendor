@@ -73,6 +73,8 @@ class EditProfileState extends State<EditProfile> {
         imageOne = imageTemporary;
         print('Image Oneeee $imageOne');
       });
+      Provider.of<BusinessProfileProvider>(context, listen: false)
+          .ImageOne(imageOne);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -87,6 +89,8 @@ class EditProfileState extends State<EditProfile> {
         imageTwo = imageTemporary;
         print('Image Twoooooooo $imageTwo');
       });
+      Provider.of<BusinessProfileProvider>(context, listen: false)
+          .ImageTwo(imageTwo);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -655,6 +659,31 @@ class EditProfileState extends State<EditProfile> {
                 onTap: () {
                   if (key.currentState!.validate()) {
                     Provider.of<BusinessProfileProvider>(context, listen: false)
+                        .postMethodOne(
+                            organisation!.isEmpty
+                                ? widget.businessDetails['data']['org_name']
+                                : organisation,
+                            teleOne!.isEmpty
+                                ? widget.businessDetails['data']['telephone_1']
+                                : teleOne,
+                            teleTwo!.isEmpty
+                                ? widget.businessDetails['data']['telephone_2']
+                                : teleTwo,
+                            panCardNumber!.isEmpty
+                                ? widget.businessDetails['data']
+                                    ['company_pancard']
+                                : panCardNumber,
+                            // imageOne,
+                            aadharUdyom!.isEmpty
+                                ? widget.businessDetails['data']
+                                    ['adhar_udyam_udoyog']
+                                : aadharUdyom,
+                            // imageTwo,
+                            gstNo!.isEmpty
+                                ? widget.businessDetails['data']['gst_number']
+                                : gstNo);
+
+                    Provider.of<BusinessProfileProvider>(context, listen: false)
                         .postBankDetails(
                             nameOfBank!.isEmpty
                                 ? widget.bankDetails['data']['acc_bank_name']
@@ -667,36 +696,7 @@ class EditProfileState extends State<EditProfile> {
                                 : ifsc,
                             accountNo!.isEmpty
                                 ? widget.bankDetails['data']['acc_no']
-                                : accountNo)
-                        .then((_) {
-                      Provider.of<BusinessProfileProvider>(context,
-                              listen: false)
-                          .postMethod(
-                              organisation!.isEmpty
-                                  ? widget.businessDetails['data']['org_name']
-                                  : organisation,
-                              teleOne!.isEmpty
-                                  ? widget.businessDetails['data']
-                                      ['telephone_1']
-                                  : teleOne,
-                              teleTwo!.isEmpty
-                                  ? widget.businessDetails['data']
-                                      ['telephone_2']
-                                  : teleTwo,
-                              panCardNumber!.isEmpty
-                                  ? widget.businessDetails['data']
-                                      ['company_pancard']
-                                  : panCardNumber,
-                              imageOne,
-                              aadharUdyom!.isEmpty
-                                  ? widget.businessDetails['data']
-                                      ['adhar_udyam_udoyog']
-                                  : aadharUdyom,
-                              imageTwo,
-                              gstNo!.isEmpty
-                                  ? widget.businessDetails['data']['gst_number']
-                                  : gstNo);
-                    });
+                                : accountNo);
                   }
                 },
                 child: Container(

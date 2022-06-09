@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import '../../screens/products.dart';
 
 class TotalProducts extends StatefulWidget {
@@ -57,9 +57,9 @@ class TotalProductsState extends State<TotalProducts> {
                     fontWeight: FontWeight.bold,
                     color: const Color.fromARGB(255, 36, 71, 100))),
           ),
-          Text('Total Products',
+          AutoSizeText('Total Products',
               style: TextStyle(
-                  fontSize: tabLayout ? 35 : 18,
+                  fontSize: tabLayout ? 35 : 16,
                   fontWeight: FontWeight.bold,
                   color: const Color.fromARGB(255, 36, 71, 100)))
         ],

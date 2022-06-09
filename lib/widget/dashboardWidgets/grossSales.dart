@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
+import '../../screens/sales.dart';
 
 class GrossSales extends StatefulWidget {
   final String grossSale;
@@ -35,11 +38,15 @@ class GrossSalesState extends State<GrossSales> {
             children: [
               Icon(Icons.point_of_sale,
                   color: Colors.green, size: tabLayout ? 200 : 80),
-              Text('View',
-                  style: TextStyle(
-                      color: const Color.fromARGB(255, 36, 71, 100),
-                      fontWeight: FontWeight.bold,
-                      fontSize: tabLayout ? 18 : 14))
+              InkWell(
+                onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SalesReport())),
+                child: Text('View',
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 36, 71, 100),
+                        fontWeight: FontWeight.bold,
+                        fontSize: tabLayout ? 18 : 14)),
+              )
             ],
           ),
           SizedBox(height: tabLayout ? height * 0.02 : 0),
@@ -51,9 +58,9 @@ class GrossSalesState extends State<GrossSales> {
                     fontWeight: FontWeight.bold,
                     color: const Color.fromARGB(255, 36, 71, 100))),
           ),
-          Text('Gross Sales',
+          AutoSizeText('Gross Sales',
               style: TextStyle(
-                  fontSize: tabLayout ? 35 : 18,
+                  fontSize: tabLayout ? 35 : 16,
                   fontWeight: FontWeight.bold,
                   color: const Color.fromARGB(255, 36, 71, 100)))
         ],

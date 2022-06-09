@@ -209,40 +209,50 @@ class BusinessProfileProvider with ChangeNotifier {
     return response;
   }
 
-  Future<void> postMethod(
+  Future<Map<String, dynamic>> postMethodOne(
       String? organizationName,
       String? telephoneNumberOne,
       String? telephoneNumberTwo,
       String? companyPanCard,
-      File? panCard,
       String? aadharUdyamUdoyog,
-      File? aadharCard,
       String? gstNumber) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    final url = Uri.parse(baseUrl + 'api/vendor/profile/business/');
+
+    final response = await http.post(url,
+        body: json.encode({
+          'org_name': organizationName,
+          'telephone_1': telephoneNumberOne,
+          'telephone_2': telephoneNumberTwo,
+          'company_pancard': companyPanCard,
+          'adhar_udyam_udoyog': aadharUdyamUdoyog,
+          'gst_number': gstNumber
+        }),
+        headers: {
+          'Authorization': 'Bearer ${localStorage.getString('token')}',
+          'Content-Type': 'application/json'
+        });
+
+    var res = json.decode(response.body);
+
+    print(res);
+
+    return res;
+  }
+
+  Future<void> ImageOne(File? panCard) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     // final File filePanCard = File(panCard!.path.toString());
     // final File fileAadharCard = File(aadharCard!.path.toString());
     final url = Uri.parse(baseUrl + 'api/vendor/profile/business/');
     var request = http.MultipartRequest('POST', url);
-    request.headers
-        .addAll({'Authorization': 'Bearer ${localStorage.getString('token')}'});
-    request.fields['org_name'] = organizationName!;
-    request.fields['telephone_1'] = telephoneNumberOne!;
-    request.fields['telephone_2'] = telephoneNumberTwo!;
-    request.fields['company_pancard'] = companyPanCard!;
+    request.headers.addAll({
+      'Authorization': 'Bearer ${localStorage.getString('token')}',
+      'Content-Type': 'application/json'
+    });
     request.files.add(await http.MultipartFile.fromPath(
         'company_pancard_doc', panCard!.path,
         contentType: MediaType('application', 'x-tar')));
-    request.files.add(await http.MultipartFile.fromPath(
-        'adhar_udyam_udoyog', aadharCard!.path,
-        contentType: MediaType('application', 'x-tar')));
-
-    // request.files.add(http.MultipartFile.fromBytes(
-    //     'company_pancard_doc', File(panCard!.toString()).readAsBytesSync()));
-    // request.fields['adhar_udyam_udoyog'] = aadharUdyamUdoyog!;
-    // request.files.add(http.MultipartFile.fromBytes('adhar_udyam_udoyog_doc',
-    //     File(aadharCard!.toString()).readAsBytesSync()));
-
-    request.fields['gst_number'] = gstNumber!;
 
     var response = await request.send();
 
@@ -251,6 +261,34 @@ class BusinessProfileProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       print('Uploaded');
     } else {
+      print('Response Error: ${response.stream.bytesToString()}');
+      print('Failed');
+    }
+  }
+
+  Future<void> ImageTwo(File? aadharCard) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // final File filePanCard = File(panCard!.path.toString());
+    // final File fileAadharCard = File(aadharCard!.path.toString());
+    final url = Uri.parse(baseUrl + 'api/vendor/profile/business/');
+    var request = http.MultipartRequest('POST', url);
+    request.headers.addAll({
+      'Authorization': 'Bearer ${localStorage.getString('token')}',
+      'Content-Type': 'application/json'
+    });
+
+    request.files.add(await http.MultipartFile.fromPath(
+        'adhar_udyam_udoyog_doc', aadharCard!.path,
+        contentType: MediaType('application', 'x-tar')));
+
+    var response = await request.send();
+
+    print('Response: $response');
+
+    if (response.statusCode == 200) {
+      print('Uploaded');
+    } else {
+      print('Response Error: ${response.stream.bytesToString()}');
       print('Failed');
     }
   }

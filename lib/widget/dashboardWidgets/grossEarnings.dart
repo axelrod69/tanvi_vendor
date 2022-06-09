@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class GrossEarnings extends StatefulWidget {
   final String grossEarnings;
@@ -51,9 +52,9 @@ class GrossEarningsState extends State<GrossEarnings> {
                     fontWeight: FontWeight.bold,
                     color: const Color.fromARGB(255, 36, 71, 100))),
           ),
-          Text('Gross Earnings',
+          AutoSizeText('Total Tax',
               style: TextStyle(
-                  fontSize: tabLayout ? 35 : 18,
+                  fontSize: tabLayout ? 35 : 16,
                   fontWeight: FontWeight.bold,
                   color: const Color.fromARGB(255, 36, 71, 100)))
         ],
