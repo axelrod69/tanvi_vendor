@@ -74,7 +74,7 @@ class EditProfileState extends State<EditProfile> {
         print('Image Oneeee $imageOne');
       });
       Provider.of<BusinessProfileProvider>(context, listen: false)
-          .ImageOne(imageOne);
+          .imageOne(imageOne);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -90,7 +90,7 @@ class EditProfileState extends State<EditProfile> {
         print('Image Twoooooooo $imageTwo');
       });
       Provider.of<BusinessProfileProvider>(context, listen: false)
-          .ImageTwo(imageTwo);
+          .imageTwo(imageTwo);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }

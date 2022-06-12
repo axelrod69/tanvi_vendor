@@ -348,12 +348,14 @@ class ProductsState extends State<Products> {
                                                               [index]['qty'],
                                                           provider['data']
                                                               [index]['price'],
-                                                          provider['data']
-                                                              [index]['tax'],
+                                                          provider['data'][index]['tax'],
                                                           provider['data'][index]['main_image'],
                                                           provider['data'][index]['category']['name'],
+                                                          provider['data'][index]['category']['id'],
                                                           provider['data'][index]['sizes']['size'],
-                                                          provider['data'][index]['uom']['short_name']))),
+                                                          provider['data'][index]['sizes']['id'],
+                                                          provider['data'][index]['uom']['short_name'],
+                                                          provider['data'][index]['uom']['id']))),
                                                   child: Icon(Icons.edit,
                                                       color: Colors.green,
                                                       size:

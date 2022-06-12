@@ -240,7 +240,7 @@ class BusinessProfileProvider with ChangeNotifier {
     return res;
   }
 
-  Future<void> ImageOne(File? panCard) async {
+  Future<void> imageOne(File? panCard) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     // final File filePanCard = File(panCard!.path.toString());
     // final File fileAadharCard = File(aadharCard!.path.toString());
@@ -266,7 +266,7 @@ class BusinessProfileProvider with ChangeNotifier {
     }
   }
 
-  Future<void> ImageTwo(File? aadharCard) async {
+  Future<void> imageTwo(File? aadharCard) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     // final File filePanCard = File(panCard!.path.toString());
     // final File fileAadharCard = File(aadharCard!.path.toString());

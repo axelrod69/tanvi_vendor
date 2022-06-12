@@ -8,6 +8,7 @@ import '../model/products/productsProvider.dart';
 import '../model/sizeList/sizeListProvider.dart';
 import '../model/measureList/measureListProvider.dart';
 import './products.dart';
+import 'package:uri_to_file/uri_to_file.dart';
 
 class EditProductsPage extends StatefulWidget {
   final int id;
@@ -21,8 +22,11 @@ class EditProductsPage extends StatefulWidget {
   final String tax;
   final String mainImage;
   final String category;
+  final int categoryId;
   final String size;
+  final int sizeId;
   final String measure;
+  final int measureId;
 
   EditProductsPageState createState() => EditProductsPageState();
 
@@ -38,8 +42,11 @@ class EditProductsPage extends StatefulWidget {
       this.tax,
       this.mainImage,
       this.category,
+      this.categoryId,
       this.size,
-      this.measure);
+      this.sizeId,
+      this.measure,
+      this.measureId);
 }
 
 class EditProductsPageState extends State<EditProductsPage> {
@@ -69,7 +76,7 @@ class EditProductsPageState extends State<EditProductsPage> {
   bool isLoading = true;
   PickedFile? _imageFile;
   File? image;
-  File? imageTwo;
+  File? stringToFile;
   bool first = false;
   PickedFile? _secondImageFile;
   bool second = false;
@@ -95,17 +102,39 @@ class EditProductsPageState extends State<EditProductsPage> {
     }
   }
 
-  Future pickSecondImage(ImageSource source) async {
-    try {
-      final pickedFile = await _imagePicker!.pickImage(source: source);
-      final imageTemporary = File(pickedFile!.path);
-      setState(() {
-        imageTwo = imageTemporary;
-        // second = true;
-      });
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-    }
+  // Future pickSecondImage(ImageSource source) async {
+  //   try {
+  //     final pickedFile = await _imagePicker!.pickImage(source: source);
+  //     final imageTemporary = File(pickedFile!.path);
+  //     setState(() {
+  //       imageTwo = imageTemporary;
+  //       // second = true;
+  //     });
+  //   } on PlatformException catch (e) {
+  //     print('Failed to pick image: $e');
+  //   }
+  // }
+
+  Future<void> convertUriToFile() async {
+    image = await File(widget.mainImage).writeAsString(widget.mainImage);
+    // try {
+    //   String uriString = 'content://sample.txt'; // Uri string
+
+    //   // Don't pass uri parameter using [Uri] object via uri.toString().
+    //   // Because uri.toString() changes the string to lowercase which causes this package to misbehave
+
+    //   // If you are using uni_links package for deep linking purpose.
+    //   // Pass the uri string using getInitialLink() or linkStream
+
+    //   stringToFile = await toFile(widget.mainImage); // Converting uri to file
+    //   print('String To File: $stringToFile');
+    // } on UnsupportedError catch (e) {
+    //   print(e.message); // Unsupported error for uri not supported
+    // } on IOException catch (e) {
+    //   print(e); // IOException for system error
+    // } catch (e) {
+    //   print(e); // General exception
+    // }
   }
 
   @override
@@ -122,11 +151,15 @@ class EditProductsPageState extends State<EditProductsPage> {
             .then((_) {
           setState(() {
             isLoading = false;
-            // image = File(widget.mainImage);
+            // final url = Uri.parse(widget.mainImage);
+            // image = File.fromUri(url);
           });
         });
       });
     });
+
+    convertUriToFile();
+
     print('Image Edit: $image');
     _title.text = widget.name;
     _shortDesc.text = widget.shortDescription;
@@ -234,7 +267,9 @@ class EditProductsPageState extends State<EditProductsPage> {
                             ]),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
-                              value: dropDownValue,
+                              value: dropDownValue == ''
+                                  ? widget.categoryId
+                                  : dropDownValue,
                               hint: Text(widget.category),
                               style: TextStyle(fontSize: tabLayout ? 20 : 14),
                               items: provider.map((list) {
@@ -247,6 +282,8 @@ class EditProductsPageState extends State<EditProductsPage> {
                                     value: list['id'].toString());
                               }).toList(),
                               onChanged: (selectedDropdownValue) {
+                                print(
+                                    'selectedDropdownValue: $selectedDropdownValue');
                                 setState(() {
                                   dropDownValue =
                                       selectedDropdownValue.toString();
@@ -491,91 +528,6 @@ class EditProductsPageState extends State<EditProductsPage> {
                                   ],
                                 ),
                               )),
-                          Flexible(
-                              flex: 1,
-                              fit: FlexFit.tight,
-                              child: Container(
-                                height: double.infinity,
-                                // color: Colors.amber,
-                                padding: EdgeInsets.only(
-                                    top: height * 0.01, bottom: height * 0.01),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  // crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: width * 0.3,
-                                      height: tabLayout
-                                          ? height * 0.165
-                                          : height * 0.14,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: const Color.fromARGB(
-                                                  255, 36, 71, 100)),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                                color: Colors.grey,
-                                                blurRadius: 8,
-                                                offset: Offset(1, 2))
-                                          ]),
-                                      child: imageTwo != null
-                                          ? ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Image.file(
-                                                imageTwo!,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            )
-                                          : ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Image.network(
-                                                'http://54.80.135.220${widget.mainImage}',
-                                                fit: BoxFit.cover,
-                                              )),
-                                    ),
-                                    SizedBox(height: height * 0.01),
-                                    InkWell(
-                                      onTap: () =>
-                                          pickSecondImage(ImageSource.gallery),
-                                      child: Container(
-                                        width: width * 0.4,
-                                        height: height * 0.045,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 36, 71, 100),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  color: Colors.grey,
-                                                  blurRadius: 8,
-                                                  offset: Offset(1, 2))
-                                            ]),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            const Icon(Icons.attachment,
-                                                color: Colors.white),
-                                            SizedBox(width: width * 0.01),
-                                            Text('Choose Image',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        tabLayout ? 18 : 14))
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ))
                         ],
                       ),
                     ),
@@ -606,7 +558,9 @@ class EditProductsPageState extends State<EditProductsPage> {
                                 ]),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton(
-                                  value: sizeDropDownValue,
+                                  value: sizeDropDownValue == ''
+                                      ? widget.sizeId
+                                      : sizeDropDownValue,
                                   hint: Text(widget.size),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -731,7 +685,9 @@ class EditProductsPageState extends State<EditProductsPage> {
                                 ]),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton(
-                                  value: measureDropDownValue,
+                                  value: measureDropDownValue == ''
+                                      ? widget.measureId
+                                      : measureDropDownValue,
                                   hint: Text(widget.measure,
                                       style: TextStyle(
                                           fontSize: tabLayout ? 20 : 12)),
@@ -994,6 +950,7 @@ class EditProductsPageState extends State<EditProductsPage> {
   }
 
   dynamic editProducts(BuildContext context) async {
+    final url = Uri.parse(widget.mainImage);
     print('nameOfProduct: ${_title.text}');
     print('imageOfProduct: $image');
     Provider.of<ProductsProvider>(context, listen: false)
@@ -1010,12 +967,16 @@ class EditProductsPageState extends State<EditProductsPage> {
             _quantities.text,
             _priceeee.text,
             _taxxx.text,
-            image == null ? File(widget.mainImage) : image!,
-            // image!,
-            dropDownValue == null ? widget.category : dropDownValue!,
-            sizeDropDownValue == null ? widget.size : sizeDropDownValue!,
+            // image == null ? File(widget.mainImage) : image!,
+            image!,
+            dropDownValue == null
+                ? widget.categoryId.toString()
+                : dropDownValue!,
+            sizeDropDownValue == null
+                ? widget.sizeId.toString()
+                : sizeDropDownValue!,
             measureDropDownValue == null
-                ? widget.measure
+                ? widget.measureId.toString()
                 : measureDropDownValue!)
         .then((_) {
       Navigator.push(
