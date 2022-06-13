@@ -151,7 +151,7 @@ class ProductsProvider with ChangeNotifier {
       String? quantity,
       String? price,
       String? tax,
-      File image,
+      File? image,
       String? category,
       String? size,
       String? uom) async {
@@ -172,41 +172,41 @@ class ProductsProvider with ChangeNotifier {
     print('size $size');
     print('uom $uom');
 
-    // if (image == null) {
-    //   formData = FormData.fromMap({
-    //     'id': id,
-    //     'name': name,
-    //     'short_description': shortDescription,
-    //     'description': description,
-    //     'status': status == 'Available' ? 'in_stock' : 'out_of_stock',
-    //     'weight': weight,
-    //     'qty': quantity,
-    //     'price': price,
-    //     'tax': tax,
-    //     'main_image': await MultipartFile.fromFile(image.path),
-    //     'brand_name': 1,
-    //     'category': int.parse(category!),
-    //     'sizes': int.parse(size!),
-    //     'uom': int.parse(uom!)
-    //   });
-    // } else {
-    formData = FormData.fromMap({
-      'id': id,
-      'name': name,
-      'short_description': shortDescription,
-      'description': description,
-      'status': status == 'Available' ? 'in_stock' : 'out_of_stock',
-      'weight': weight,
-      'qty': quantity,
-      'price': price,
-      'tax': tax,
-      'main_image': await MultipartFile.fromFile(image.path),
-      'brand_name': 1,
-      'category': category,
-      'sizes': size,
-      'uom': uom
-    });
-    // }
+    if (image == null) {
+      formData = FormData.fromMap({
+        'id': id,
+        'name': name,
+        'short_description': shortDescription,
+        'description': description,
+        'status': status == 'Available' ? 'in_stock' : 'out_of_stock',
+        'weight': weight,
+        'qty': quantity,
+        'price': price,
+        'tax': tax,
+        // 'main_image': await MultipartFile.fromFile(image.path),
+        'brand_name': 1,
+        'category': int.parse(category!),
+        'sizes': int.parse(size!),
+        'uom': int.parse(uom!)
+      });
+    } else {
+      formData = FormData.fromMap({
+        'id': id,
+        'name': name,
+        'short_description': shortDescription,
+        'description': description,
+        'status': status == 'Available' ? 'in_stock' : 'out_of_stock',
+        'weight': weight,
+        'qty': quantity,
+        'price': price,
+        'tax': tax,
+        'main_image': await MultipartFile.fromFile(image.path),
+        'brand_name': 1,
+        'category': category,
+        'sizes': size,
+        'uom': uom
+      });
+    }
 
     print('Form Data $formData');
 

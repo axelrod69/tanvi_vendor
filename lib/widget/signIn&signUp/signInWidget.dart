@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import '../../model/network/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 // import 'package:shared_preferences/shared_preferences.dart';
 // import '../../authentication/network.dart';
 
@@ -16,6 +19,19 @@ class FormWidgetState extends State<FormWidget> {
   // final _focusFifth = FocusNode();
   String? emailId = '';
   String? password = '';
+  String? fcm;
+
+  Future<void> fcmCodeGenerate() async {
+    fcm = await FirebaseMessaging.instance.getToken();
+    print('FCM Code $fcm');
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    fcmCodeGenerate();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -317,6 +333,18 @@ class FormWidgetState extends State<FormWidget> {
     var res = json.decode(response.body);
     if (res['status'] == 'success') {
       await localStorage.setString('token', res['data']['access']);
+      final url = Uri.parse('http://54.80.135.220/' + 'api/fcm-token/');
+
+      // var responseFcm =
+      //     await Provider.of<Network>(context, listen: false).fcmToken(fcm);
+
+      var responseFcm =
+          await http.post(url, body: json.encode({'fcm_token': fcm}), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${localStorage.getString('token')}'
+      });
+
+      print(responseFcm.body);
       Navigator.of(context).pushNamed('/home');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -115,27 +115,27 @@ class EditProductsPageState extends State<EditProductsPage> {
   //   }
   // }
 
-  Future<void> convertUriToFile() async {
-    image = await File(widget.mainImage).writeAsString(widget.mainImage);
-    // try {
-    //   String uriString = 'content://sample.txt'; // Uri string
+  // Future<void> convertUriToFile() async {
+  //   image = await File(widget.mainImage).writeAsString(widget.mainImage);
+  //   // try {
+  //   //   String uriString = 'content://sample.txt'; // Uri string
 
-    //   // Don't pass uri parameter using [Uri] object via uri.toString().
-    //   // Because uri.toString() changes the string to lowercase which causes this package to misbehave
+  //   //   // Don't pass uri parameter using [Uri] object via uri.toString().
+  //   //   // Because uri.toString() changes the string to lowercase which causes this package to misbehave
 
-    //   // If you are using uni_links package for deep linking purpose.
-    //   // Pass the uri string using getInitialLink() or linkStream
+  //   //   // If you are using uni_links package for deep linking purpose.
+  //   //   // Pass the uri string using getInitialLink() or linkStream
 
-    //   stringToFile = await toFile(widget.mainImage); // Converting uri to file
-    //   print('String To File: $stringToFile');
-    // } on UnsupportedError catch (e) {
-    //   print(e.message); // Unsupported error for uri not supported
-    // } on IOException catch (e) {
-    //   print(e); // IOException for system error
-    // } catch (e) {
-    //   print(e); // General exception
-    // }
-  }
+  //   //   stringToFile = await toFile(widget.mainImage); // Converting uri to file
+  //   //   print('String To File: $stringToFile');
+  //   // } on UnsupportedError catch (e) {
+  //   //   print(e.message); // Unsupported error for uri not supported
+  //   // } on IOException catch (e) {
+  //   //   print(e); // IOException for system error
+  //   // } catch (e) {
+  //   //   print(e); // General exception
+  //   // }
+  // }
 
   @override
   void initState() {
@@ -158,7 +158,7 @@ class EditProductsPageState extends State<EditProductsPage> {
       });
     });
 
-    convertUriToFile();
+    // convertUriToFile();
 
     print('Image Edit: $image');
     _title.text = widget.name;
@@ -968,7 +968,7 @@ class EditProductsPageState extends State<EditProductsPage> {
             _priceeee.text,
             _taxxx.text,
             // image == null ? File(widget.mainImage) : image!,
-            image!,
+            image,
             dropDownValue == null
                 ? widget.categoryId.toString()
                 : dropDownValue!,

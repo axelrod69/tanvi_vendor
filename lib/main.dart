@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import './widget/bottomNavigation.dart';
 import './screens/addProducts.dart';
@@ -18,8 +20,20 @@ import './model/dashboard/monthlyStats.dart';
 import './model/orderSummary/orderSummary.dart';
 import './screens/viewOrderDetails.dart';
 import './model/address/addressChange.dart';
+import 'notificationService/localNotificationService.dart';
 
-void main() => runApp(TanviVendor());
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification!.title);
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  LocalNotificationService.initialize();
+  runApp(TanviVendor());
+}
 
 class TanviVendor extends StatefulWidget {
   TanviVendorState createState() => TanviVendorState();
