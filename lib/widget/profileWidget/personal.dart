@@ -84,6 +84,7 @@ class PersonalState extends State<Personal> {
                 Container(
                   width: double.infinity,
                   height: height * 0.14,
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
                   // color: Colors.red,
                   child: image != null
                       ? CircleAvatar(
@@ -101,7 +102,8 @@ class PersonalState extends State<Personal> {
                               //   'assets/images/NoPath - Copy (14).png',
                               // ),
                               backgroundImage: NetworkImage(
-                                  'http://54.80.135.220${widget.profilePic}'),
+                                'http://54.80.135.220${widget.profilePic}',
+                              ),
                               backgroundColor: Colors.blue,
                               // child: widget.profilePic != ''
                               //     ? Image.network(

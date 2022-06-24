@@ -69,7 +69,7 @@ class ProfileProvider with ChangeNotifier {
   //   return response;
   // }
 
-  Future<void> postProfileUpdate(
+  Future<Map<String, dynamic>> postProfileUpdate(
       String? firstName,
       String? lastName,
       String? email,
@@ -89,9 +89,11 @@ class ProfileProvider with ChangeNotifier {
     request.files.add(await http.MultipartFile.fromPath(
         'profile_pic', image!.path,
         contentType: MediaType('application', 'x-tar')));
-    var response = await request.send();
+    var response = await http.Response.fromStream(await request.send());
     if (response.statusCode == 200) {
       print('Uploaded');
+      print('Response From Uploading File: ${response.body}');
     }
+    return json.decode(response.body);
   }
 }

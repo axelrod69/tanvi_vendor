@@ -438,91 +438,91 @@ class AddProductsPageState extends State<AddProductsPage> {
                                   ],
                                 ),
                               )),
-                          Flexible(
-                              flex: 1,
-                              fit: FlexFit.tight,
-                              child: Container(
-                                height: double.infinity,
-                                // color: Colors.amber,
-                                padding: EdgeInsets.only(
-                                    top: height * 0.01, bottom: height * 0.01),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  // crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: width * 0.3,
-                                      height: tabLayout
-                                          ? height * 0.165
-                                          : height * 0.14,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: const Color.fromARGB(
-                                                  255, 36, 71, 100)),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                                color: Colors.grey,
-                                                blurRadius: 8,
-                                                offset: Offset(1, 2))
-                                          ]),
-                                      child: imageTwo != null
-                                          ? ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Image.file(
-                                                imageTwo!,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            )
-                                          : Center(
-                                              child: Text('Pick An Image',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize:
-                                                          tabLayout ? 18 : 14)),
-                                            ),
-                                    ),
-                                    SizedBox(height: height * 0.01),
-                                    InkWell(
-                                      onTap: () =>
-                                          pickSecondImage(ImageSource.gallery),
-                                      child: Container(
-                                        width: width * 0.4,
-                                        height: height * 0.045,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 36, 71, 100),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  color: Colors.grey,
-                                                  blurRadius: 8,
-                                                  offset: Offset(1, 2))
-                                            ]),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            const Icon(Icons.attachment,
-                                                color: Colors.white),
-                                            SizedBox(width: width * 0.01),
-                                            Text('Choose Image',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        tabLayout ? 18 : 14))
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ))
+                          // Flexible(
+                          //     flex: 1,
+                          //     fit: FlexFit.tight,
+                          //     child: Container(
+                          //       height: double.infinity,
+                          //       // color: Colors.amber,
+                          //       padding: EdgeInsets.only(
+                          //           top: height * 0.01, bottom: height * 0.01),
+                          //       child: Column(
+                          //         mainAxisAlignment: MainAxisAlignment.start,
+                          //         // crossAxisAlignment: CrossAxisAlignment.center,
+                          //         children: [
+                          //           Container(
+                          //             width: width * 0.3,
+                          //             height: tabLayout
+                          //                 ? height * 0.165
+                          //                 : height * 0.14,
+                          //             decoration: BoxDecoration(
+                          //                 color: Colors.white,
+                          //                 borderRadius:
+                          //                     BorderRadius.circular(10),
+                          //                 border: Border.all(
+                          //                     color: const Color.fromARGB(
+                          //                         255, 36, 71, 100)),
+                          //                 boxShadow: const [
+                          //                   BoxShadow(
+                          //                       color: Colors.grey,
+                          //                       blurRadius: 8,
+                          //                       offset: Offset(1, 2))
+                          //                 ]),
+                          //             child: imageTwo != null
+                          //                 ? ClipRRect(
+                          //                     borderRadius:
+                          //                         BorderRadius.circular(10),
+                          //                     child: Image.file(
+                          //                       imageTwo!,
+                          //                       fit: BoxFit.cover,
+                          //                     ),
+                          //                   )
+                          //                 : Center(
+                          //                     child: Text('Pick An Image',
+                          //                         style: TextStyle(
+                          //                             color: Colors.black,
+                          //                             fontSize:
+                          //                                 tabLayout ? 18 : 14)),
+                          //                   ),
+                          //           ),
+                          //           SizedBox(height: height * 0.01),
+                          //           InkWell(
+                          //             onTap: () =>
+                          //                 pickSecondImage(ImageSource.gallery),
+                          //             child: Container(
+                          //               width: width * 0.4,
+                          //               height: height * 0.045,
+                          //               decoration: BoxDecoration(
+                          //                   color: const Color.fromARGB(
+                          //                       255, 36, 71, 100),
+                          //                   borderRadius:
+                          //                       BorderRadius.circular(10),
+                          //                   boxShadow: const [
+                          //                     BoxShadow(
+                          //                         color: Colors.grey,
+                          //                         blurRadius: 8,
+                          //                         offset: Offset(1, 2))
+                          //                   ]),
+                          //               child: Row(
+                          //                 mainAxisAlignment:
+                          //                     MainAxisAlignment.center,
+                          //                 children: [
+                          //                   const Icon(Icons.attachment,
+                          //                       color: Colors.white),
+                          //                   SizedBox(width: width * 0.01),
+                          //                   Text('Choose Image',
+                          //                       style: TextStyle(
+                          //                           color: Colors.white,
+                          //                           fontWeight: FontWeight.bold,
+                          //                           fontSize:
+                          //                               tabLayout ? 18 : 14))
+                          //                 ],
+                          //               ),
+                          //             ),
+                          //           )
+                          //         ],
+                          //       ),
+                          //     ))
                         ],
                       ),
                     ),

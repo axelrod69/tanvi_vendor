@@ -228,7 +228,7 @@ class EditProfileState extends State<EditProfile> {
                   )),
               SizedBox(height: height * 0.025),
               InkWell(
-                onTap: () {
+                onTap: () async {
                   if (key.currentState!.validate()) {
                     // Provider.of<ProfileProvider>(context, listen: false)
                     //     .postProfileUpdate(
@@ -242,7 +242,8 @@ class EditProfileState extends State<EditProfile> {
                     //             ? widget.mobileNo
                     //             : mobileNumber,
                     //         widget.image);
-                    Provider.of<ProfileProvider>(context, listen: false)
+                    var res = await Provider.of<ProfileProvider>(context,
+                            listen: false)
                         .postProfileUpdate(
                             firstNames.isEmpty ? widget.firstName : firstNames,
                             lastNames.isEmpty ? widget.lastName : lastNames,
@@ -254,12 +255,29 @@ class EditProfileState extends State<EditProfile> {
                                 ? widget.mobileNo
                                 : mobileNumber,
                             widget.image);
+
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text(res['message'],
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        action: SnackBarAction(
+                          label: 'OK',
+                          textColor: Colors.white,
+                          onPressed: () => ScaffoldMessenger.of(context)
+                              .hideCurrentSnackBar(),
+                        )));
+
                     print('First Name $firstNames');
                     print('Last Name $lastNames');
                     print('Email ID $emailId');
                     print('Alternate Email ID $alternateEmailId');
                     print('Mobile Number $mobileNumber');
                     print('Image ${widget.image}');
+
+                    Navigator.of(context).pushNamed('/home');
                   }
                 },
                 child: Container(
