@@ -125,15 +125,17 @@ class PersonalState extends State<Personal> {
                               //           ),
                             ),
                 ),
-                Positioned(
-                  top: height * 0.095,
-                  left: width * 0.56,
-                  child: InkWell(
-                    onTap: () => pickImage(ImageSource.gallery),
-                    child: Icon(Icons.camera_alt_rounded,
-                        size: height * 0.04, color: textColor),
-                  ),
-                )
+                clicked
+                    ? Positioned(
+                        top: height * 0.095,
+                        left: width * 0.56,
+                        child: InkWell(
+                          onTap: () => pickImage(ImageSource.gallery),
+                          child: Icon(Icons.camera_alt_rounded,
+                              size: height * 0.04, color: textColor),
+                        ),
+                      )
+                    : Container()
               ],
             ),
             SizedBox(height: height * 0.02),

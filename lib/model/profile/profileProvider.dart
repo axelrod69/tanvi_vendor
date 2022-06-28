@@ -69,7 +69,7 @@ class ProfileProvider with ChangeNotifier {
   //   return response;
   // }
 
-  Future<Map<String, dynamic>> postProfileUpdate(
+  Future<dynamic> postProfileUpdate(
       String? firstName,
       String? lastName,
       String? email,
@@ -78,22 +78,45 @@ class ProfileProvider with ChangeNotifier {
       File? image) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     final url = Uri.parse(baseUrl + 'api/vendor/profile/basic/');
-    var request = http.MultipartRequest('POST', url);
-    request.headers
-        .addAll({'Authorization': 'Bearer ${localStorage.getString('token')}'});
-    request.fields['first_name'] = firstName!;
-    request.fields['last_name'] = lastName!;
-    request.fields['email'] = email!;
-    request.fields['alternate_email'] = alternateEmail!;
-    request.fields['mobile_no'] = mobileNo!;
-    request.files.add(await http.MultipartFile.fromPath(
-        'profile_pic', image!.path,
-        contentType: MediaType('application', 'x-tar')));
-    var response = await http.Response.fromStream(await request.send());
-    if (response.statusCode == 200) {
-      print('Uploaded');
-      print('Response From Uploading File: ${response.body}');
+
+    if (image == null) {
+      var request = http.MultipartRequest('POST', url);
+      request.headers.addAll(
+          {'Authorization': 'Bearer ${localStorage.getString('token')}'});
+      request.fields['first_name'] = firstName!;
+      request.fields['last_name'] = lastName!;
+      request.fields['email'] = email!;
+      request.fields['alternate_email'] = alternateEmail!;
+      request.fields['mobile_no'] = mobileNo!;
+      // request.files.add(await http.MultipartFile.fromPath(
+      //     'profile_pic', image!.path,
+      //     contentType: MediaType('application', 'x-tar')));
+      var response = await http.Response.fromStream(await request.send());
+      var res = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print('Uploaded');
+        print('Response From Uploading File: ${response.body}');
+      }
+      return res;
+    } else {
+      var request = http.MultipartRequest('POST', url);
+      request.headers.addAll(
+          {'Authorization': 'Bearer ${localStorage.getString('token')}'});
+      request.fields['first_name'] = firstName!;
+      request.fields['last_name'] = lastName!;
+      request.fields['email'] = email!;
+      request.fields['alternate_email'] = alternateEmail!;
+      request.fields['mobile_no'] = mobileNo!;
+      request.files.add(await http.MultipartFile.fromPath(
+          'profile_pic', image.path,
+          contentType: MediaType('application', 'x-tar')));
+      var response = await http.Response.fromStream(await request.send());
+      var res = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print('Uploaded');
+        print('Response From Uploading File: ${response.body}');
+      }
+      return res;
     }
-    return json.decode(response.body);
   }
 }
