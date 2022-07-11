@@ -10,7 +10,7 @@ import 'dart:io';
 import 'package:geolocator/geolocator.dart';
 
 class BusinessProfileProvider with ChangeNotifier {
-  String baseUrl = 'http://54.80.135.220/';
+  String baseUrl = 'http://34.100.212.22/';
   Map<String, dynamic> _bankDetails = {};
   Map<String, dynamic> _businessProfile = {};
   Map<String, dynamic> _businessAddress = {};
@@ -198,7 +198,7 @@ class BusinessProfileProvider with ChangeNotifier {
     print('Form Data $formData');
 
     final response =
-        await Dio().post('http://54.80.135.220/api/vendor/profile/business/',
+        await Dio().post('http://34.100.212.22/api/vendor/profile/business/',
             data: formData,
             options: Options(headers: {
               'Authorization': 'Bearer ${localStorage.getString('token')}',

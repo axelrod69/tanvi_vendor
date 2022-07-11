@@ -102,12 +102,12 @@ class PersonalState extends State<Personal> {
                               //   'assets/images/NoPath - Copy (14).png',
                               // ),
                               backgroundImage: NetworkImage(
-                                'http://54.80.135.220${widget.profilePic}',
+                                'http://34.100.212.22${widget.profilePic}',
                               ),
                               backgroundColor: Colors.blue,
                               // child: widget.profilePic != ''
                               //     ? Image.network(
-                              //       'http://54.80.135.220${widget.profilePic}',
+                              //       'http://34.100.212.22${widget.profilePic}',
                               //       // fit: BoxFit.fitHeight,
                               //     )
                               //     // ? Image.file(widget.profilePic, fit: BoxFit.cover)

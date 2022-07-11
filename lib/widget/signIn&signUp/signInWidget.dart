@@ -333,7 +333,7 @@ class FormWidgetState extends State<FormWidget> {
     var res = json.decode(response.body);
     if (res['status'] == 'success') {
       await localStorage.setString('token', res['data']['access']);
-      final url = Uri.parse('http://54.80.135.220/' + 'api/fcm-token/');
+      final url = Uri.parse('http://34.100.212.22/' + 'api/fcm-token/');
 
       // var responseFcm =
       //     await Provider.of<Network>(context, listen: false).fcmToken(fcm);

@@ -91,8 +91,8 @@ class TanviVendorState extends State<TanviVendor> {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               scaffoldBackgroundColor: const Color.fromRGBO(236, 236, 248, 1)),
-          // home: SignIn(),
-          home: isAuth ? CustomBottomNavigation() : SignIn(),
+          home: SignIn(),
+          // home: isAuth ? CustomBottomNavigation() : SignIn(),
           routes: {
             '/home': (context) => CustomBottomNavigation(),
             '/add-products': (context) => AddProductsPage(),

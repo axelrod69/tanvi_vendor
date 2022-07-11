@@ -95,7 +95,7 @@ class ViewOrderDetailsState extends State<ViewOrderDetails> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Image.network(
-                                  'http://54.80.135.220${provider['data']['productDetails'][index]['product']['main_image']}',
+                                  'http://34.100.212.22${provider['data']['productDetails'][index]['product']['main_image']}',
                                   fit: BoxFit.cover,
                                 ),
                               ),

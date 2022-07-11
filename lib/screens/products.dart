@@ -113,7 +113,7 @@ class ProductsState extends State<Products> {
                                 color: const Color.fromARGB(255, 132, 175, 134),
                                 borderRadius: BorderRadius.circular(20)),
                             child: Image.network(
-                              'http://54.80.135.220${provider['data'][index]['main_image']}',
+                              'http://34.100.212.22${provider['data'][index]['main_image']}',
                               // fit: BoxFit.contain,
                             ),
                           ),

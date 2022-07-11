@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 import './productsModel.dart';
 
 class ProductsProvider with ChangeNotifier {
-  String baseUrl = 'http://54.80.135.220/';
+  String baseUrl = 'http://34.100.212.22/';
   Map<String, dynamic> _vendorProducts = {};
 
   Map<String, dynamic> get vendorProducts {
@@ -62,7 +62,7 @@ class ProductsProvider with ChangeNotifier {
   //   print('Form Data $formData');
 
   //   final response = await Dio().post(
-  //       'http://54.80.135.220/api/vendor/product/',
+  //       'http://34.100.212.22/api/vendor/product/',
   //       data: formData,
   //       options: Options(headers: {
   //         'Authorization': 'Bearer ${localStorage.getString('token')}'
@@ -211,7 +211,7 @@ class ProductsProvider with ChangeNotifier {
     print('Form Data $formData');
 
     final response = await Dio().patch(
-        'http://54.80.135.220/api/vendor/product/',
+        'http://34.100.212.22/api/vendor/product/',
         data: formData,
         options: Options(headers: {
           'Authorization': 'Bearer ${localStorage.getString('token')}'
