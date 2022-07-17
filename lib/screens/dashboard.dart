@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tanvi_vendor/model/orderSummary/orderSummary.dart';
+import '../model/notificationList/notificationList.dart';
 import '../notificationService/localNotificationService.dart';
 import '../widget/dashboardWidgets/grossSales.dart';
 import '../widget/dashboardWidgets/grossEarnings.dart';
@@ -11,6 +12,7 @@ import '../widget/dashboardWidgets/newOrders.dart';
 import 'package:provider/provider.dart';
 import '../model/dashboard/monthlyStats.dart';
 import '../model/profile/profileProvider.dart';
+import 'notificationList.dart';
 
 class Dashboard extends StatefulWidget {
   DashboardState createState() => DashboardState();
@@ -25,8 +27,12 @@ class DashboardState extends State<Dashboard> {
     Provider.of<MonthlyStatsProvider>(context, listen: false)
         .getStats()
         .then((_) {
-      setState(() {
-        isLoading = false;
+      Provider.of<NotificationList>(context, listen: false)
+          .getNotificationList()
+          .then((_) {
+        setState(() {
+          isLoading = false;
+        });
       });
       // Provider.of<ProfileProvider>(context, listen: false)
       //     .fetchProfileDetails()
@@ -86,6 +92,8 @@ class DashboardState extends State<Dashboard> {
     final width = MediaQuery.of(context).size.width;
     final provider = Provider.of<MonthlyStatsProvider>(context).stats;
     final profileProvider = Provider.of<ProfileProvider>(context).profile;
+    final notificationLength =
+        Provider.of<NotificationList>(context).notificationList;
     final tabLayout = width > 600;
     final largeLayout = width > 350 && width < 600;
 
@@ -142,10 +150,15 @@ class DashboardState extends State<Dashboard> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Icon(
-                            Icons.notifications,
-                            size: tabLayout ? height * 0.05 : height * 0.04,
-                            color: const Color.fromARGB(255, 99, 118, 134),
+                          InkWell(
+                            onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => Notifications())),
+                            child: Icon(
+                              Icons.notifications,
+                              size: tabLayout ? height * 0.05 : height * 0.04,
+                              color: const Color.fromARGB(255, 99, 118, 134),
+                            ),
                           )
                         ],
                       ),
@@ -157,17 +170,23 @@ class DashboardState extends State<Dashboard> {
             Positioned(
                 top: height * 0.01,
                 right: width * 0.02,
-                child: CircleAvatar(
-                  radius: width * 0.023,
-                  backgroundColor: Colors.red,
-                  child: Text(
-                    '9+',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: tabLayout ? 16 : 10),
-                  ),
-                ))
+                child: isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.green,
+                        ),
+                      )
+                    : CircleAvatar(
+                        radius: width * 0.023,
+                        backgroundColor: Colors.red,
+                        child: Text(
+                          notificationLength['data'].length.toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: tabLayout ? 16 : 10),
+                        ),
+                      ))
           ],
         ),
       ),

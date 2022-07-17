@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:tanvi_vendor/model/notificationList/notificationList.dart';
 import './widget/bottomNavigation.dart';
 import './screens/addProducts.dart';
 import 'package:provider/provider.dart';
@@ -79,7 +80,8 @@ class TanviVendorState extends State<TanviVendor> {
         ChangeNotifierProvider(create: (context) => MeasureListProvider()),
         ChangeNotifierProvider(create: (context) => MonthlyStatsProvider()),
         ChangeNotifierProvider(create: (context) => OrderSummaryProvider()),
-        ChangeNotifierProvider(create: (context) => ChangeLocationProvider())
+        ChangeNotifierProvider(create: (context) => ChangeLocationProvider()),
+        ChangeNotifierProvider(create: ((context) => NotificationList()))
       ],
 
       builder: (context, child) {
@@ -91,8 +93,8 @@ class TanviVendorState extends State<TanviVendor> {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
               scaffoldBackgroundColor: const Color.fromRGBO(236, 236, 248, 1)),
-          home: SignIn(),
-          // home: isAuth ? CustomBottomNavigation() : SignIn(),
+          // home: SignIn(),
+          home: isAuth ? CustomBottomNavigation() : SignIn(),
           routes: {
             '/home': (context) => CustomBottomNavigation(),
             '/add-products': (context) => AddProductsPage(),
