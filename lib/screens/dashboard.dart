@@ -233,8 +233,12 @@ class DashboardState extends State<Dashboard> {
                           mainAxisSpacing: height * 0.03,
                           maxCrossAxisExtent: width * 0.45),
                       children: [
-                        GrossSales(provider['data']['gross_sell'].toString()),
-                        GrossEarnings(provider['data']['gross_tax'].toString()),
+                        GrossSales(provider['data']['gross_sell']
+                                ['total_price__sum']
+                            .toString()),
+                        GrossEarnings(provider['data']['gross_tax']
+                                ['total_tax__sum']
+                            .toString()),
                         TotalOrders(
                             provider['data']['total_orders'].toString()),
                         TotalProducts(

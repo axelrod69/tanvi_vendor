@@ -22,6 +22,7 @@ import './model/orderSummary/orderSummary.dart';
 import './screens/viewOrderDetails.dart';
 import './model/address/addressChange.dart';
 import 'notificationService/localNotificationService.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   print(message.data.toString());
@@ -55,8 +56,10 @@ class TanviVendorState extends State<TanviVendor> {
   void checkIfLoggedIn() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var token = localStorage.getString('token');
+    bool isExpired = JwtDecoder.isExpired(token!);
+
     print('Tokeeeeeeeeeeeeen $token');
-    if (token != null) {
+    if (token != null && isExpired == false) {
       setState(() {
         isAuth = true;
       });

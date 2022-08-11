@@ -181,8 +181,10 @@ class PersonalState extends State<Personal> {
                     SharedPreferences localStorage =
                         await SharedPreferences.getInstance();
                     localStorage.remove('token');
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SignIn()));
+                    // Navigator.of(context).push(
+                    //     MaterialPageRoute(builder: (context) => SignIn()));
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/sign-in', (route) => false);
                   },
                   child: Text(
                     'Sign Out',

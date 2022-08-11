@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tanvi_vendor/screens/viewOrderDetails.dart';
 import '../../model/orderSummary/orderSummary.dart';
+import 'package:intl/intl.dart';
 
 class NewOrders extends StatefulWidget {
   NewOrdersState createState() => NewOrdersState();
@@ -10,6 +11,7 @@ class NewOrders extends StatefulWidget {
 
 class NewOrdersState extends State<NewOrders> {
   bool isLoading = true;
+  DateFormat dateFormat = DateFormat('dd-MMM-yyyy HH:mm:ss');
 
   // @override
   // void initState() {
@@ -75,7 +77,7 @@ class NewOrdersState extends State<NewOrders> {
                               ),
                               SizedBox(height: height * 0.002),
                               Text(
-                                '${DateFormat.yMMMMd().format(DateTime.now())} ${DateFormat('HH:mm:ss').format(DateTime.now())}',
+                                '${dateFormat.format(DateTime.parse(recentOrder['data'][0]['order']['created_at']).toLocal())}',
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,

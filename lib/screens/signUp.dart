@@ -351,7 +351,7 @@ class SignUpState extends State<SignUp> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'PAN Card',
+                              'PAN Card (Optional)',
                               // textScaleFactor: textScaleFactor,
                               style: TextStyle(
                                   color: Colors.black,
@@ -374,7 +374,7 @@ class SignUpState extends State<SignUp> {
                                         // color: Color.fromRGBO(227, 189, 255, 0.5),
                                         offset: Offset(1, 2))
                                   ]),
-                              child: TextFormField(
+                              child: TextField(
                                 style: TextStyle(fontSize: tabLayout ? 25 : 18),
                                 controller: _panCardController,
                                 keyboardType: TextInputType.text,
@@ -393,14 +393,16 @@ class SignUpState extends State<SignUp> {
                                     enabledBorder: InputBorder.none),
                                 // onFieldSubmitted: (_) => FocusScope.of(context)
                                 //     .requestFocus(_focusFirst),
-                                validator: (panNo) {
-                                  if (panNo!.isEmpty) {
-                                    return 'Please Enter Your PAN Number';
-                                  } else {
-                                    panNumber = panNo;
-                                    return null;
-                                  }
-                                },
+                                // validator: (panNo) {
+                                //   if (panNo!.isEmpty) {
+                                //     // return 'Please Enter Your PAN Number';
+                                //     return null;
+                                //   }
+                                //   // else {
+                                //   //   panNumber = panNo;
+                                //   //   return null;
+                                //   // }
+                                // },
                               ),
                             ),
                           ],
@@ -544,7 +546,9 @@ class SignUpState extends State<SignUp> {
                             //   _signUp();
                             // }
                             if (_globalKey.currentState!.validate()) {
-                              _signUp();
+                              _signUp(_panCardController.text == null
+                                  ? ""
+                                  : _panCardController.text);
                             }
                           },
                           child: Container(
@@ -604,13 +608,13 @@ class SignUpState extends State<SignUp> {
     );
   }
 
-  void _signUp() async {
+  void _signUp(String panCardNumber) async {
     var data = {
       'first_name': firstName.toString(),
       'last_name': lastName.toString(),
       'gender': dropDownValue.toString(),
       'org_name': organizationName.toString(),
-      'pancard': panNumber.toString(),
+      'pancard': panCardNumber,
       'mobile': phoneNumber.toString(),
       'email': email.toString()
     };
@@ -624,8 +628,8 @@ class SignUpState extends State<SignUp> {
 
     if (receivedResponse['status'] != 'warning') {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text(
-              'Registration Successful! Please Go Back To The Sign In Page To Login',
+          content: Text(
+              'Registration Successful!!! Please Check your Email for Username and Password',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

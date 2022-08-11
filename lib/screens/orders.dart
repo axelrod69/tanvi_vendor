@@ -10,6 +10,8 @@ class Orders extends StatefulWidget {
 }
 
 class OrdersState extends State<Orders> {
+  DateFormat dateFormat = DateFormat('dd-MMM-yyyy HH:mm:ss');
+
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -69,11 +71,11 @@ class OrdersState extends State<Orders> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Icon(
-                            Icons.notifications,
-                            size: tabLayout ? height * 0.05 : height * 0.04,
-                            color: const Color.fromARGB(255, 99, 118, 134),
-                          )
+                          // Icon(
+                          //   Icons.notifications,
+                          //   size: tabLayout ? height * 0.05 : height * 0.04,
+                          //   color: const Color.fromARGB(255, 99, 118, 134),
+                          // )
                         ],
                       ),
                     ),
@@ -81,20 +83,20 @@ class OrdersState extends State<Orders> {
                 ],
               ),
             ),
-            Positioned(
-                top: height * 0.01,
-                right: width * 0.02,
-                child: CircleAvatar(
-                  radius: width * 0.02,
-                  backgroundColor: Colors.red,
-                  child: Text(
-                    '9+',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: tabLayout ? 16 : 12),
-                  ),
-                ))
+            // Positioned(
+            //     top: height * 0.01,
+            //     right: width * 0.02,
+            //     child: CircleAvatar(
+            //       radius: width * 0.02,
+            //       backgroundColor: Colors.red,
+            //       child: Text(
+            //         '9+',
+            //         style: TextStyle(
+            //             color: Colors.white,
+            //             fontWeight: FontWeight.bold,
+            //             fontSize: tabLayout ? 16 : 12),
+            //       ),
+            //     ))
           ],
         ),
       ),
@@ -155,7 +157,7 @@ class OrdersState extends State<Orders> {
                                       ),
                                       SizedBox(height: height * 0.002),
                                       Text(
-                                        '${DateFormat.yMMMMd().format(DateTime.now())} ${DateFormat('HH:mm:ss').format(DateTime.now())}',
+                                        '${dateFormat.format(DateTime.parse(provider['data'][index]['order']['created_at']).toLocal())}',
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.bold,

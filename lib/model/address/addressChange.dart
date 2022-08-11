@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ChangeLocationProvider with ChangeNotifier {
-  String apiKey = 'AIzaSyCdgEuoV0QVIB-KvFMbL4K_58ckFNVxfxI';
+  // String apiKey = 'AIzaSyCdgEuoV0QVIB-KvFMbL4K_58ckFNVxfxI';
+  String apiKey = 'AIzaSyBnEAzyBm_5qL13nn26_L0uH6b9g9VhKPA';
   List<dynamic> _places = [];
 
   List<dynamic> get places {

@@ -108,12 +108,15 @@ class ViewOrderDetailsState extends State<ViewOrderDetails> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                        provider['data']['productDetails']
-                                            [index]['product']['name'],
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24)),
+                                    FittedBox(
+                                      fit: BoxFit.contain,
+                                      child: Text(
+                                          provider['data']['productDetails']
+                                              [index]['product']['name'],
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 24)),
+                                    ),
                                     Text(
                                         provider['data']['productDetails']
                                                         [index]['product']

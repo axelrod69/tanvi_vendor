@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/rendering.dart';
 
 import '../../model/network/authentication.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,15 @@ class FormWidget extends StatefulWidget {
 
 class FormWidgetState extends State<FormWidget> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _dialogKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
   // final _focusFifth = FocusNode();
   String? emailId = '';
   String? password = '';
+  String? email;
+  String? changedPassword;
   String? fcm;
+  TextEditingController emailController = TextEditingController();
 
   Future<void> fcmCodeGenerate() async {
     fcm = await FirebaseMessaging.instance.getToken();
@@ -159,34 +165,10 @@ class FormWidgetState extends State<FormWidget> {
         ],
       ),
       SizedBox(height: height * 0.04),
-      // Text(
-      //   'Forgot your password?',
-      //   textAlign: TextAlign.center,
-      //   // textScaleFactor: textScaleFactor,
-      //   style: TextStyle(color: Colors.grey, fontSize: tabLayout ? 25 : 14),
-      // ),
       Padding(
         padding: EdgeInsets.only(left: width * 0.08, right: width * 0.08),
         child: InkWell(
           onTap: () {
-            // if (_otpKey.currentState!.validate()) {
-            //   login(firstOtp!, secondOtp!, thirdOtp!, fourthOtp!,
-            //       mobileNumber!);
-            // } else {
-            //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            //     content: const Text(
-            //       'Please Enter Your OTP',
-            //       style: TextStyle(
-            //         color: Colors.black,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //     backgroundColor: Colors.white,
-            //     action: SnackBarAction(
-            //         label: 'Ok',
-            //         onPressed: () => Navigator.of(context).pop()),
-            //   ));
-            // }
             if (_key.currentState!.validate()) {
               _signIn();
             }
@@ -249,77 +231,185 @@ class FormWidgetState extends State<FormWidget> {
           ),
         ],
       ),
-      SizedBox(height: height * 0.04),
+      SizedBox(height: height * 0.01),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: () => showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text('Please Enter Email To Continue'),
+                      actions: [
+                        Form(
+                          key: _dialogKey,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: width * 0.04, right: width * 0.04),
+                            child: TextFormField(
+                              // controller: emailController,
+                              decoration: InputDecoration(
+                                  hintText:
+                                      'Enter your registered email address'),
+                              validator: (input) {
+                                if (input!.isEmpty) {
+                                  return 'Please Enter your Registered Email Address';
+                                } else {
+                                  email = input;
+                                  return null;
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                            onPressed: () async {
+                              SharedPreferences localStorage =
+                                  await SharedPreferences.getInstance();
+                              if (_dialogKey.currentState!.validate()) {
+                                var response =
+                                    await Provider.of<Authentication>(context,
+                                            listen: false)
+                                        .forgotPassword({'email': email},
+                                            'api/forgot-password/');
+                                var passwordResponse =
+                                    json.decode(response.body);
+                                print(passwordResponse);
+                                localStorage.setString(
+                                    'uid', passwordResponse['uid'][0]);
+                                localStorage.setString('passwordResetToken',
+                                    passwordResponse['token']);
+                                Navigator.of(context).pop();
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                          title: Text('Enter New Password'),
+                                          actions: [
+                                            Form(
+                                              key: _passwordKey,
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: width * 0.04,
+                                                    right: width * 0.04),
+                                                child: TextFormField(
+                                                  // controller: emailController,
+                                                  decoration: InputDecoration(
+                                                      hintText:
+                                                          'Enter New Password'),
+                                                  validator: (changePassword) {
+                                                    if (changePassword!
+                                                        .isEmpty) {
+                                                      return 'Please Enter Password';
+                                                    } else if (changePassword
+                                                            .length <
+                                                        10) {
+                                                      return 'Password must be atleast 10 characters long';
+                                                    } else {
+                                                      changedPassword =
+                                                          changePassword;
+                                                      return null;
+                                                    }
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                SharedPreferences localStorage =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                if (_passwordKey.currentState!
+                                                    .validate()) {
+                                                  var passwordResponse =
+                                                      await Provider.of<
+                                                                  Authentication>(
+                                                              context,
+                                                              listen: false)
+                                                          .resetPassword({
+                                                    'password': changedPassword,
+                                                    'uidb64': localStorage
+                                                        .getString('uid'),
+                                                    'token':
+                                                        localStorage.getString(
+                                                            'passwordResetToken'),
+                                                  }, 'api/password-reset-complete/');
+                                                  Navigator.of(context).pop();
+                                                  var decodedReponse = json
+                                                      .decode(passwordResponse
+                                                          .body);
+                                                  if (decodedReponse[
+                                                          'success'] ==
+                                                      'true') {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                      backgroundColor:
+                                                          Colors.green,
+                                                      content: Text(
+                                                          decodedReponse[
+                                                              'message'],
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white)),
+                                                    ));
+                                                  }
+                                                  // print(json.decode(
+                                                  //     passwordResponse.body));
+                                                }
+                                              },
+                                              child: Text('Ok',
+                                                  style: TextStyle(
+                                                      color: Colors.green)),
+                                            )
+                                          ],
+                                        ));
+                              }
+                            },
+                            child: Text(
+                              'Continue',
+                              style: TextStyle(color: Colors.green),
+                            ))
+                      ],
+                    )),
+            child: Text(
+              'Change Password',
+              textAlign: TextAlign.center,
+              // textScaleFactor: textScaleFactor,
+              style: TextStyle(
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                  fontSize: tabLayout
+                      ? 23
+                      : largeLayout
+                          ? 16
+                          : 12),
+            ),
+          ),
+        ],
+      ),
+      // SizedBox(height: height * 0.01),
       // Row(
       //   mainAxisAlignment: MainAxisAlignment.center,
       //   children: [
-      //     Container(
-      //       width: width * 0.18,
-      //       height: height * 0.065,
-      //       padding:
-      //           EdgeInsets.only(top: height * 0.02, bottom: height * 0.02),
-      //       decoration: BoxDecoration(
-      //           color: Colors.white,
-      //           borderRadius: BorderRadius.circular(10),
-      //           boxShadow: const [
-      //             BoxShadow(
-      //                 color: Colors.grey,
-      //                 spreadRadius: 2,
-      //                 blurRadius: 4,
-      //                 offset: Offset(0, 1))
-      //           ]),
-      //       child: Center(
-      //         child:
-      //             Image.asset('assets/images/facebook-logo-transparent.png'),
+      //     InkWell(
+      //       onTap: () => Navigator.of(context).pushNamed('/sign-up'),
+      //       child: Text(
+      //         'Change Your Password',
+      //         textAlign: TextAlign.center,
+      //         // textScaleFactor: textScaleFactor,
+      //         style: TextStyle(
+      //             color: Colors.green,
+      //             fontWeight: FontWeight.bold,
+      //             fontSize: tabLayout
+      //                 ? 23
+      //                 : largeLayout
+      //                     ? 16
+      //                     : 12),
       //       ),
       //     ),
-      //     SizedBox(width: width * 0.04),
-      //     Container(
-      //       width: width * 0.18,
-      //       height: height * 0.065,
-      //       padding:
-      //           EdgeInsets.only(top: height * 0.02, bottom: height * 0.02),
-      //       decoration: BoxDecoration(
-      //           color: Colors.white,
-      //           borderRadius: BorderRadius.circular(10),
-      //           boxShadow: const [
-      //             BoxShadow(
-      //                 color: Colors.grey,
-      //                 spreadRadius: 2,
-      //                 blurRadius: 4,
-      //                 offset: Offset(0, 1))
-      //           ]),
-      //       child: Center(
-      //         child: Image.asset('assets/images/google-logo.png'),
-      //       ),
-      //     )
       //   ],
       // ),
-      SizedBox(height: height * 0.04),
-      // Text(
-      //     'Please Change your Password if you are Logging In For the First Time',
-      //     textAlign: TextAlign.center,
-      //     style: TextStyle(
-      //       color: Colors.grey,
-      //       fontSize: tabLayout
-      //           ? 23
-      //           : largeLayout
-      //               ? 16
-      //               : 12,
-      //       fontWeight: FontWeight.bold,
-      //     )),
-      // SizedBox(height: height * 0.02),
-      //   InkWell(
-      //     onTap: () => Navigator.of(context).pushNamed('/change-password'),
-      //     child: const Text('Change Password',
-      //         textAlign: TextAlign.center,
-      //         style: TextStyle(
-      //           color: Colors.green,
-      //           fontSize: 16,
-      //           fontWeight: FontWeight.bold,
-      //         )),
-      //   )
-      // ],
+      // SizedBox(height: height * 0.04),
     ]);
   }
 
@@ -334,9 +424,6 @@ class FormWidgetState extends State<FormWidget> {
     if (res['status'] == 'success') {
       await localStorage.setString('token', res['data']['access']);
       final url = Uri.parse('http://34.100.212.22/' + 'api/fcm-token/');
-
-      // var responseFcm =
-      //     await Provider.of<Network>(context, listen: false).fcmToken(fcm);
 
       var responseFcm =
           await http.post(url, body: json.encode({'fcm_token': fcm}), headers: {
@@ -362,27 +449,4 @@ class FormWidgetState extends State<FormWidget> {
     }
     print(json.decode(response.body));
   }
-
-  // void validateNumber(String number) async {
-  //   var data = {'mobile': number.toString()};
-  //   var response = await Provider.of<Network>(context, listen: false)
-  //       .logIn(data, 'api/login/');
-  //   print(response.body);
-  // }
-
-  // void login(String firstOtp, String secondOtp, String thirdOtp,
-  //     String fourthOtp, String mobileNumber) async {
-  //   SharedPreferences localStorage = await SharedPreferences.getInstance();
-  //   String otp = firstOtp + secondOtp + thirdOtp + fourthOtp;
-  //   var data = {'otp': otp, 'mobile': mobileNumber};
-
-  //   var response = await Provider.of<Network>(context, listen: false)
-  //       .loginOtp(data, 'api/login-otp/');
-  //   print(response.body);
-  //   var receivedResponse = json.decode(response.body);
-
-  //   await localStorage.setString('token', receivedResponse['access']);
-
-  //   Navigator.of(context).pushNamed('/landing-page');
-  // }
 }
