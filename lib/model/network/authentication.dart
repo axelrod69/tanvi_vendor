@@ -26,7 +26,7 @@ class Authentication with ChangeNotifier {
 
   dynamic resetPassword(data, url) async {
     final fullUrl = Uri.parse(baseUrl + url);
-    return await http.patch(fullUrl,
+    return await http.post(fullUrl,
         body: json.encode(data), headers: {'Content-Type': 'application/json'});
   }
 

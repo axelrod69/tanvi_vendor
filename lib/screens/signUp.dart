@@ -1,9 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tanvi_vendor/model/network/authentication.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 // import '../authentication/network.dart';
 
 class SignUp extends StatefulWidget {
@@ -609,6 +609,8 @@ class SignUpState extends State<SignUp> {
   }
 
   void _signUp(String panCardNumber) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+
     var data = {
       'first_name': firstName.toString(),
       'last_name': lastName.toString(),
@@ -619,6 +621,8 @@ class SignUpState extends State<SignUp> {
       'email': email.toString()
     };
     print(data);
+
+    localStorage.setString('registeredEmail', data['email'].toString());
 
     var response = await Provider.of<Authentication>(context, listen: false)
         .signUp(data, 'api/vendor/registration/');
