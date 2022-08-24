@@ -229,7 +229,8 @@ class OrdersState extends State<Orders> {
                                     fontSize: tabLayout ? 22 : 14),
                               ),
                               Text(
-                                provider['data'][0]['order']['address']['name'],
+                                provider['data'][index]['order']['address']
+                                    ['name'],
                                 style: TextStyle(
                                     color:
                                         const Color.fromARGB(255, 36, 71, 100),

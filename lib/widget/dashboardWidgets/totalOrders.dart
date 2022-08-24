@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+import '../../screens/orders.dart';
+
 class TotalOrders extends StatefulWidget {
   final String totalOrders;
   TotalOrdersState createState() => TotalOrdersState();
@@ -36,17 +38,21 @@ class TotalOrdersState extends State<TotalOrders> {
             children: [
               Icon(Icons.shopping_cart,
                   color: Colors.green, size: tabLayout ? 200 : 80),
-              Text('View',
-                  style: TextStyle(
-                      color: const Color.fromARGB(255, 36, 71, 100),
-                      fontWeight: FontWeight.bold,
-                      fontSize: tabLayout ? 18 : 14))
+              InkWell(
+                onTap: () => Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Orders())),
+                child: Text('View',
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 36, 71, 100),
+                        fontWeight: FontWeight.bold,
+                        fontSize: tabLayout ? 18 : 14)),
+              )
             ],
           ),
           SizedBox(height: tabLayout ? height * 0.02 : 0),
           Padding(
             padding: EdgeInsets.only(left: width * 0.02, top: height * 0.01),
-            child: Text('₹${widget.totalOrders}',
+            child: Text(widget.totalOrders,
                 style: TextStyle(
                     fontSize: tabLayout ? 45 : 22,
                     fontWeight: FontWeight.bold,

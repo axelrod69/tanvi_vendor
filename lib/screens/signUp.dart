@@ -623,7 +623,6 @@ class SignUpState extends State<SignUp> {
     print(data);
 
     localStorage.setString('registeredEmail', data['email'].toString());
-
     var response = await Provider.of<Authentication>(context, listen: false)
         .signUp(data, 'api/vendor/registration/');
 

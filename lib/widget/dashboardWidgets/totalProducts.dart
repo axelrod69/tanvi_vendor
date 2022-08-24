@@ -51,7 +51,7 @@ class TotalProductsState extends State<TotalProducts> {
           SizedBox(height: tabLayout ? height * 0.02 : 0),
           Padding(
             padding: EdgeInsets.only(left: width * 0.02, top: height * 0.01),
-            child: Text('₹${widget.totalProducts}',
+            child: Text(widget.totalProducts,
                 style: TextStyle(
                     fontSize: tabLayout ? 45 : 22,
                     fontWeight: FontWeight.bold,

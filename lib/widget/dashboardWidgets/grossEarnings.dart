@@ -36,11 +36,11 @@ class GrossEarningsState extends State<GrossEarnings> {
             children: [
               Icon(Icons.money,
                   color: Colors.green, size: tabLayout ? 200 : 80),
-              Text('View',
-                  style: TextStyle(
-                      color: const Color.fromARGB(255, 36, 71, 100),
-                      fontWeight: FontWeight.bold,
-                      fontSize: tabLayout ? 18 : 14))
+              // Text('View',
+              //     style: TextStyle(
+              //         color: const Color.fromARGB(255, 36, 71, 100),
+              //         fontWeight: FontWeight.bold,
+              //         fontSize: tabLayout ? 18 : 14))
             ],
           ),
           SizedBox(height: tabLayout ? height * 0.02 : 0),
